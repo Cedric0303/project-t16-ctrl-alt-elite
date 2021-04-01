@@ -27,11 +27,13 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 | Name | Task | State |
 | :---         |     :---:      |          ---: |
 | Student Name 1  | Back End     |  Done |
-| Student Name 2    | Front End      |  Testing |
-| Student Name 3    | README Format      |  Amazing! |
+| Jun Li Chen (Cedric)    | Back End      |  ????? |
+| Student Name 3    | Not Back End      |  Amazing! |
+| Student Name 4    | README Format      |  Amazing! |
+| Student Name 5    | README Format      |  Amazing! |
 
 ## General info
-This is project ...
+This is a project ...
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
 
 ## Technologies
