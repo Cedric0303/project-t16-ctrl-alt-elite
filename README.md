@@ -92,8 +92,10 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 
 - [x] Read the Project handouts carefully
 - [x] User Interface (UI)mockup
-- [ ] App server mockup
+- [.] App server mockup
 - [ ] Front-end + back-end (one feature)
 - [ ] Complete system + source code
 - [ ] Report on your work(+ test1 feature)
 
+## Important
+Run 'npm install' in this current directory to install node modules listed in package.json.
