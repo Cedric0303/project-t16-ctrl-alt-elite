@@ -26,7 +26,7 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 
 | Name | Task | State |
 | :---         |     :---:      |          ---: |
-| Student Name 1  | Back End     |  Done |
+| Jack Lenard  | Back End     |  In Progress|
 | Jun Li Chen (Cedric)    | Back End      |  ????? |
 | Student Name 3    | Not Back End      |  Amazing! |
 | Student Name 4    | README Format      |  Amazing! |
