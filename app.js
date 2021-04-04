@@ -2,19 +2,21 @@
 const express = require('express')
 const app = express();
 
-app.get('/', (req, res) => {
-	res.send('<h1> Home screen </h1>')
+// CUSTOMER ROUTES
+
+app.get('/customer', (req, res) => {
+	res.send('<h1> Customer Home screen </h1>')
 })
 
-app.get('/menu', (req, res) => {
+app.get('/customer/menu', (req, res) => {
 	res.send('<h1> Ordering/Menu Screen </h1>')
 })
 
-app.get('/menu/:id', (req, res) => {
+app.get('/customer/menu/:id', (req, res) => {
 	res.send('<h1> View details of a snack </h1>')
 })
 
-app.post('/menu/:id', (req, res) => {
+app.post('/customer/menu/:id', (req, res) => {
 	res.send('<h1> Customer starts a new order by requesting a snack </h1>')
 })
 
@@ -25,3 +27,4 @@ app.all('*', (req, res) => {  // 'default' route to catch user errors
 app.listen(8080, () => {
 	console.log('Snacks in a Van server is listening for requests ...')
 })
+
