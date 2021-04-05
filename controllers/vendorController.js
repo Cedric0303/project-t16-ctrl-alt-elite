@@ -41,7 +41,8 @@ const getVendor = async (req, res) => {
 }
 
 const getOrders = async (req, res) => {
-    res.send('<h1> Get list of outstanding orders </h1>')
+    const orders = await db.db.collection('order').find({vendorID: req.params.id}).toArray()    
+    res.send(orders)
 }
 
 const fulfilledOrder = async (req, res) => {

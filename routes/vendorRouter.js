@@ -12,8 +12,8 @@ vendorRouter.post('/:id', vendorController.postVendor)
 
 vendorRouter.get('/:id', vendorController.getVendor)
 
-vendorRouter.get('/:id/:orderID', vendorController.getOrders)
+vendorRouter.get('/:id/orders', vendorController.getOrders)
 
-vendorRouter.post('/:id/:orderID', vendorController.fulfilledOrder)
+vendorRouter.post('/:id/orders/:orderID', vendorController.fulfilledOrder)
 
 module.exports = vendorRouter
