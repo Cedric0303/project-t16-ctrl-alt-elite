@@ -10,13 +10,10 @@ mongoose.connect(uri, {
 })
 .then (() => {
 	console.log('MongoDB Connected...')
-}
-)
+})
 .catch(err => console.log(err))
 
 const connection = mongoose.connection;
-
-// const vendors = require('../models/vendor.json')
 
 const getVendorHome = (req, res) => {
     res.send('<h1> Vendor Home screen </h1>')
@@ -46,5 +43,9 @@ const fulfilledOrder = async (req, res) => {
 }
 
 module.exports = {
-    getVendorHome, postVendor, getVendor, getOrders, fulfilledOrder
+    getVendorHome, 
+    postVendor, 
+    getVendor, 
+    getOrders, 
+    fulfilledOrder
 }
