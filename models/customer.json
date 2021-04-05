@@ -1,8 +1,17 @@
-[
-    {
-        "loginID": "junlic@student.unimelb.edu.au",
-        "password": "12345678",
-        "nameGiven": "Jun Li",
-        "nameFamily": "Chen"
-    }
-]
+[{
+  "_id": {
+    "$oid": "6069e91b93eaa4469cd25294"
+  },
+  "loginID": "junlic@student.unimelb.edu.au",
+  "password": "12345678",
+  "nameGiven": "Jun Li",
+  "nameFamily": "Chen"
+},{
+  "_id": {
+    "$oid": "606af58aec57137cc2beca3c"
+  },
+  "loginID": "jlenard@student.unimelb.edu.au",
+  "nameFamily": "Lenard",
+  "nameGiven": "Jack",
+  "password": "87654321"
+}]
