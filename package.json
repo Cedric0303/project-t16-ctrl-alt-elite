@@ -4,7 +4,7 @@
   "description": "**The University of Melbourne** # INFO30005 – Web Information Technologies",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/INFO30005-2021-SM1/project-t16-ctrl-alt-elite#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "handlebars": "^4.7.7",
     "mongoose": "^5.12.3"

@@ -1,28 +1,32 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
 
 // connect to database
 
-const uri = "mongodb+srv://defaultuser:defaultuser@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
+CONNECTION_STRING = "mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
+CONNECTION_STRING = CONNECTION_STRING.replace("<username>",process.env.MONGO_USERNAME).replace("<password>",process.env.MONGO_PASSWORD)
 
-mongoose.connect(uri, {
+mongoose.connect(CONNECTION_STRING, {
 	useNewUrlParser: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
+    useCreateIndex: true,
 })
-.then (() => {
-	console.log('MongoDB Connected...')
-})
-.catch(err => console.log(err))
+const db = mongoose.connection
 
-const connection = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', () => {
+    console.log('connected to Mongo ...')
+})
+
 
 const getCustomerHome = async (req, res) => {
     res.send('<h1> Customer Home screen </h1>')
 }
 
 const getMenu = async (req, res) => {
-    const foods = await connection.db.collection('food').find({}).toArray()
-    if (foods) {
-        res.send(foods)
+    const result = await db.db.collection('food').find({}, {_id:false}).project({ "_id": false }).toArray()
+    if (result) {
+        res.send(result) 
     }
     else {
         res.send("ERROR")
@@ -30,7 +34,9 @@ const getMenu = async (req, res) => {
 }
 
 const getFoodDetails = async (req, res) => {
-    res.send('<h1> View details of a snack </h1>')
+    const result = await db.db.collection('food').findOne({name: req.params.name}, { projection: {"_id": false}})
+    .catch(e => console.err(e))
+    res.send(result)
 }
 
 const addFoodToOrder = async (req, res) => {

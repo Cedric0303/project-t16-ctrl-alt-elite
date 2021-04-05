@@ -9,8 +9,8 @@ customerRouter.get('/', customerController.getCustomerHome)
 
 customerRouter.get('/menu', customerController.getMenu)
 
-customerRouter.get('/menu/:id', customerController.getFoodDetails)
+customerRouter.get('/menu/:name', customerController.getFoodDetails)
 
-customerRouter.post('/menu/:id', customerController.addFoodToOrder)
+customerRouter.post('/menu/:name', customerController.addFoodToOrder)
 
 module.exports = customerRouter

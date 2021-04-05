@@ -1,19 +1,23 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
 
 // connect to database
 
-const uri = "mongodb+srv://defaultuser:defaultuser@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
+CONNECTION_STRING = "mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
+CONNECTION_STRING = CONNECTION_STRING.replace("<username>",process.env.MONGO_USERNAME).replace("<password>",process.env.MONGO_PASSWORD)
 
-mongoose.connect(uri, {
+mongoose.connect(CONNECTION_STRING, {
 	useNewUrlParser: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
+    useCreateIndex: true,
 })
-.then (() => {
-	console.log('MongoDB Connected...')
-})
-.catch(err => console.log(err))
+const db = mongoose.connection
 
-const connection = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', () => {
+    console.log('connected to Mongo ...')
+})
+
 
 const getVendorHome = (req, res) => {
     res.send('<h1> Vendor Home screen </h1>')
@@ -24,10 +28,10 @@ const postVendor = async (req, res) => {
 }
 
 const getVendor = async (req, res) => {
-    const vendorName = await connection.db.collection('vendor').findOne({loginID: req.params.id})
+    const vendorName = await db.db.collection('vendor').findOne({loginID: req.params.id}, { projection: {"_id": false}})
     .catch(e => console.err(e))
     if (vendorName) {
-        res.send(vendorName.loginID)
+        res.send(vendorName)
     }
     else {
         res.send('<h1> Invalid vendor loginID </h1>')

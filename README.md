@@ -16,11 +16,16 @@ We have added to this repository a `README.md`, `.gitignore`, and `.gitattribute
 Remember that _"this document"_ can use `different formats` to **highlight** important information. This is just an example of different formating tools available for you. For help with the format you can find a guide [here](https://docs.github.com/en/github/writing-on-github).
 
 ## Table of contents
-* [Team Members](#team-members)
-* [General Info](#general-info)
-* [Technologies](#technologies)
-* [Code Implementation](#code-implementation)
-* [Adding Images](#adding-images)
+- [INFO30005 – Web Information Technologies](#info30005--web-information-technologies)
+- [Group Project Repository](#group-project-repository)
+  - [Table of contents](#table-of-contents)
+  - [Team Members](#team-members)
+  - [General info](#general-info)
+  - [Technologies](#technologies)
+  - [Code Implementation](#code-implementation)
+  - [Adding Images](#adding-images)
+  - [Important](#important)
+  - [Packages](#packages)
 
 ## Team Members
 
@@ -99,3 +104,9 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 
 ## Important
 Run 'npm install' in this current directory to install node modules listed in package.json.
+
+## Packages
+* mongoose
+* express
+* handlebars
+* **dotenv**
