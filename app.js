@@ -1,11 +1,12 @@
 // stubs for Snacks in a Van routes
 const express = require('express')
-
 const customerRouter = require('./routes/customerRouter')
 const vendorRouter = require('./routes/vendorRouter')
 
 const app = express();
 const port = process.env.PORT || 8080
+
+app.use(express.json())
 
 // CUSTOMER ROUTES
 app.use('/customer', customerRouter)
