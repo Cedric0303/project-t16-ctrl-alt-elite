@@ -1,15 +1,45 @@
 [
     {
-        "orderID": "123",
-        "item": [
-            { "foodID":"606aa37d4f6097522cc0e27a", "name":"Latte", "count":1 }, 
-            { "foodID":"606aa37d4f6097522cc0e279", "name":"Cappucino", "count":1 }
-        ],
-        "timestamp": {
-            "$numberLong": "23142142151"
+        "_id": {
+            "$oid": "606b1a358e53a634241ab5ab"
         },
+        "item": [
+            {
+            "foodID": "606aa37d4f6097522cc0e27a",
+            "name": "Latte",
+            "count": 1
+            },
+            {
+            "foodID": "606aa37d4f6097522cc0e279",
+            "name": "Cappucino",
+            "count": 1
+            }
+        ],
+        "timestamp": 23142142151,
         "vendorID": "Tasty Trailer",
         "customerID": "606af58aec57137cc2beca3c",
-        "customerGivenName": "Jack"
+        "customerGivenName": "jack",
+        "orderStatus": "fulfilled",
+        "orderID": 123
+    },
+    {
+        "_id": {
+            "$oid": "606b2088c65d313820ab5ea9"
+        },
+        "item": [
+            {
+            "foodID": null,
+            "name": "Latte",
+            "count": 1
+            }
+        ],
+        "timestamp": {
+            "$date": "2021-04-05T14:36:56.146Z"
+        },
+        "vendorID": "Tasty Trailer",
+        "customerID": "junlic@student.unimelb.edu.au",
+        "customerGivenName": "Jun Li",
+        "orderStatus": "Ordering",
+        "orderID": 436680
     }
 ]
