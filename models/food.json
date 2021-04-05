@@ -1,6 +1,42 @@
 [
     {
         "name": "Cappucino",
+        "category": "drinks",
+        "price": "4.50"
+    },
+    {
+        "name": "latte",
+        "category": "drinks",
+        "price": "4.50"
+    },
+    {
+        "name": "Flat white",
+        "category": "drinks",
         "price": "4.20"
+    },
+    {
+        "name": "Long black",
+        "category": "drinks",
+        "price": "4.00"
+    },
+    {
+        "name": "Plain biscuit",
+        "category": "snack",
+        "price": "1.00"
+    },
+    {
+        "name": "Fancy biscuit",
+        "category": "snack",
+        "price": "2.00"
+    },
+    {
+        "name": "Small cake",
+        "category": "dessert",
+        "price": "5.90"
+    },
+    {
+        "name": "Big cake",
+        "category": "dessert",
+        "price": "6.90"
     }
 ]
