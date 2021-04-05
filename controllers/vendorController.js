@@ -24,7 +24,6 @@ const getVendorHome = (req, res) => {
 }
 
 const postVendor = async (req, res) => {
-    const vendorName =  await db.db.collection('vendor').findOne({loginID: req.params.id})
     db.db.collection('vendor').updateOne({loginID: req.params.id}, {$set: 
         {isOpen: true, address: req.body.address, longitude: req.body.longitude, latitude: req.body.latitude}})    
     res.send("<h1> Setting van status </h1>")
@@ -46,6 +45,7 @@ const getOrders = async (req, res) => {
 }
 
 const fulfilledOrder = async (req, res) => {
+    db.db.collection('order').updateOne({orderID: req.params.orderID}, {$set: {orderStatus: "fulfilled"}})
     res.send("<h1> Mark an order as 'fulfilled' </h1>")
 }
 
