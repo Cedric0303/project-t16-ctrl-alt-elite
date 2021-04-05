@@ -24,7 +24,7 @@ const getCustomerHome = async (req, res) => {
 }
 
 const getMenu = async (req, res) => {
-    const result = await db.db.collection('food').find({}, {_id:false}).project({ "_id": false }).toArray()
+    const result = await db.db.collection('food').find({}).project({ "_id": false }).toArray()
     if (result) {
         res.send(result) 
     }
