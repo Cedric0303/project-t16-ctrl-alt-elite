@@ -40,6 +40,18 @@ const getFoodDetails = async (req, res) => {
 }
 
 const addFoodToOrder = async (req, res) => {
+    const food = await db.db.collection('food').findOne({name: req.params.name})
+    const customer = await db.db.collection('customer').findOne({loginID: req.body.loginID})
+    await db.db.collection('order').insertOne({
+        item: [{foodID: food.foodID, name: food.name, count: req.body.count}], 
+        timestamp: new Date(),
+        vendorID: req.body.vendorID, 
+        customerID: customer.loginID, 
+        customerGivenName: customer.nameGiven,
+        orderStatus: "Ordering",
+        orderID: Math.floor((Math.random() * 1000000) + 1)
+    })
+    console.log(await db.db.collection('order').find({}).toArray())
     res.send('<h1> Customer starts a new order by requesting a snack </h1>')
 }
 
