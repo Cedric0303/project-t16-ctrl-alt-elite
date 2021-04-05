@@ -1,12 +1,15 @@
 [
     {
-    "orderID": "123",
-    "item": "latte",
-    "time": {
-        "$timestamp": {
-            "t": 0,
-            "i": 0
-            }
-        }
+        "orderID": "123",
+        "item": [
+            { "foodID":"606aa37d4f6097522cc0e27a", "name":"Latte", "count":1 }, 
+            { "foodID":"606aa37d4f6097522cc0e279", "name":"Cappucino", "count":1 }
+        ],
+        "timestamp": {
+            "$numberLong": "23142142151"
+        },
+        "vendorID": "Tasty Trailer",
+        "customerID": "606af58aec57137cc2beca3c",
+        "customerGivenName": "Jack"
     }
 ]
