@@ -24,12 +24,12 @@ const getVendorHome = (req, res) => {
 }
 
 const postVendor = async (req, res) => {
-    res.send("<h1> Setting van status </h1>")
-
     // marks van as ready-for-orders
     // need to implement some way to prevent van status from being changed before login details are entered 
     const vendorName =  await db.db.collection('vendor').findOne({loginID: req.params.id})
-    db.db.collection('vendor').updateOne({loginID: req.params.id}, {$set: {is_open: !(vendorName.is_open)}})
+    db.db.collection('vendor').updateOne({loginID: req.params.id}, {$set: {isOpen: !(vendorName.isOpen)}})
+    res.send("<h1> Set van status </h1>")
+
 }
 
 const getVendor = async (req, res) => {
