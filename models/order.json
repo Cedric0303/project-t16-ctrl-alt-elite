@@ -1,0 +1,12 @@
+[
+    {
+    "orderID": "123",
+    "item": "latte",
+    "time": {
+        "$timestamp": {
+            "t": 0,
+            "i": 0
+            }
+        }
+    }
+]
