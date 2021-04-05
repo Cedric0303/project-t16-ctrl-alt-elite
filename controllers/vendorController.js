@@ -41,7 +41,7 @@ const getVendor = async (req, res) => {
 }
 
 const getOrders = async (req, res) => {
-    const orders = await db.db.collection('order').find({vendorID: req.params.id}).toArray()    
+    const orders = await db.db.collection('order').find({vendorID: req.params.id,  orderStatus:{$not:{$eq:"fulfilled"}}}).toArray()    
     res.send(orders)
 }
 
