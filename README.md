@@ -24,8 +24,7 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
   - [Technologies](#technologies)
   - [Code Implementation](#code-implementation)
   - [Adding Images](#adding-images)
-  - [Important](#important)
-  - [Packages](#packages)
+  - [Postman Requests](#postman-requests)
 
 ## Team Members
 
@@ -46,6 +45,10 @@ Project is created with:
 * NodeJs 14.16.X
 * Ipsum version: 2.33
 * Ament library version: 999
+* mongoose
+* express
+* handlebars
+* dotenv
 
 ## Code Implementation
 
@@ -102,11 +105,10 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 - [ ] Complete system + source code
 - [ ] Report on your work(+ test1 feature)
 
-## Important
-Run 'npm install' in this current directory to install node modules listed in package.json.
 
-## Packages
-* mongoose
-* express
-* handlebars
-* **dotenv**
+##  Postman Requests
+1. Import `Deliverable 2.postman_collection.json` into Postman.
+2. Click on each requests to access them.
+<p align="center">
+  <img src="postman_request.gif"  width="1000" >
+</p>
