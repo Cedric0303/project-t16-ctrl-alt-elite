@@ -51,7 +51,6 @@ const addFoodToOrder = async (req, res) => {
         orderStatus: "Ordering",
         orderID: Math.floor((Math.random() * 1000000) + 1)
     })
-    console.log(await db.db.collection('order').find({}).toArray())
     res.send(`<h1> Added ${food.name} to order </h1>`)
 }
 
