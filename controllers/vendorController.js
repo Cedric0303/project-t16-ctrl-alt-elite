@@ -47,7 +47,7 @@ const getOrders = async (req, res) => {
 
 const fulfilledOrder = async (req, res) => {
     await db.db.collection('order').updateOne({orderID: {$eq: Number(req.params.orderID)}}, {$set: {orderStatus: "Fulfilled"}})
-    res.send(`<h1> Order ${req.params.orderID} fulfilled. </h1>`)
+    res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
 }
 
 module.exports = {
