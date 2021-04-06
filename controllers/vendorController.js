@@ -46,7 +46,7 @@ const getOrders = async (req, res) => {
 }
 
 const fulfilledOrder = async (req, res) => {
-    db.db.collection('order').updateOne({orderID: req.params.orderID}, {$set: {orderStatus: "fulfilled"}})
+    db.db.collection('order').updateOne({orderID: {$eq: req.params.orderID}}, {$set: {orderStatus: "Fulfilled"}})
     res.send("<h1> Mark an order as 'fulfilled' </h1>")
 }
 
