@@ -41,13 +41,13 @@ const getVendor = async (req, res) => {
 }
 
 const getOrders = async (req, res) => {
-    const orders = await db.db.collection('order').find({vendorID: req.params.id,  orderStatus:{$not:{$eq:"fulfilled"}}}).toArray()    
+    const orders = await db.db.collection('order').find({vendorID: req.params.id,  orderStatus:{$not:{$eq:"Fulfilled"}}}).toArray()    
     res.send(orders)
 }
 
 const fulfilledOrder = async (req, res) => {
-    db.db.collection('order').updateOne({orderID: {$eq: req.params.orderID}}, {$set: {orderStatus: "Fulfilled"}})
-    res.send("<h1> Mark an order as 'fulfilled' </h1>")
+    await db.db.collection('order').updateOne({orderID: {$eq: Number(req.params.orderID)}}, {$set: {orderStatus: "Fulfilled"}})
+    res.send("<h1>order status changed</h1>")
 }
 
 module.exports = {
