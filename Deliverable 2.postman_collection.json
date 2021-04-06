@@ -1,0 +1,231 @@
+{
+	"info": {
+		"_postman_id": "c579f3bf-6122-4517-8645-4264f9aba90d",
+		"name": "Deliverable 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer App",
+			"item": [
+				{
+					"name": "customer home screen",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/customer/",
+							"protocol": "https",
+							"host": [
+								"project-t16-ctrl-alt-elite",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"customer",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view menu of snacks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/customer/menu",
+							"protocol": "https",
+							"host": [
+								"project-t16-ctrl-alt-elite",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"customer",
+								"menu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view details of a snack",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/customer/menu/Latte",
+							"protocol": "https",
+							"host": [
+								"project-t16-ctrl-alt-elite",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"customer",
+								"menu",
+								"Latte"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "start order by requesting a snack",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vendorID\": \"Calming Car\",\r\n    \"loginID\": \"jlenard@student.unimelb.edu.au\",\r\n    \"count\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/customer/menu/Big cake",
+							"protocol": "https",
+							"host": [
+								"project-t16-ctrl-alt-elite",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"customer",
+								"menu",
+								"Big cake"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vendor App",
+			"item": [
+				{
+					"name": "vendor home screen",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/",
+							"protocol": "https",
+							"host": [
+								"project-t16-ctrl-alt-elite",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"vendor",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view vendor information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming Car",
+							"protocol": "https",
+							"host": [
+								"project-t16-ctrl-alt-elite",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"vendor",
+								"Calming Car"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set van status and location",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": \"on Grattan st outside Melbourne Uni\",\r\n    \"latitude\":  -37.800248,\r\n    \"longitude\": 144.962366 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming Car",
+							"protocol": "https",
+							"host": [
+								"project-t16-ctrl-alt-elite",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"vendor",
+								"Calming Car"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show list of outstanding orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming Car/orders",
+							"protocol": "https",
+							"host": [
+								"project-t16-ctrl-alt-elite",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"vendor",
+								"Calming Car",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mark order as 'fulfilled'",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming Car/orders/813778",
+							"protocol": "https",
+							"host": [
+								"project-t16-ctrl-alt-elite",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"vendor",
+								"Calming Car",
+								"orders",
+								"813778"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

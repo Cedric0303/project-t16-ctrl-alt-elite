@@ -32,10 +32,10 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 | Name | Task | State |
 | :---         |     :---:      |          ---: |
 | Jack Lenard  | Back End     |  In Progress|
-| Jun Li Chen (Cedric)    | Back End      |  ????? |
-| Student Name 3    | Not Back End      |  Amazing! |
-| Student Name 4    | README Format      |  Amazing! |
-| Student Name 5    | README Format      |  Amazing! |
+| Jun Li Chen (Cedric)    | Back End      |  In Progress |
+| Paris Eckert    | Front End      |  In Progress |
+| Zac Beaumont    | Front End      |  In Progress |
+| Jeongwoo Seo    | Front End      |  In Progress |
 
 ## General info
 This is a project ...
