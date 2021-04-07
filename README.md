@@ -115,5 +115,5 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 
 
 ## Database Access
-<p> _Username_ : defaultuser<br> _Password_ : defaultuser</p>
+<p> <i>Username</i> : defaultuser<br> <i>Password</i> : defaultuser</p>
 
