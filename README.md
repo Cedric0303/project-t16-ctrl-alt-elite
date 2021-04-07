@@ -115,6 +115,6 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 
 
 ## Database Access
-<p> Connection String (using MongoDB Compass): <mongodb+srv://defaultuser:defaultuser@ctrl-alt-elite.ys2d9.mongodb.net/test> </p>
+<p> Connection String (using MongoDB Compass): `mongodb+srv://\<username\>:\<password\>@ctrl-alt-elite.ys2d9.mongodb.net/test` </p>
 <p> Username : defaultuser<br> Password : defaultuser</p>
 
