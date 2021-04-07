@@ -112,3 +112,8 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 <p align="center">
   <img src="postman_request.gif"  width="1000" >
 </p>
+
+
+## MongoDB Database Access
+USERNAME: defaultuser
+PASSWORD: defaultuser
