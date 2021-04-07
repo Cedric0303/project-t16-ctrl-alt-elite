@@ -4,11 +4,11 @@ const mongoose = require('mongoose')
 // connect to database
 
 CONNECTION_STRING = "mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
-CONNECTION_STRING = CONNECTION_STRING.replace("<username>",process.env.MONGO_USERNAME).replace("<password>",process.env.MONGO_PASSWORD)
+CONNECTION_STRING = CONNECTION_STRING.replace("<username>", process.env.MONGO_USERNAME).replace("<password>", process.env.MONGO_PASSWORD)
 
 mongoose.connect(CONNECTION_STRING, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
     useCreateIndex: true,
 })
 const db = mongoose.connection
@@ -24,36 +24,64 @@ const getVendorHome = (req, res) => {
 }
 
 const postVendor = async (req, res) => {
-    db.db.collection('vendor').updateOne({loginID: req.params.id}, {$set: 
-        {isOpen: true, address: req.body.address, longitude: req.body.longitude, latitude: req.body.latitude}})    
+    db.db.collection('vendor').updateOne({
+        loginID: req.params.id
+    }, {
+        $set: {
+            isOpen: true,
+            address: req.body.address,
+            longitude: req.body.longitude,
+            latitude: req.body.latitude
+        }
+    })
     res.send("<h1> Setting van status </h1>")
 }
 
 const getVendor = async (req, res) => {
-    const vendorName = await db.db.collection('vendor').findOne({loginID: req.params.id}, { projection: {"_id": false}})
-    .catch(e => console.err(e))
+    const vendorName = await db.db.collection('vendor').findOne({
+            loginID: req.params.id
+        }, {
+            projection: {
+                "_id": false
+            }
+        })
+        .catch(e => console.err(e))
     if (vendorName) {
         res.send(vendorName)
-    }
-    else {
+    } else {
         res.send('<h1> Invalid vendor loginID </h1>')
     }
 }
 
 const getOrders = async (req, res) => {
-    const orders = await db.db.collection('order').find({vendorID: req.params.id,  orderStatus:{$not:{$eq:"Fulfilled"}}}).toArray()    
+    const orders = await db.db.collection('order').find({
+        vendorID: req.params.id,
+        orderStatus: {
+            $not: {
+                $eq: "Fulfilled"
+            }
+        }
+    }).toArray()
     res.send(orders)
 }
 
 const fulfilledOrder = async (req, res) => {
-    await db.db.collection('order').updateOne({orderID: {$eq: Number(req.params.orderID)}}, {$set: {orderStatus: "Fulfilled"}})
+    await db.db.collection('order').updateOne({
+        orderID: {
+            $eq: Number(req.params.orderID)
+        }
+    }, {
+        $set: {
+            orderStatus: "Fulfilled"
+        }
+    })
     res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
 }
 
 module.exports = {
-    getVendorHome, 
-    postVendor, 
-    getVendor, 
-    getOrders, 
+    getVendorHome,
+    postVendor,
+    getVendor,
+    getOrders,
     fulfilledOrder
 }
