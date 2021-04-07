@@ -114,6 +114,6 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 </p>
 
 
-## MongoDB Database Access
-USERNAME: defaultuser
-PASSWORD: defaultuser
+## Database Access
+<p>_Username_: defaultuser<br>_Password_: defaultuser</p>
+
