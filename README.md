@@ -3,7 +3,7 @@
 
 # Group Project Repository
 
-Welcome!
+<!-- Welcome!
 
 We have added to this repository a `README.md`, `.gitignore`, and `.gitattributes`.
 
@@ -13,7 +13,7 @@ We have added to this repository a `README.md`, `.gitignore`, and `.gitattribute
 
 * **.gitattributes**: configures the line ending of files, to ensure consistency across development environments. More information can be found in this [link](https://git-scm.com/docs/gitattributes).
 
-Remember that _"this document"_ can use `different formats` to **highlight** important information. This is just an example of different formating tools available for you. For help with the format you can find a guide [here](https://docs.github.com/en/github/writing-on-github).
+Remember that _"this document"_ can use `different formats` to **highlight** important information. This is just an example of different formating tools available for you. For help with the format you can find a guide [here](https://docs.github.com/en/github/writing-on-github). -->
 
 ## Table of contents
 - [INFO30005 – Web Information Technologies](#info30005--web-information-technologies)
@@ -22,9 +22,17 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
   - [Team Members](#team-members)
   - [General info](#general-info)
   - [Technologies](#technologies)
-  - [Code Implementation](#code-implementation)
-  - [Adding Images](#adding-images)
   - [Postman Requests](#postman-requests)
+    - [**Customer App**](#customer-app)
+    - [**Vendor App**](#vendor-app)
+    - [**How to use Postman**](#how-to-use-postman)
+  - [Project Website](#project-website)
+  - [Database Access](#database-access)
+  <!-- - [Code Implementation](#code-implementation)
+  - [Adding Images](#adding-images) -->
+  - [Postman Requests](#postman-requests)
+  - [Project Website](#project-website)
+  - [Database Access](#database-access)
 
 ## Team Members
 
@@ -50,7 +58,7 @@ Project is created with:
 * handlebars
 * dotenv
 
-## Code Implementation
+<!-- ## Code Implementation
 
 You can include a code snippet here.
 
@@ -94,7 +102,7 @@ Or you can add your own images from a folder in your repo with the following cod
 
 To create a gif from a video you can follow this [link](https://ezgif.com/video-to-gif/ezgif-6-55f4b3b086d4.mov).
 
-You can use emojis :+1: but do not over use it, we are looking for professional work. If you would not add them in your job, do not use them here! :shipit:
+You can use emojis :+1: but do not over use it, we are looking for professional work. If you would not add them in your job, do not use them here! :shipit: -->
 
 **Now Get ready to complete all the tasks:**
 
@@ -107,11 +115,39 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 
 
 ##  Postman Requests
-**Customer App**
+### **Customer App**
+- **GET** customer homescreen
+  - returns the customer homescreen
+<br>
+- **GET** view menu of snacks
+  - returns an array of JSON food objects(?) fetched from the database
+<br>
+- **GET** view details of an individual snack
+  - returns a JSON file of an individual snack using the `:name` supplied from 
+  `[server-name]/customer/menu/:name`
+<br>
+- **POST** start an order by requesting a snack
+  - sends a JSON file of the `vendorID`, `loginID` & `count` of an individual snack using the `:name` supplied from `[server-name]/customer/menu/:name` and create a new order with a new `OrderID`
+  - returns the `name` of snack ordered
 
-**Vendor App**
+### **Vendor App**
+- **GET** vendor homescreen
+  - returns the customer homescreen
+<br>
+- **GET** view information of an individual vendor van
+  - returns a JSON file of an individual vendor van using the `:id` supplied from `[server-name]/vendor/:id`
+<br>
+- **POST** set individual vendor van status & location
+  - sends a JSON file of `address`, `latitude` & `longitude` of an individual vendor van using the `:id` supplied from `[server-name]/vendor/:id` to update said vendor van's status & location
+  - returns a `Setting van status` message
+<br>
+- **GET** show list of outstanding orders for a vendor van
+  - returns an array of JSON order objects(?) of a vendor van fetched from the database
+<br>
+- **POST** mark an individual order as 'fulfilled'
+  - sets an order to 'fulfilled' using the `orderID` supplied from `[server-name]/vendor/:id/orders/:OrderID`
 
-**How to use Postman**
+### **How to use Postman**
 1. Import `Deliverable 2.postman_collection.json` into Postman.
 2. Click on each requests to access them.
 <p align="center">
