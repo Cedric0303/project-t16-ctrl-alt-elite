@@ -107,6 +107,11 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 
 
 ##  Postman Requests
+**Customer App**
+
+**Vendor App**
+
+**How to use Postman**
 1. Import `Deliverable 2.postman_collection.json` into Postman.
 2. Click on each requests to access them.
 <p align="center">
