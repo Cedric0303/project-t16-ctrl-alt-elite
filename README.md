@@ -118,14 +118,14 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 ### **Customer App**
 - **GET** customer homescreen
   - returns the customer homescreen
-<br>
+
 - **GET** view menu of snacks
   - returns an array of JSON food objects(?) fetched from the database
-<br>
+
 - **GET** view details of an individual snack
   - returns a JSON file of an individual snack using the `:name` supplied from 
   `[server-name]/customer/menu/:name`
-<br>
+
 - **POST** start an order by requesting a snack
   - sends a JSON file of the `vendorID`, `loginID` & `count` of an individual snack using the `:name` supplied from `[server-name]/customer/menu/:name` and create a new order with a new `OrderID`
   - returns the `name` of snack ordered
@@ -133,17 +133,17 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 ### **Vendor App**
 - **GET** vendor homescreen
   - returns the customer homescreen
-<br>
+
 - **GET** view information of an individual vendor van
   - returns a JSON file of an individual vendor van using the `:id` supplied from `[server-name]/vendor/:id`
-<br>
+
 - **POST** set individual vendor van status & location
   - sends a JSON file of `address`, `latitude` & `longitude` of an individual vendor van using the `:id` supplied from `[server-name]/vendor/:id` to update said vendor van's status & location
   - returns a `Setting van status` message
-<br>
+
 - **GET** show list of outstanding orders for a vendor van
   - returns an array of JSON order objects(?) of a vendor van fetched from the database
-<br>
+
 - **POST** mark an individual order as 'fulfilled'
   - sets an order to 'fulfilled' using the `orderID` supplied from `[server-name]/vendor/:id/orders/:OrderID`
 
