@@ -124,7 +124,7 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
   `[server-name]/customer/menu/:name`
 
 - **POST** start an order by requesting a snack
-  - sends a JSON file of the `vendorID`, `loginID` & `count` of an individual snack using the `:name` supplied from `[server-name]/customer/menu/:name` and create a new order with a new `OrderID`
+  - sends a JSON file of the `vendorID`, `loginID` & `count` of an individual snack using the `:name` supplied from `[server-name]/customer/menu/:name` and creates a new order with a new `OrderID`
   - returns the `name` of snack ordered
 
 ### Vendor App
