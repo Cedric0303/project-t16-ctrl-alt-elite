@@ -30,9 +30,6 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
   - [Database Access](#database-access)
   <!-- - [Code Implementation](#code-implementation)
   - [Adding Images](#adding-images) -->
-  - [Postman Requests](#postman-requests)
-  - [Project Website](#project-website)
-  - [Database Access](#database-access)
 
 ## Team Members
 
