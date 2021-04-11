@@ -23,9 +23,9 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
   - [General info](#general-info)
   - [Technologies](#technologies)
   - [Postman Requests](#postman-requests)
-    - [**Customer App**](#customer-app)
-    - [**Vendor App**](#vendor-app)
-    - [**How to use Postman**](#how-to-use-postman)
+    - [Customer App](#customer-app)
+    - [Vendor App](#vendor-app)
+    - [How to use Postman](#how-to-use-postman)
   - [Project Website](#project-website)
   - [Database Access](#database-access)
   <!-- - [Code Implementation](#code-implementation)
@@ -115,7 +115,7 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 
 
 ##  Postman Requests
-### **Customer App**
+### Customer App
 - **GET** customer homescreen
   - returns the customer homescreen
 
@@ -130,7 +130,7 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
   - sends a JSON file of the `vendorID`, `loginID` & `count` of an individual snack using the `:name` supplied from `[server-name]/customer/menu/:name` and create a new order with a new `OrderID`
   - returns the `name` of snack ordered
 
-### **Vendor App**
+### Vendor App
 - **GET** vendor homescreen
   - returns the customer homescreen
 
@@ -147,7 +147,7 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 - **POST** mark an individual order as 'fulfilled'
   - sets an order to 'fulfilled' using the `orderID` supplied from `[server-name]/vendor/:id/orders/:OrderID`
 
-### **How to use Postman**
+### How to use Postman
 1. Import `Deliverable 2.postman_collection.json` into Postman.
 2. Click on each requests to access them.
 <p align="center">
