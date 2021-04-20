@@ -11,7 +11,7 @@ app.use(express.json())
 // customer routes
 app.use('/customer', customerRouter)
 
-// customer routes
+// vendor routes
 app.use('/vendor', vendorRouter)
 
 // invalid routes
