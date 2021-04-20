@@ -22,6 +22,7 @@ const getVendorHome = (req, res) => {
     res.send('<h1> Vendor Home screen </h1>')
 }
 
+// set van status using location provided
 const postVendor = async (req, res) => {
     db.db.collection('vendor').updateOne({
         loginID: req.params.id
