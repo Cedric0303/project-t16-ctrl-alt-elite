@@ -2,7 +2,6 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 
 // connect to database
-
 CONNECTION_STRING = "mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
 CONNECTION_STRING = CONNECTION_STRING.replace("<username>", process.env.MONGO_USERNAME).replace("<password>", process.env.MONGO_PASSWORD)
 
@@ -18,11 +17,12 @@ db.once('open', () => {
     console.log('connected to Mongo ...')
 })
 
-
+// return default customer homescreen
 const getCustomerHome = async (req, res) => {
     res.send('<h1> Customer Home screen </h1>')
 }
 
+// get food items from the database and return it
 const getMenu = async (req, res) => {
     const result = await db.db.collection('food').find({}).project({
         "_id": false
@@ -34,6 +34,7 @@ const getMenu = async (req, res) => {
     }
 }
 
+// return information for a given food item
 const getFoodDetails = async (req, res) => {
     const result = await db.db.collection('food').findOne({
             name: req.params.name
@@ -46,6 +47,7 @@ const getFoodDetails = async (req, res) => {
     res.send(result)
 }
 
+// create a new order and add a specified food into the order
 const addFoodToOrder = async (req, res) => {
     const food = await db.db.collection('food').findOne({
         name: req.params.name

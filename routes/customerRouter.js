@@ -1,5 +1,6 @@
 const express = require('express')
 
+// add our router
 const customerRouter = express.Router()
 
 // add the customer controller

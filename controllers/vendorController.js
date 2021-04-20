@@ -2,7 +2,6 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 
 // connect to database
-
 CONNECTION_STRING = "mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
 CONNECTION_STRING = CONNECTION_STRING.replace("<username>", process.env.MONGO_USERNAME).replace("<password>", process.env.MONGO_PASSWORD)
 
@@ -18,7 +17,7 @@ db.once('open', () => {
     console.log('connected to Mongo ...')
 })
 
-
+// return default vendor home screen
 const getVendorHome = (req, res) => {
     res.send('<h1> Vendor Home screen </h1>')
 }
@@ -37,6 +36,7 @@ const postVendor = async (req, res) => {
     res.send("<h1> Setting van status </h1>")
 }
 
+// return a specific vendor van
 const getVendor = async (req, res) => {
     const vendorName = await db.db.collection('vendor').findOne({
             loginID: req.params.id
@@ -53,6 +53,7 @@ const getVendor = async (req, res) => {
     }
 }
 
+// return orders of a specific vendor van
 const getOrders = async (req, res) => {
     const orders = await db.db.collection('order').find({
         vendorID: req.params.id,
@@ -65,6 +66,7 @@ const getOrders = async (req, res) => {
     res.send(orders)
 }
 
+// sets a specific order as fulfilled
 const fulfilledOrder = async (req, res) => {
     await db.db.collection('order').updateOne({
         orderID: {

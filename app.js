@@ -8,17 +8,18 @@ const port = process.env.PORT || 8080
 
 app.use(express.json())
 
-// CUSTOMER ROUTES
+// customer routes
 app.use('/customer', customerRouter)
 
-// VENDOR ROUTES
+// customer routes
 app.use('/vendor', vendorRouter)
 
-
+// invalid routes
 app.all('*', (req, res) => {  // 'default' route to catch user errors
 	res.status(404).send('<p>invalid request</p>')
 })
 
+// start server
 app.listen(port, () => {
 	console.log('Snacks in a Van server is listening for requests ...')
 })
