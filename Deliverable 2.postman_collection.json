@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "840e187f-8f0d-4f93-baa5-7fdfa19bedb4",
+		"_postman_id": "49719d01-1df6-42d5-b75e-ca30671a5c09",
 		"name": "Deliverable 2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -79,7 +79,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"vendorID\": \"Calming Car\",\r\n    \"loginID\": \"jlenard@student.unimelb.edu.au\",\r\n    \"count\": 1\r\n}",
+							"raw": "{\r\n    \"vendorID\": \"Calming_Car\",\r\n    \"loginID\": \"jlenard@student.unimelb.edu.au\",\r\n    \"count\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -87,7 +87,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/customer/menu/Big cake",
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/customer/menu/Big_cake",
 							"protocol": "https",
 							"host": [
 								"project-t16-ctrl-alt-elite",
@@ -97,7 +97,7 @@
 							"path": [
 								"customer",
 								"menu",
-								"Big cake"
+								"Big_cake"
 							]
 						}
 					},
@@ -135,7 +135,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming Car",
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming_Car",
 							"protocol": "https",
 							"host": [
 								"project-t16-ctrl-alt-elite",
@@ -144,7 +144,7 @@
 							],
 							"path": [
 								"vendor",
-								"Calming Car"
+								"Calming_Car"
 							]
 						}
 					},
@@ -165,7 +165,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming Car",
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming_Car",
 							"protocol": "https",
 							"host": [
 								"project-t16-ctrl-alt-elite",
@@ -174,7 +174,7 @@
 							],
 							"path": [
 								"vendor",
-								"Calming Car"
+								"Calming_Car"
 							]
 						}
 					},
@@ -186,7 +186,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming Car/orders",
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming_Car/orders",
 							"protocol": "https",
 							"host": [
 								"project-t16-ctrl-alt-elite",
@@ -195,7 +195,7 @@
 							],
 							"path": [
 								"vendor",
-								"Calming Car",
+								"Calming_Car",
 								"orders"
 							]
 						}
@@ -208,7 +208,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming Car/orders/305198",
+							"raw": "https://project-t16-ctrl-alt-elite.herokuapp.com/vendor/Calming_Car/orders/813778",
 							"protocol": "https",
 							"host": [
 								"project-t16-ctrl-alt-elite",
@@ -217,9 +217,9 @@
 							],
 							"path": [
 								"vendor",
-								"Calming Car",
+								"Calming_Car",
 								"orders",
-								"305198"
+								"813778"
 							]
 						}
 					},
