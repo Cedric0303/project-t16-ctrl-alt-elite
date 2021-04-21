@@ -14,6 +14,11 @@ app.use('/customer', customerRouter)
 // vendor routes
 app.use('/vendor', vendorRouter)
 
+// project homescreen
+app.get('/', (req, res) => {
+	res.send('<h1>Ctrl-ALT-ELITE Project Home screen</h1>')
+})
+
 // invalid routes
 app.all('*', (req, res) => {  // 'default' route to catch user errors
 	res.status(404).send('<p>invalid request</p>')
