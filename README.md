@@ -156,5 +156,5 @@ URL: `http://project-t16-ctrl-alt-elite.herokuapp.com/`
 
 ## Database Access
 Connection String (using MongoDB Compass): `mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/test`
- Username : defaultuser (replace `<username>`)<br> Password : defaultuser (replace `<password>`)
+<br> Username : defaultuser (replace `<username>`)<br> Password : defaultuser (replace `<password>`)
 
