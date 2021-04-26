@@ -18,4 +18,10 @@ customerRouter.get('/menu/:name', customerController.getFoodDetails)
 // create a new order and add a specified food into the order
 customerRouter.post('/menu/:name', customerController.addFoodToOrder)
 
+customerRouter.get('/login', customerController.getLogin)
+
+customerRouter.get('/register', customerController.getRegister)
+
+customerRouter.post('/register', customerController.addCustomer)
+
 module.exports = customerRouter

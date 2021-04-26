@@ -71,9 +71,31 @@ const addFoodToOrder = async (req, res) => {
     res.send(`<h1> Added ${food.name} to order </h1>`)
 }
 
+
+const getLogin = async (req, res) => {
+    res.send('<h1> Login screen </h1>')
+}
+
+const getRegister = async (req, res) => {
+    res.send('<h1> Register screen </h1>')
+}
+
+const addCustomer = async (req, res) => {
+    await db.db.collection('customer').insertOne({
+        nameGiven: req.body.firstName,
+        nameFamily: req.body.lastName,
+        loginID: req.body.email,
+        password: req.body.password
+    })
+    res.send(`<h1> Added user to database </h1>`)
+}
+
 module.exports = {
     getCustomerHome,
     getMenu,
     getFoodDetails,
-    addFoodToOrder
+    addFoodToOrder,
+    getLogin,
+    getRegister,
+    addCustomer
 }
