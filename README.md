@@ -56,6 +56,7 @@ Project is created with:
 * **express-session**
 * **handlebars**
 * **dotenv**
+* **bcrypt**
 
 <!-- ## Code Implementation
 

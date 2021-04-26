@@ -1,6 +1,8 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 const path = require('path')
+const bcrypt = require('bcrypt')
+const salt = 10
 
 // connect to database
 CONNECTION_STRING = "mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
@@ -85,11 +87,9 @@ const authLogin = async (req, res) => {
     const email = req.body.email
     const pw = req.body.password
     if (email && pw) {
-        const user = await db.db.collection('customer').findOne({
-            loginID: email,
-            password: pw
-        })
-        if (user) {
+        const user = await db.db.collection('customer').findOne({loginID: email})
+        const valid = await bcrypt.compare(pw, user.password)
+        if (user && valid) {
             req.session.loggedin = true;
             req.session.username = email;
             res.redirect('/customer/menu/');
@@ -110,11 +110,12 @@ const getRegister = async (req, res) => {
 }
 
 const addCustomer = async (req, res) => {
+    const hash_pw = await bcrypt.hash(req.body.password, salt)
     await db.db.collection('customer').insertOne({
         nameGiven: req.body.firstName,
         nameFamily: req.body.lastName,
         loginID: req.body.email,
-        password: req.body.password
+        password: hash_pw
     })
     res.redirect('/customer/menu');
 }
