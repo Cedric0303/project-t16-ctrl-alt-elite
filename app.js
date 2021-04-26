@@ -7,6 +7,7 @@ const app = express();
 const port = process.env.PORT || 8080
 
 app.use(express.json())
+app.use(express.static('public'))
 
 // customer routes
 app.use('/customer', customerRouter)

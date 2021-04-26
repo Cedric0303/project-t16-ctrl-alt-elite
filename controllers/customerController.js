@@ -1,5 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
+const path = require('path')
 
 // connect to database
 CONNECTION_STRING = "mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
@@ -72,8 +73,8 @@ const addFoodToOrder = async (req, res) => {
 }
 
 
-const getLogin = async (req, res) => {
-    res.send('<h1> Login screen </h1>')
+const getLogin = (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'html', 'customer', 'login.html'));
 }
 
 const getRegister = async (req, res) => {
