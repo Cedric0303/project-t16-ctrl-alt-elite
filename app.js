@@ -2,12 +2,21 @@
 const express = require('express')
 const customerRouter = require('./routes/customerRouter')
 const vendorRouter = require('./routes/vendorRouter')
+const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const app = express();
 const port = process.env.PORT || 8080
 
 app.use(express.json())
 app.use(express.static('public'))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 
 // customer routes
 app.use('/customer', customerRouter)

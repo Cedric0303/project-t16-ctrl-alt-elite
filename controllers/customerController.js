@@ -77,6 +77,30 @@ const getLogin = (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'html', 'customer', 'login.html'));
 }
 
+const authLogin = async (req, res) => {
+    const email = req.body.email
+    const pw = req.body.password
+    if (email && pw) {
+        const user = await db.db.collection('customer').findOne({
+            loginID: email,
+            password: pw
+        })
+        if (user) {
+            req.session.loggedin = true;
+            req.session.username = email;
+            res.redirect('/customer/menu/');
+        }
+        else {
+            res.send('Incorrect Username and/or Password!')
+        }
+        res.end();
+    }
+    else {
+        res.send('Please enter Username and Password!');
+		res.end();
+    }
+}
+
 const getRegister = async (req, res) => {
     res.send('<h1> Register screen </h1>')
 }
@@ -97,6 +121,7 @@ module.exports = {
     getFoodDetails,
     addFoodToOrder,
     getLogin,
+    authLogin,
     getRegister,
     addCustomer
 }
