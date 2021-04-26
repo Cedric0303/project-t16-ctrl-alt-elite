@@ -117,7 +117,7 @@ const addCustomer = async (req, res) => {
         loginID: req.body.email,
         password: hash_pw
     })
-    res.redirect('/customer/menu');
+    res.redirect('/customer/login');
 }
 
 module.exports = {
