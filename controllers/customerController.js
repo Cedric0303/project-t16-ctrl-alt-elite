@@ -116,7 +116,7 @@ const addCustomer = async (req, res) => {
         loginID: req.body.email,
         password: req.body.password
     })
-    res.send(`<h1> Added user to database </h1>`)
+    res.redirect('/customer/menu');
 }
 
 module.exports = {
