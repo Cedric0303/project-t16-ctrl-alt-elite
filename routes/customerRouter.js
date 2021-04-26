@@ -20,6 +20,8 @@ customerRouter.post('/menu/:name', customerController.addFoodToOrder)
 
 customerRouter.get('/login', customerController.getLogin)
 
+customerRouter.get('/loginerror', customerController.getLoginError)
+
 customerRouter.post('/auth', customerController.authLogin)
 
 customerRouter.get('/register', customerController.getRegister)

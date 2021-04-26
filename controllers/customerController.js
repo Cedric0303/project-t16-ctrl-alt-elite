@@ -77,6 +77,10 @@ const getLogin = (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'html', 'customer', 'login.html'));
 }
 
+const getLoginError = (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'html', 'customer', 'loginerror.html'));
+}
+
 const authLogin = async (req, res) => {
     const email = req.body.email
     const pw = req.body.password
@@ -91,7 +95,7 @@ const authLogin = async (req, res) => {
             res.redirect('/customer/menu/');
         }
         else {
-            res.send('Incorrect Username and/or Password!')
+            res.redirect('/customer/loginerror')
         }
         res.end();
     }
@@ -102,7 +106,7 @@ const authLogin = async (req, res) => {
 }
 
 const getRegister = async (req, res) => {
-    res.send('<h1> Register screen </h1>')
+    res.sendFile(path.join(__dirname, '..', 'html', 'customer', 'register.html'));
 }
 
 const addCustomer = async (req, res) => {
@@ -121,6 +125,7 @@ module.exports = {
     getFoodDetails,
     addFoodToOrder,
     getLogin,
+    getLoginError,
     authLogin,
     getRegister,
     addCustomer
