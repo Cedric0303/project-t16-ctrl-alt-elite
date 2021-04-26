@@ -11,6 +11,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
     <script language='javascript' type='text/javascript'>
         // https://stackoverflow.com/questions/21727317/how-to-check-confirm-password-field-in-form-without-reloading-page/21727518
+        // https://stackoverflow.com/questions/18640051/check-if-html-form-values-are-empty-using-javascript
+        function checkform(form) {
+            // get all the inputs within the submitted form
+            var inputs = form.getElementsByTagName('input');
+            for (var i = 0; i < inputs.length; i++) {
+                // only validate the inputs that have the required attribute
+                if(inputs[i].hasAttribute("required")){
+                    if (inputs[i].value == "") {
+                        // found an empty field that is required
+                        document.getElementById('loginbutton').disabled = true;
+                        return false;
+                    }
+                }
+            }
+            document.getElementById('loginbutton').disabled = false;
+        }
+
         function check_pass() {
             if ((document.getElementById('password').value || document.getElementById('confirm_password').value) != '') {
                 if (document.getElementById('password').value == (document.getElementById('confirm_password').value) ) {
@@ -20,7 +37,6 @@
                     document.getElementById('confirm_password').style.borderWidth = '2px';
                     document.getElementById('confirm_password').style.marginBottom = '10px';
                     document.getElementById('pwmatcherror').style.display = 'none';
-                    document.getElementById('loginbutton').disabled = false;
                 } else {
                     // execute if either password fields are not empty and the passwords do not match
                     document.getElementById('confirm_password').style.border = 'solid';
@@ -28,11 +44,9 @@
                     document.getElementById('confirm_password').style.borderWidth = '2px';
                     document.getElementById('confirm_password').style.marginBottom = '2px';
                     document.getElementById('pwmatcherror').style.display = 'inline';
-                    document.getElementById('loginbutton').disabled = true;
                 }
             } else {
                 // execute if password fields are empty
-                document.getElementById('loginbutton').disabled = true;
                 document.getElementById('pwmatcherror').style.display = 'none';
                 document.getElementById('confirm_password').style.border = 'none';
                 document.getElementById('confirm_password').style.marginBottom = '10px';
@@ -54,16 +68,16 @@
             <h1 id="logintitle"><i>Snacks<br class="responsive"> in a Van</i></h1>
             <form action="" id="login_form" method="post">
                 <label for="email">Enter Your Email</label><br>
-                <input type="text" class="loginfield" name="email" required><br>
+                <input type="text" class="loginfield" name="email" oninput="checkform(form);" required><br>
                 <label for="password">Create a Password</label><br>
-                <input type="password" class="loginfield" id="password" name="password" oninput="check_pass();" required><br>
+                <input type="password" class="loginfield" id="password" name="password" oninput="check_pass(); checkform(form);" required><br>
                 <label for="confirm_password">Confirm Password</label><br>
                 <input type="password" class="loginfield" id="confirm_password" name="confirm_password" oninput="check_pass();" required><br>
                 <div id="pwmatcherror">Passwords must be matching.<br></div>
                 <label for="firstName">First Name (Or Preferred Name)</label><br>
-                <input type="text" class="loginfield" name="firstName" required><br>
+                <input type="text" class="loginfield" name="firstName" oninput="checkform(form);" required><br>
                 <label for="lastName">Last Name</label><br>
-                <input type="text" class="loginfield" name="lastName" required><br>
+                <input type="text" class="loginfield" name="lastName" oninput="checkform(form);" required><br>
                 <input type="submit" id="loginbutton" value="Create Account" disabled>
             </form>
             <div id="createacc">
