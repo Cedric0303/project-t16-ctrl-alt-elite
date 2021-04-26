@@ -50,10 +50,12 @@ Project is created with:
 * NodeJs 14.16.X
 * Ipsum version: 2.33
 * Ament library version: 999
-* mongoose
-* express
-* handlebars
-* dotenv
+* **mongoose**
+* **express**
+* **express-handlebars**
+* **express-session**
+* **handlebars**
+* **dotenv**
 
 <!-- ## Code Implementation
 
