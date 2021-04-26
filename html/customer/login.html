@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://kit.fontawesome.com/40c25fb1ee.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+</head>
+
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href=""><i id="navicon" class="fas fa-home"></i><br class="responsive"> Home</a></li>
+            <li><a href=""><i id="navicon" class="fas fa-clipboard-list"></i><br class="responsive"> Orders</a></li>
+            <li><a href=""><i id="navicon" class="fas fa-user"></i><br class="responsive"> Profile</a></li>
+        </ul>
+    </div>
+    <main>
+        <div id="loginforms" class="centerflex">
+            <h1 id="logintitle"><i>Snacks<br class="responsive"> in a Van</i></h1>
+            <form id="login_form" method="post">
+                <label for="email">Email</label><br>
+                <input type="text" id="loginfield" name="email"><br>
+                <label for="password">Password</label><br>
+                <input type="password" id="loginfield" name="password"><br>
+                <input type="submit" id="loginbutton" value="Sign In">
+            </form>
+            <div id="createacc">
+                Don't have an account?<br>
+                <a href="">Create an account</a>
+            </div>
+            <a id="backbutton" href="">Back</a>
+        </div>
+    </main>
+</body>
+
+</html>
