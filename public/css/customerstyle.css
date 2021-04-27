@@ -6,7 +6,7 @@ html {
 }
 
 p {
-    font-family: 'Roboto', sans-serif;
+    margin: 0;
 }
 
 a {
@@ -18,7 +18,9 @@ body {
 }
 
 main {
-    margin-bottom: 10vh;
+    height: 100%;
+    overflow-y: auto;
+    padding-bottom: 4em;
 }
 
 /* superscript, currently only used for * required on register */
@@ -53,9 +55,9 @@ sup {
     background-color: #ffffff;
     color: black;
     text-align: center;
-    padding: 1vh 5vw;
+    padding: 0.7em 5vw;
     text-decoration: none;
-    font-size: max(2vh, 14px);
+    font-size: 0.9em;
     font-weight: 300;
 }
 
@@ -68,8 +70,81 @@ sup {
 }
 /* -----------van selected float------------- */
 .vanfloat {
-    background-color: #803535;
+    overflow: hidden;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    box-sizing: border-box;
+    top: 0;
+    z-index: 99;
+
+    background-color: #ffffff;
+    padding: 1.6vh 4vw 1.3vh 8vw;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: 0;
     
+    grid-template-areas: 
+        "vanfloatleft vanfloatright";
+}
+
+.vanfloat #vanfloatleft {
+    grid-area: "vanfloatleft";
+    justify-self: start;
+    align-content: start;
+}
+
+.vanfloat #vanfloatright {
+    grid-area: "vanfloatright";
+    justify-self: end;
+    align-content: start;
+}
+
+.vanfloat p {
+    font-family: "Roboto", sans-serif;
+    font-size: 0.7em;
+    font-weight: 300;
+    color: #181818;
+}
+
+/* van name */
+.vanfloat h3 {
+    margin: 1vh 0 0.2vh;
+
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+}
+
+/* address */
+.vanfloat h4 {
+    margin: 0.5vh 0 0.2vh;
+    font-size: 0.8em;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 500;
+    color: #727272;
+    text-transform: capitalize;
+}
+
+/* distance */
+.vanfloat h5 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    margin: 0.5vh 0 0.2vh;
+}
+
+/* change truck button */
+.vanfloat a {
+    display: flex;
+    background-color: #5490f5;
+    padding: 1vh 4vw;
+
+    border-radius: 100px;
+    margin-top: 2.3vh;
+
+    font-size: 0.8em;
+    color: #ffffff;
+    justify-content: center;
+    align-items: center;
 }
 
 /* --------------------login page---------------------- */
@@ -201,5 +276,14 @@ sup {
 @media screen and (min-width: 1000px) {
     .responsive {
         display: none;
+    }
+
+    .vanfloat {
+        padding-left: 4vw;
+    }
+
+    .vanfloat a {
+        font-size: 1em;
+        padding: 1vh 2vw;
     }
 }
