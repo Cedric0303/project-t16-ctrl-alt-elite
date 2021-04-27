@@ -108,10 +108,12 @@ sup {
     font-size: 0.8em;
 }
 
+/* error text for email/pw incorrect/duplicate */
 #loginerror {
     color: #d83200;
 }
 
+/* error text for when password and confirm password dont match */
 #pwmatcherror {
     display: none;
     width: 100%;
@@ -119,6 +121,7 @@ sup {
     font-size: 0.8em;
 }
 
+/* error text for when form fields are not filled */
 #formnotfill {
     width: 100%;
     color: #d83200;
@@ -153,6 +156,7 @@ sup {
     background-color: #bdbdbd;
 }
 
+/* already have an account? don't have an account? text at bottom of login/register pages */
 #createacc {
     padding-top: 3vh;
     font-size: 0.8em;
@@ -172,6 +176,7 @@ sup {
     text-decoration: underline;
 }
 
+/* back link for login page */
 #backbutton {
     margin-top: 18vh;
     font-family: "Roboto",sans-serif;
