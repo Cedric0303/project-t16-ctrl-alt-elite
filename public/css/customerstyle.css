@@ -20,6 +20,11 @@ body {
 main {
     margin-bottom: 10vh;
 }
+
+/* superscript, currently only used for * required on register */
+sup {
+    color: #d83200;
+}
 /* --------------navigation bar-------------- */
 .navbar {
     overflow: hidden;
@@ -109,6 +114,12 @@ main {
 
 #pwmatcherror {
     display: none;
+    width: 100%;
+    color: #d83200;
+    font-size: 0.8em;
+}
+
+#formnotfill {
     width: 100%;
     color: #d83200;
     font-size: 0.8em;
