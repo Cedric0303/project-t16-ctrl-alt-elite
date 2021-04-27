@@ -84,7 +84,9 @@ const addFoodToOrder = async (req, res) => {
     })
     await db.db.collection('order').insertOne({
         item: [{
-            foodID: food._ID,
+            foodID: {
+                $toString: food._ID
+            },
             name: food.name,
             count: req.body.count
         }],
