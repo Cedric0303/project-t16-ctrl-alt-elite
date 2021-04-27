@@ -129,7 +129,7 @@ const addCustomer = async (req, res) => {
 
 const getOrders = async (req, res) => {
     const result = await db.db.collection('order').find({
-        "customerID": req.body.loginID
+        "customerID": req.session.username
     }).project({}).toArray()
     if (result) {
         res.send(result)
