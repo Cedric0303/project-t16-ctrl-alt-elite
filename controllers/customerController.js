@@ -98,6 +98,7 @@ const authLogin = async (req, res) => {
                 })
                 req.session.loggedin = true;
                 req.session.username = email;
+                req.session.maxAge = new Date(Date.now() + hour)
                 req.session.cookie.maxAge = hour;
                 res.redirect('/customer/menu/');
             }
