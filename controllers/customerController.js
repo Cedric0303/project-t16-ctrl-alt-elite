@@ -77,14 +77,8 @@ const addFoodToOrder = async (req, res) => {
 
 
 const getLogin = (req, res) => {
-    // res.sendFile(path.join(__dirname, '..', 'html', 'customer', 'login.html'));
     res.render('login')
 }
-
-// const getLoginError = (req, res) => {
-//     // res.sendFile(path.join(__dirname, '..', 'html', 'customer', 'loginerror.html'));
-//     res.render('loginerror')
-// }
 
 const authLogin = async (req, res) => {
     const email = req.body.email
@@ -108,11 +102,9 @@ const authLogin = async (req, res) => {
                 res.redirect('/customer/menu/');
             }
             else {
-                // res.redirect('/customer/loginerror');
                 res.render('loginerror')
             }
         } else {
-            // res.redirect('/customer/loginerror');
             res.render('loginerror')
         }
     } 
@@ -122,7 +114,6 @@ const authLogin = async (req, res) => {
 }
 
 const getRegister = async (req, res) => {
-    // res.sendFile(path.join(__dirname, '..', 'html', 'customer', 'register.html'));
     res.render('register')
 }
 
@@ -154,7 +145,6 @@ module.exports = {
     getFoodDetails,
     addFoodToOrder,
     getLogin,
-    // getLoginError,
     authLogin,
     getRegister,
     addCustomer,
