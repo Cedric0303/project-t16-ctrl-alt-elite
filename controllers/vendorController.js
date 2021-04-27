@@ -1,5 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
+const path = require('path')
 
 // connect to database
 CONNECTION_STRING = "mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
@@ -19,7 +20,7 @@ db.once('open', () => {
 
 // return default vendor home screen
 const getVendorHome = (req, res) => {
-    res.send('<h1> Vendor Home screen </h1>')
+    res.sendFile(path.join(__dirname, '..', 'html', 'vendor', 'index.html'))
 }
 
 // set van status using location provided

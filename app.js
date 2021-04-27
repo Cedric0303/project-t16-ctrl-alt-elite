@@ -34,7 +34,10 @@ app.use('/vendor', vendorRouter)
 
 // project homescreen
 app.get('/', (req, res) => {
-	res.send('<h1>Ctrl-ALT-ELITE Project Home screen</h1>')
+	res.status(200)
+	res.write('<h1>Ctrl-ALT-ELITE Project Home screen</h1>')
+	res.write('<p><a href="/customer">Customer app</a></p>')
+	res.end('<p><a href="/vendor">Vendor app</a></p>')
 })
 
 // invalid routes
