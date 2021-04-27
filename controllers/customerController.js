@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const path = require('path')
 const bcrypt = require('bcrypt')
 const salt = 10
+const hour = 3600000
 
 // connect to database
 CONNECTION_STRING = "mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
@@ -93,8 +94,17 @@ const authLogin = async (req, res) => {
         if (user != null) {
             const valid = await bcrypt.compare(pw, user.password)
             if (user && valid) {
+                await db.db.collection('customer').findOneAndUpdate({
+                    loginID: email
+                }, { 
+                    $set:{
+                        sessionID : req.sessionID,
+                        expiryDate : new Date(Date.now() + hour)
+                    }
+                })
                 req.session.loggedin = true;
                 req.session.username = email;
+                req.session.cookie.maxAge = hour;
                 res.redirect('/customer/menu/');
             }
             else {
