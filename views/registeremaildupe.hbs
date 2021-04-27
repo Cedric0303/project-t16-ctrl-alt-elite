@@ -1,0 +1,24 @@
+<script src="/js/registerformcheck.js"></script>
+<div id="loginforms" class="centerflex">
+    <h1 id="logintitle"><i>Snacks<br class="responsive"> in a Van</i></h1>
+    <form action="" id="login_form" method="post">
+        <div id="loginerror">An account with this email already exists!</div>
+        <label for="email">Enter Your Email<sup>&ast;</sup></label><br>
+        <input type="email" class="loginfield" name="email" onkeyup="checkform(form);" required><br>
+        <label for="password">Create a Password<sup>&ast;</sup></label><br>
+        <input type="password" class="loginfield" id="password" name="password" onkeyup="check_pass(); checkform(form);" required><br>
+        <label for="confirm_password">Confirm Password<sup>&ast;</sup></label><br>
+        <input type="password" class="loginfield" id="confirm_password" name="confirm_password" onkeyup="check_pass(); checkform(form);" required><br>
+        <div id="pwmatcherror">Passwords must be matching.<br></div>
+        <label for="firstName">First Name (Or Preferred Name)<sup>&ast;</sup></label><br>
+        <input type="text" class="loginfield" name="firstName" onkeyup="checkform(form);" required><br>
+        <label for="lastName">Last Name<sup>&ast;</sup></label><br>
+        <input type="text" class="loginfield" name="lastName" onkeyup="checkform(form);" required><br>
+        <div id="formnotfill">Please fill out all fields.<br></div>
+        <input type="submit" id="loginbutton" value="Create Account" disabled>
+    </form>
+    <div id="createacc">
+        Already have an account?<br>
+        <a href="/customer/login">Sign In</a>
+    </div>
+</div>
