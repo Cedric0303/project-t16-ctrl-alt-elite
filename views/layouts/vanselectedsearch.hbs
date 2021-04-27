@@ -12,22 +12,28 @@
 </head>
 
 <body>
-    <div class="navbar">
-        <ul>
-            <li><a href=""><i id="navicon" class="fas fa-home"></i><br class="responsive"> Home</a></li>
-            <li><a href="/customer/orders"><i id="navicon" class="fas fa-clipboard-list"></i><br class="responsive"> Orders</a></li>
-            <li><a href=""><i id="navicon" class="fas fa-user"></i><br class="responsive"> Profile</a></li>
-        </ul>
-    </div>
-    <div class="vanfloat">
-        <div id="vanfloatleft">
-            <p>CURRENTLY ORDERING FROM</p>
-            <h3>{{van.vanName}}</h3>
-            <h4>{{van.address}}</h4>
-            <h5><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;DISTANCE</h5>
+    <div class="sticky">
+        <div class="navbar">
+            <ul>
+                <li><a href=""><i id="navicon" class="fas fa-home"></i><br class="responsive"> Home</a></li>
+                <li><a href="/customer/orders"><i id="navicon" class="fas fa-clipboard-list"></i><br class="responsive"> Orders</a></li>
+                <li><a href=""><i id="navicon" class="fas fa-user"></i><br class="responsive"> Profile</a></li>
+            </ul>
         </div>
-        <div id="vanfloatright">
-            <a href="">Change Truck</a>
+        <div class="vanfloat">
+            <div id="vanfloatleft">
+                <p>CURRENTLY ORDERING FROM</p>
+                <h3>{{van.vanName}}</h3>
+                <h4>{{van.address}}</h4>
+                <h5><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;DISTANCE</h5>
+            </div>
+            <div id="vanfloatright">
+                <a href="">Change Truck</a>
+            </div>
+        </div>
+        <div class="searchmenu">
+            <p>Search</p>
+            <input type="text" id="searchbar">
         </div>
     </div>
     <main>

@@ -68,14 +68,19 @@ sup {
 #navicon {
     font-size: 1.3em;
 }
+
+/* sticky to top */
+.sticky {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+
 /* -----------van selected float------------- */
 .vanfloat {
     overflow: hidden;
-    position: -webkit-sticky; /* Safari */
-    position: sticky;
     box-sizing: border-box;
-    top: 0;
-    z-index: 99;
 
     background-color: #ffffff;
     padding: 1.6vh 4vw 1.3vh 8vw;
@@ -145,6 +150,31 @@ sup {
     color: #ffffff;
     justify-content: center;
     align-items: center;
+}
+/* -------- menu search bar ------------- */
+.searchmenu {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 2vh 4vw;
+    background-color: #cde9fc;
+}
+
+.searchmenu p {
+    font-weight: 600;
+    margin-right: 2vw;
+}
+
+.searchmenu input {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 2px;
+    width: 60vw;
+    min-width: 120px;
+    padding: 0.4vh 4px;
+    box-sizing: border-box;
 }
 
 /* --------------------login page---------------------- */
@@ -272,6 +302,18 @@ sup {
     text-decoration: underline;
     
 }
+/* -------------menu page-------------- */
+#menu {
+    margin: 0 10vw;
+    padding: 0;
+    column-count: 2;
+    text-align: center;
+}
+
+#menu li {
+    list-style-type: none;
+}
+
 /* --------------responsive------------------ */
 @media screen and (min-width: 1000px) {
     .responsive {
