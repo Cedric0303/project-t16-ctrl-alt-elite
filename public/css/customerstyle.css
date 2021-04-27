@@ -151,6 +151,10 @@ sup {
     justify-content: center;
     align-items: center;
 }
+
+.vanfloat a:hover {
+    background-color: #7ca7f1;
+}
 /* -------- menu search bar ------------- */
 .searchmenu {
     overflow: hidden;
