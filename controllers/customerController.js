@@ -127,6 +127,17 @@ const addCustomer = async (req, res) => {
     res.redirect('/customer/login');
 }
 
+const getOrders = async (req, res) => {
+    const result = await db.db.collection('order').find({
+        "customerID": req.body.loginID
+    }).project({}).toArray()
+    if (result) {
+        res.send(result)
+    } else {
+        res.send("ERROR")
+    }
+}
+
 module.exports = {
     getCustomerHome,
     getMenu,
@@ -136,5 +147,6 @@ module.exports = {
     // getLoginError,
     authLogin,
     getRegister,
-    addCustomer
+    addCustomer,
+    getOrders
 }

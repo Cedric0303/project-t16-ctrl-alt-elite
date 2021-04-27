@@ -28,4 +28,6 @@ customerRouter.get('/register', customerController.getRegister)
 
 customerRouter.post('/register', customerController.addCustomer)
 
+customerRouter.get('/orders', customerController.getOrders)
+
 module.exports = customerRouter
