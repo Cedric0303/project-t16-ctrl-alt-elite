@@ -18,9 +18,10 @@ customerRouter.get('/menu/:name', customerController.getFoodDetails)
 // create a new order and add a specified food into the order
 customerRouter.post('/menu/:name', customerController.addFoodToOrder)
 
-customerRouter.get('/login', customerController.getLogin)
+// get food items from the database and also information of selected van
+customerRouter.get('/:vanId/menu', customerController.getMenuVan)
 
-// customerRouter.get('/loginerror', customerController.getLoginError)
+customerRouter.get('/login', customerController.getLogin)
 
 customerRouter.post('/auth', customerController.authLogin)
 

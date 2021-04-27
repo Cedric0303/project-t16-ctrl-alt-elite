@@ -38,6 +38,29 @@ const getMenu = async (req, res) => {
     }
 }
 
+const getMenuVan = async (req, res) => {
+    const menu = await db.db.collection('food').find({}).project({
+        "_id": false
+    }).toArray()
+    const vendorinfo = await db.db.collection('vendor').findOne({
+        loginID: req.params.vanId
+    }, {
+        projection: {
+            "_id": false,
+            "password": false
+        }
+    })
+    .catch(e => console.err(e))
+    if (menu && vendorinfo) {
+        res.render('menu', {
+            "menu":menu, // passing menu array as "menu"
+            "van":vendorinfo, // passing selected vendor info json object as "van"
+            layout: 'vanselected'})
+    } else {
+        res.send('<h1> Error getting menu and/or vendor </h1>')
+    }
+}
+
 // return information for a given food item
 const getFoodDetails = async (req, res) => {
     const result = await db.db.collection('food').findOne({
@@ -143,6 +166,7 @@ const getOrders = async (req, res) => {
 module.exports = {
     getCustomerHome,
     getMenu,
+    getMenuVan,
     getFoodDetails,
     addFoodToOrder,
     getLogin,

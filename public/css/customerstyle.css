@@ -66,6 +66,12 @@ sup {
 #navicon {
     font-size: 1.3em;
 }
+/* -----------van selected float------------- */
+.vanfloat {
+    background-color: #803535;
+    
+}
+
 /* --------------------login page---------------------- */
 .centerflex {
     display: flex;
