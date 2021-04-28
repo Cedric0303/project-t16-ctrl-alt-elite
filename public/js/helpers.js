@@ -9,6 +9,7 @@ var register = function(Handlebars) {
                 ret = ret + "<li>" +  "<a href=\"/customer/menu/" + 
                 menu_link + "\">" + menu[i].name + "</li>"
             }
+            return ret + "</ul>"
         }
     };
 
