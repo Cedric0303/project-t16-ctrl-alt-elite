@@ -10,13 +10,13 @@
             <p>${{this.price}}</p>
             {{!-- https://stackoverflow.com/questions/45396280/customizing-increment-arrows-on-input-of-type-number-using-css/45396364 --}}
             <div class="number-input">
-                <a onclick="this.parentNode.querySelector('input[type=number]').stepDown()" >
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown();preventDefault();" >
                     <i class="fas fa-minus-circle"></i>
-                </a>
+                </button>
                 <input name={{this.name}} type="number" value="0" min="0" max="99">
-                <a onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp();preventDefault();">
                     <i class="fas fa-plus-circle"></i>
-                </a>
+                </button>
             </div>
         </div>
     </li>
