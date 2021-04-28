@@ -42,14 +42,6 @@ const getMenuVan = async (req, res) => {
     const menu = await db.db.collection('food').find({}).project({
         "_id": false
     }).toArray()
-    // if (menu) {
-    //     var i;
-    //     for (i=0; i<menu.length;i++) {
-    //         menu[i].name = menu[i].name.replace("_", " ");
-    //     }
-    // } else {
-    //     res.send('<h1> Error getting menu </h1>')
-    // }
     const vendorinfo = await db.db.collection('vendor').findOne({
         loginID: req.params.vanId
     }, {
@@ -65,7 +57,7 @@ const getMenuVan = async (req, res) => {
             "van":vendorinfo, // passing selected vendor info json object as "van"
             layout: 'vanselectedsearch'})
     } else {
-        res.send('<h1> Error getting vendor info </h1>')
+        res.send('<h1> Error getting vendor/menu info </h1>')
     }
 }
 
