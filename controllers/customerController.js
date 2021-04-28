@@ -42,14 +42,14 @@ const getMenuVan = async (req, res) => {
     const menu = await db.db.collection('food').find({}).project({
         "_id": false
     }).toArray()
-    if (menu) {
-        var i;
-        for (i=0; i<menu.length;i++) {
-            menu[i].name = menu[i].name.replace("_", " ");
-        }
-    } else {
-        res.send('<h1> Error getting menu </h1>')
-    }
+    // if (menu) {
+    //     var i;
+    //     for (i=0; i<menu.length;i++) {
+    //         menu[i].name = menu[i].name.replace("_", " ");
+    //     }
+    // } else {
+    //     res.send('<h1> Error getting menu </h1>')
+    // }
     const vendorinfo = await db.db.collection('vendor').findOne({
         loginID: req.params.vanId
     }, {
@@ -122,7 +122,7 @@ const authLogin = async (req, res) => {
             const valid = await bcrypt.compare(pw, user.password)
             if (user && valid) {
                 await db.db.collection('customer').findOneAndUpdate({
-                    loginID: email
+                    loginID: user.loginID
                 }, { 
                     $set:{
                         sessionID : req.sessionID,
