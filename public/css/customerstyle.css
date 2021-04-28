@@ -308,17 +308,63 @@ sup {
 }
 /* -------------menu page-------------- */
 #menu {
+    display: grid;
     margin: 0 10vw;
     padding: 0;
-    column-count: 2;
+    grid-template-columns: repeat(2, 1fr);
     text-align: center;
+
+    gap: 2vw 5vw;
 }
 
 #menu li {
+    display: inline-block;
     list-style-type: none;
+    vertical-align: top;
+    text-align: center;
 }
 
-/* --------------responsive------------------ */
+#menuitem {
+    text-align: center;
+}
+
+#menuitem a {
+    font-weight: 600;
+    color: #000000;
+}
+
+#menuitem img {
+    width: 100%;
+    height: 15vh;
+    object-fit: cover;
+}
+
+.numberinput {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#menuitem input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+
+    border: none;
+    background: none;
+    text-align: center;
+    width: 2em;
+    font-family: "Roboto", sans-serif;
+    font-size: 1em;
+    font-weight: 300;
+}
+
+#menuitem input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+/* --------------responsive landscape tablet view ~1000px------------------ */
 @media screen and (min-width: 1000px) {
     .responsive {
         display: none;
@@ -331,5 +377,16 @@ sup {
     .vanfloat a {
         font-size: 1em;
         padding: 1vh 2vw;
+    }
+
+    #menu {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ------------responsive desktop fullscreen browser ~1500px------------- */
+@media screen and (min-width: 1500px) {
+    #menu {
+        grid-template-columns: repeat(4, 1fr);
     }
 }

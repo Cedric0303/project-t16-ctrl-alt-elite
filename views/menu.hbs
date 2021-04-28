@@ -1,7 +1,24 @@
 <ul id="menu">
     {{#each menu}}
     <li>
-        <a href="/customer/menu/{{this.name}}">{{#removeunderscore this.name}}{{/removeunderscore}}</a>
+        <div id="menuitem">
+            <a href="/customer/menu/{{this.name}}">
+            <img src="https://source.unsplash.com/{{this.image}}" 
+                alt="Photo of {{#removeunderscore this.name}}{{/removeunderscore}}">
+            {{#removeunderscore this.name}}{{/removeunderscore}}
+            </a>
+            <p>${{this.price}}</p>
+            {{!-- https://stackoverflow.com/questions/45396280/customizing-increment-arrows-on-input-of-type-number-using-css/45396364 --}}
+            <div class="number-input">
+                <a onclick="this.parentNode.querySelector('input[type=number]').stepDown()" >
+                    <i class="fas fa-minus-circle"></i>
+                </a>
+                <input name={{this.name}} type="number" value="0" min="0" max="99">
+                <a onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                    <i class="fas fa-plus-circle"></i>
+                </a>
+            </div>
+        </div>
     </li>
     {{/each}}
 </ul>
