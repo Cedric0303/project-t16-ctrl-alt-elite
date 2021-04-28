@@ -1,11 +1,19 @@
+<ul id="categories">
+    {{#each menucat}}
+        <li>
+            {{this.category}}
+        </li>
+    {{/each}}
+</ul>
+
 <ul id="menu">
     {{#each menu}}
     <li>
-        <div id="menuitem">
+        <div id="menuitem" class="{{this.category}}">
             <a href="/customer/menu/{{this.name}}">
-            <img src="https://source.unsplash.com/{{this.image}}" 
+                <img src="https://source.unsplash.com/{{this.image}}" 
                 alt="Photo of {{#removeunderscore this.name}}{{/removeunderscore}}">
-            {{#removeunderscore this.name}}{{/removeunderscore}}
+                <span>{{#removeunderscore this.name}}{{/removeunderscore}}</span>
             </a>
             <p>${{this.price}}</p>
             {{!-- https://stackoverflow.com/questions/45396280/customizing-increment-arrows-on-input-of-type-number-using-css/45396364 --}}

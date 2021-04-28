@@ -42,6 +42,9 @@ const getMenuVan = async (req, res) => {
     const menu = await db.db.collection('food').find({}).project({
         "_id": false
     }).toArray()
+    const menucategories = await db.db.collection('foodcategories').find({}).project({
+        "_id": false
+    }).toArray()
     const vendorinfo = await db.db.collection('vendor').findOne({
         loginID: req.params.vanId
     }, {
@@ -54,6 +57,7 @@ const getMenuVan = async (req, res) => {
     if (menu && vendorinfo) {
         res.render('menu', {
             "menu":menu, // passing menu array as "menu"
+            "menucat":menucategories, // passing menu categories array as "menucat""
             "van":vendorinfo, // passing selected vendor info json object as "van"
             layout: 'vanselectedsearch'})
     } else {
