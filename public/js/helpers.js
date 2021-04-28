@@ -2,13 +2,9 @@ var register = function(Handlebars) {
 
     var helpers = {
         // put all of your helpers inside this object
-        listmenu: function (menu) {
-            var ret = "<ul id=\"menu\">";
-            for (var i = 0; i < menu.length; i++) {
-                var item_name =  menu[i].name.replace("_", " ");
-                ret = ret + "<li>" +  "<a href=\"/customer/menu/" + menu[i].name + "\">" + item_name + "</li>"
-            }
-            return ret + "</ul>"
+        removeunderscore: function (input) {
+            var newinput = input.replace("_", " ");
+            return newinput
         }
     };
 
