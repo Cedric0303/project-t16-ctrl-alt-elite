@@ -144,14 +144,20 @@ const getRegister = async (req, res) => {
 }
 
 const addCustomer = async (req, res) => {
-    const hash_pw = await bcrypt.hash(req.body.password, salt)
-    await db.db.collection('customer').insertOne({
-        nameGiven: req.body.firstName,
-        nameFamily: req.body.lastName,
-        loginID: req.body.email,
-        password: hash_pw
-    })
-    res.redirect('/customer/login');
+    // if email does not exist in database, then add an account, if not render dupe account handlebar
+    const user = await db.db.collection('customer').findOne({loginID: req.body.email});
+    if (user == null) {
+        const hash_pw = await bcrypt.hash(req.body.password, salt)
+        await db.db.collection('customer').insertOne({
+            nameGiven: req.body.firstName,
+            nameFamily: req.body.lastName,
+            loginID: req.body.email,
+            password: hash_pw
+        })
+        res.redirect('/customer/login');
+    } else {
+        res.render('registeremaildupe');
+    }
 }
 
 const getOrders = async (req, res) => {

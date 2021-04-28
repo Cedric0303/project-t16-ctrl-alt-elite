@@ -197,7 +197,7 @@ sup {
     font-size: 1.3em;
     text-transform: uppercase;
     padding-top: 15vh;
-    padding-bottom: 3vh;
+    padding-bottom: 2vh;
 }
 
 #login_form label {
@@ -223,9 +223,15 @@ sup {
     font-size: 0.8em;
 }
 
-/* error text for email/pw incorrect/duplicate */
+/* error text for email/pw incorrect */
 #loginerror {
     color: #d83200;
+}
+/* error text for dupe acc */
+#dupeerror {
+    color: #d83200;
+    margin-bottom: 1vh;
+    font-size: 0.9em;
 }
 
 /* error text for when password and confirm password dont match */
