@@ -30,11 +30,8 @@ sup {
 /* --------------navigation bar-------------- */
 .navbar {
     overflow: hidden;
-    position: fixed;
-    bottom: 0;
     width: 100%;
     background-color: #ffffff;
-    z-index: 99;
 }
 
 .navbar ul {
@@ -71,11 +68,33 @@ sup {
 }
 
 /* sticky to top */
-.sticky {
+.stickytop {
     position: -webkit-sticky; /* Safari */
     position: sticky;
     top: 0;
     z-index: 99;
+}
+
+.fixedbot {
+    position: fixed;
+    bottom: 0;
+    z-index: 99;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+/* --------------cart float--------------- */
+.cart {
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0;
+
+    background-color: #e4e4e4;
+
+    display: grid;
+    grid-template-columns: auto auto;
+
+    justify-content: space-evenly;
 }
 
 /* -----------van selected float------------- */

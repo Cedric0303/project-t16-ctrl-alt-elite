@@ -59,7 +59,7 @@ const getMenuVan = async (req, res) => {
             "menu":menu, // passing menu array as "menu"
             "menucat":menucategories, // passing menu categories array as "menucat""
             "van":vendorinfo, // passing selected vendor info json object as "van"
-            layout: 'vanselectedsearch'})
+            layout: 'vanselectedsearchcart'})
     } else {
         res.send('<h1> Error getting vendor/menu info </h1>')
     }
