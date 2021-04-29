@@ -1,7 +1,7 @@
 <ul id="categories">
     {{#each menucat}}
         <li>
-            <input type="checkbox" name="catcheck" id="{{this.category}}" onclick="filterMenu(this)">
+            <input type="checkbox" name="catcheck" id="{{this.category}}">
             <label class="catbutton" for="{{this.category}}">
                 <span id="caticon"><i class="{{this.icon}}"></i></span>
                 {{this.category}}
