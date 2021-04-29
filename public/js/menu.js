@@ -38,11 +38,30 @@ function filterMenu() {
     }
 }
 
+// expand/collapse cart
+function toggleCart() {
+    cartcontainer = document.getElementById('cartcontainer');
+    // if cart is expanded
+    if (cartcontainer.style.height == '30vh') {
+        // collapse cart
+        cartcontainer.style.height = 'initial';
+        // hide cart contents
+        document.getElementById('cart').style.display = 'none';
+    } else {
+        // expand cart
+        cartcontainer.style.height = '30vh';
+        // show cart contents
+        document.getElementById('cart').style.display = 'grid';
+    }
+}
+
 // register events to elements
 categoryCheckboxes = document.getElementsByName('catcheck');
 for (var i=0; i < categoryCheckboxes.length; i++) {
     categoryCheckboxes[i].addEventListener("click", filterMenu, false);
 }
+
+document.getElementById('vcartbutton').addEventListener("click", toggleCart, false)
 
 // run the filter on load
 filterMenu()
