@@ -317,6 +317,7 @@ sup {
 #categories {
     display: flex;
     flex-direction: row;
+    overflow-x: auto;
     justify-content: center;
     list-style-type: none;
     margin: 0 0 1em;
