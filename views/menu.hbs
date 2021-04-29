@@ -1,15 +1,18 @@
 <ul id="categories">
     {{#each menucat}}
         <li>
-            {{this.category}}
+            <input type="checkbox" name="catcheck" id="{{this.category}}" onclick="filterMenu(this)">
+            <label class="catbutton" for="{{this.category}}">
+                <span id="caticon"><i class="{{this.icon}}"></i></span>
+                {{this.category}}
+            </label>
         </li>
     {{/each}}
 </ul>
-
 <ul id="menu">
     {{#each menu}}
-    <li>
-        <div id="menuitem" class="{{this.category}}">
+    <li class="{{this.category}} menuitemcontainer">
+        <div id="menuitem">
             <a href="/customer/menu/{{this.name}}">
                 <img src="https://source.unsplash.com/{{this.image}}" 
                 alt="Photo of {{#removeunderscore this.name}}{{/removeunderscore}}">
@@ -30,3 +33,4 @@
     </li>
     {{/each}}
 </ul>
+<script src="/js/menu.js"></script>
