@@ -47,11 +47,15 @@ function toggleCart() {
         cartcontainer.style.height = 'initial';
         // hide cart contents
         document.getElementById('cart').style.display = 'none';
+        // change view cart button to 'view cart' 
+        document.getElementById('vcartbutton').innerHTML = 'View Cart';
     } else {
         // expand cart
         cartcontainer.style.height = '30vh';
         // show cart contents
         document.getElementById('cart').style.display = 'grid';
+        // change view cart button to 'close cart'
+        document.getElementById('vcartbutton').innerHTML = 'Hide Cart';
     }
 }
 

@@ -105,13 +105,14 @@ sup {
     overflow-y: auto;
 
     display: none;
+    /* when expanded, display: grid */
 }
 
 .cartbuttons {
     grid-area: "buttons";
     align-self: flex-end;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     justify-content: space-between;
     margin-top: 1vh;
 }
@@ -121,16 +122,21 @@ sup {
     border-radius: 50px;
     border: none;
     height: 100%;
-    padding: 1vh max(3vw,25px);
+    padding: 1vh 0;
+    width: 30vw;
+    min-width: 110px;
+    max-width: 150px;
+    white-space: nowrap;
     text-decoration: none;
     font-family: "Nunito", sans-serif;
     font-size: 1em;
+    text-align: center;
 }
 
 #vcartbutton {
+    justify-self: left;
     background-color: #ffffff;
     font-weight: 400;
-    
 }
 
 #vcartbutton:hover {
@@ -139,6 +145,7 @@ sup {
 }
 
 #chkoutbutton {
+    justify-self: right;
     background-color: #5391f5;
     color: #ffffff;
     font-weight: 600;
@@ -457,7 +464,7 @@ sup {
     overflow: hidden;
     object-fit: cover;
     border-radius: 2vh;
-    transition: 0.2s all ease-in-out;
+    transition: all 0.2s ease-in-out;
     background-color: #ffffff;
 }
 
@@ -554,7 +561,7 @@ input[type=number]::-webkit-outer-spin-button {
     }
 
     #chkoutbutton {
-        margin-left: 5vw;
+        margin-left: 2vw;
     }
 }
 
