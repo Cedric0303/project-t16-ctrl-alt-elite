@@ -17,13 +17,15 @@ var geolocate = new mapboxgl.GeolocateControl({
 
 map.addControl(geolocate)
 
-var vans_array = JSON.parse(vans)
+var vans_array = vans
+console.log(vans_array)
 for (var van in vans_array) {
-    console.log(van_loc)
+    var latitude = van.latitude
+    var longitude = van.longitude
     var van_marker = new mapboxgl.Marker({
         color: '#FFFFFF'
         }) // initialize a new marker
-        .setLngLat([van.longitude, van.latitude]) // Marker [lng, lat] coordinates
+        .setLngLat([longitude, latitude]) // Marker [lng, lat] coordinates
         .addTo(map); // Add the marker to the map
 }
 
@@ -53,20 +55,20 @@ var marker = new mapboxgl.Marker({
     .setLngLat([144.95878, -37.7983416]) // Marker [lng, lat] coordinates
     .addTo(map); // Add the marker to the map
 
-function getNearestVans(vans) {
-    // var cur_loc = geolocate.trigger()
-    // var cur_loc = [144.95878, -37.7983416]
-    for (van in vans) {
-        console.log(van_loc)
-        new mapboxgl.Marker({
-            color: '#FFFFFF'
-            }) // initialize a new marker
-            .setLngLat([van.longitude, van.latitude]) // Marker [lng, lat] coordinates
-            .addTo(map); // Add the marker to the map
-    }
-}
+// function getNearestVans(vans) {
+//     // var cur_loc = geolocate.trigger()
+//     // var cur_loc = [144.95878, -37.7983416]
+//     for (van in vans) {
+//         console.log(van_loc)
+//         new mapboxgl.Marker({
+//             color: '#FFFFFF'
+//             }) // initialize a new marker
+//             .setLngLat([van.longitude, van.latitude]) // Marker [lng, lat] coordinates
+//             .addTo(map); // Add the marker to the map
+//     }
+// }
 
 // map.on('load', function() {
 //     geolocate.trigger(); //<- Automatically activates geolocation
 //   });
-getNearestVans(vans);
+// getNearestVans(vans);
