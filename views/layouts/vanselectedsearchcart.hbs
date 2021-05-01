@@ -32,14 +32,26 @@
     <div class="fixedbot">
         <div id="cartcontainer">
             <div id="cart">
-                <div>blah</div>
+                <div class="cartitem">
+                    <div class="itemname">Long Black</div>
+                    <div class="itemquant number-input">
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown();preventDefault();" >
+                            <i class="fas fa-minus-circle"></i>
+                        </button>
+                        <input type="number" value="0" min="0" max="99">
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp();preventDefault();">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
+                    <div class="itemprice">$4.50</div>
+                </div>
+                <div class="carttotal">Order Total: $4.50</div>
             </div>
             <div class="cartbuttons">
-                <button id="vcartbutton" class="cartbutton">View Cart</button>
+                <button id="vcartbutton" class="cartbutton">Cart&nbsp;(<span class="cart-count"></span>)</button>
                 <button id="chkoutbutton" class="cartbutton">Checkout</button>
             </div>
         </div>
-        
         <div class="navbar">
             <ul>
                 <li><a href="/customer"><i id="navicon" class="fas fa-home"></i>Home</a></li>

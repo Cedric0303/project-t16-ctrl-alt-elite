@@ -106,7 +106,32 @@ sup {
 
     display: none;
     /* when expanded, display: grid */
+    grid-template-rows: auto min-content;
+    grid-template-areas:
+        "cartitem"
+        "carttotal";
 }
+.cartitem {
+    grid-area: "cartitem";
+    height: min-content;
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: 0.4fr 0.4fr 0.2fr;
+    grid-template-areas: 
+        "itemname itemquant itemprice";
+}
+.carttotal {
+    grid-area: "carttotal";
+    text-align: end;
+}
+.itemname { grid-area: "itemname" }
+.itemquant { grid-area: "itemquant" }
+.itemprice {
+    grid-area: "itemprice";
+    text-align: center;
+}
+
 
 .cartbuttons {
     grid-area: "buttons";
@@ -491,7 +516,7 @@ sup {
     filter: invert(0.4);
 }
 
-#menuitem input[type="number"] {
+.number-input input[type="number"] {
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
     appearance: textfield;
