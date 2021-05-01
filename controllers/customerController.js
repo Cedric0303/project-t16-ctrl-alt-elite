@@ -23,7 +23,12 @@ db.once('open', () => {
 
 // return default customer homescreen
 const getCustomerHome = async (req, res) => {
+    const vans = await db.db.collection('vendor').find({}).project({
+        "_id": false,
+        "password": false
+    })
     res.render('home', {
+        "vans": vans,
         layout: 'home_main'})
 }
 

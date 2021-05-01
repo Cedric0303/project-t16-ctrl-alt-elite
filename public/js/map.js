@@ -1,14 +1,72 @@
-var mymap = L.map('map').setView([-37.8029981, 144.9561669], 15);
-        
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-    maxZoom: 18,
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    id: 'mapbox/streets-v11',
-    maxZoom: 18,
-    tileSize: 512,
-    zoomOffset: -1,
-}).addTo(mymap);
-// mymap.locate({setView: true, maxZoom: 16, enableHighAccuracy: true});
+mapboxgl.accessToken = 'pk.eyJ1IjoianVubGljIiwiYSI6ImNrbzVpY3psNjAzODMydnBiYWVycXd2cDIifQ.sEdF7QZVuor4EbMa3hWdfA'
 
-var marker = L.marker([-37.8029981, 144.9561669]).addTo(mymap);
-marker.bindPopup("<b>Hello world!</b><br>I am a marker.");
+var map = new mapboxgl.Map({
+    container: 'map', // container ID
+    style: 'mapbox://styles/mapbox/streets-v11', // style URL
+    center: [144.95878, -37.7983416], // starting position [lng, lat]
+    zoom: 14 // starting zoom
+});
+
+var geolocate = new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: false
+      },
+      trackUserLocation: true,
+      showAccuracyCircle: false
+    });
+
+map.addControl(geolocate)
+
+var vans_array = JSON.parse(vans)
+for (var van in vans_array) {
+    console.log(van_loc)
+    var van_marker = new mapboxgl.Marker({
+        color: '#FFFFFF'
+        }) // initialize a new marker
+        .setLngLat([van.longitude, van.latitude]) // Marker [lng, lat] coordinates
+        .addTo(map); // Add the marker to the map
+}
+
+// var map = new mapboxgl.Map({
+//     container: 'map',
+//     style: "https://api.jawg.io/styles/jawg-streets.json?access-token=WNOUDThn1YkriWZNGrnIqTGPSf40C2FkPsYJ1anAcEAcjBHopzZfVO0OddI9bRLI",
+//     zoom: 14,
+//     center: [144.95878, -37.7983416]
+// });
+// mapboxgl.setRTLTextPlugin(
+//   "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js"
+// );
+
+
+// var geocoder = new MapboxGeocoder({ // Initialize the geocoder
+//     accessToken: mapboxgl.accessToken, // Set the access token
+//     mapboxgl: mapboxgl, // Set the mapbox-gl instance
+//     marker: true, // Do not use the default marker style
+//   });
+  
+//   // Add the geocoder to the map
+//   map.addControl(geocoder);
+
+var marker = new mapboxgl.Marker({
+    color: '#000000'
+    }) // initialize a new marker
+    .setLngLat([144.95878, -37.7983416]) // Marker [lng, lat] coordinates
+    .addTo(map); // Add the marker to the map
+
+function getNearestVans(vans) {
+    // var cur_loc = geolocate.trigger()
+    // var cur_loc = [144.95878, -37.7983416]
+    for (van in vans) {
+        console.log(van_loc)
+        new mapboxgl.Marker({
+            color: '#FFFFFF'
+            }) // initialize a new marker
+            .setLngLat([van.longitude, van.latitude]) // Marker [lng, lat] coordinates
+            .addTo(map); // Add the marker to the map
+    }
+}
+
+// map.on('load', function() {
+//     geolocate.trigger(); //<- Automatically activates geolocation
+//   });
+getNearestVans(vans);
