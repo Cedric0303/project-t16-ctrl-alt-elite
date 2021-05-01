@@ -72,13 +72,13 @@ sup {
     position: -webkit-sticky; /* Safari */
     position: sticky;
     top: 0;
-    z-index: 99;
+    z-index: 9999;
 }
 
 .fixedbot {
     position: fixed;
     bottom: 0;
-    z-index: 99;
+    z-index: 9999;
     margin: 0;
     padding: 0;
     width: 100%;
