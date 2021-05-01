@@ -23,7 +23,8 @@ db.once('open', () => {
 
 // return default customer homescreen
 const getCustomerHome = async (req, res) => {
-    res.send('<h1> Customer Home screen </h1>')
+    res.render('home', {
+        layout: 'home_main'})
 }
 
 // get food items from the database and return it

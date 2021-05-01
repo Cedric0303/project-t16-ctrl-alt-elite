@@ -511,10 +511,6 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
 }
 
-.responsive {
-    height: 0;
-    width: 0;
-}
 
 /* --------------responsive landscape tablet view ~1000px------------------ */
 @media screen and (min-width: 1000px) {
