@@ -18,10 +18,9 @@ var geolocate = new mapboxgl.GeolocateControl({
 map.addControl(geolocate)
 
 var vans_array = vans
-console.log(vans_array)
 for (var van in vans_array) {
-    var latitude = van.latitude
-    var longitude = van.longitude
+    var latitude = vans_array[van].latitude
+    var longitude = vans_array[van].longitude
     var van_marker = new mapboxgl.Marker({
         color: '#FFFFFF'
         }) // initialize a new marker

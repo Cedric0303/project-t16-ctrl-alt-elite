@@ -5,6 +5,10 @@ var register = function(Handlebars) {
         removeunderscore: function (input) {
             var newinput = input.replace("_", " ");
             return newinput
+        },
+        // https://stackoverflow.com/questions/10232574/handlebars-js-parse-object-instead-of-object-object
+        json: function (context) {
+            return JSON.stringify(context);
         }
     };
 
