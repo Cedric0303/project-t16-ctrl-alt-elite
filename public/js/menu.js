@@ -59,6 +59,9 @@ function toggleCart() {
     }
 }
 
+// shopping cart --------------------------
+
+
 // register events to elements
 categoryCheckboxes = document.getElementsByName('catcheck');
 for (var i=0; i < categoryCheckboxes.length; i++) {

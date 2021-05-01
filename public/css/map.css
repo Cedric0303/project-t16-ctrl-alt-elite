@@ -1,8 +1,9 @@
-body {
-    padding: 0;
-    margin: 0;
+#map {
+    height: calc(100vh - 4.9em);
 }
-html, body, #map {
-    height: 98.3%;
-    width: 100vw;
+
+@media screen and (min-width: 1000px) {
+    #map {
+        height: calc(100vh - 3.3em);
+    }
 }
