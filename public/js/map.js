@@ -38,6 +38,7 @@ function createMap() {
       trackUserLocation: true,
       showAccuracyCircle: false
     });
+    map.addControl(new mapboxgl.AttributionControl(), 'top-left');
     return {map, geolocate};
 }
 
