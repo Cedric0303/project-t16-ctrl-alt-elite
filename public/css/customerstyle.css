@@ -102,18 +102,29 @@ sup {
 
 #cart {
     grid-area: "cart";
-    overflow-y: auto;
-
+    height: 100%;
+    
     display: none;
-    /* when expanded, display: grid */
+    /* display:grid when cart expanded */
     grid-template-rows: auto min-content;
-    grid-template-areas:
-        "cartitem"
+    grid-template-areas: 
+        "cartlist"
         "carttotal";
+}
+
+#cartlist {
+    grid-area: "cartlist";
+    overflow-y: auto;
+    height: 100%;
+
+    display: grid;
+    row-gap: 0.5vh;
+    grid-template-rows: min-content;
 }
 .cartitem {
     grid-area: "cartitem";
     height: min-content;
+    padding: 0;
 
     display: grid;
     align-items: center;
