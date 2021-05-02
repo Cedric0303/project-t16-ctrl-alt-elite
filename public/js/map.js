@@ -11,7 +11,7 @@ function distance([long1, lat1], [long2, lat2]) {
     lat1 = toRad(lat1);
     lat2 = toRad(lat2);
 
-    // harvesine formula
+    // harvesine distance formula
     const a =
     Math.pow(Math.sin(dLat / 2), 2) +
     Math.pow(Math.sin(dLong / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
@@ -38,13 +38,23 @@ function createMap() {
       trackUserLocation: true,
       showAccuracyCircle: false
     });
+    map.addControl(new mapboxgl.AttributionControl(), 'top-left');
     return {map, geolocate};
 }
 
 function createLocationMarker() {
-    return new mapboxgl.Marker({color: '#000000'}) 
-            .setLngLat(map.getCenter()) // Marker [lng, lat] coordinates
-            .addTo(map)
+    var pos = map.getCenter()
+    return new mapboxgl.Marker({
+        color: '#000000',
+        draggable: true
+    }) 
+    .setLngLat([pos.lng, pos.lat]) // Marker [lng, lat] coordinates
+    .setPopup(new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: true,
+        closeOnMove: true,
+    }).setHTML("Current location:<br>" + pos.lng.toString() + " " + pos.lat.toString()))
+    .addTo(map)
 }
 
 function createVanMarker(points) {
@@ -57,7 +67,12 @@ function createVanMarker(points) {
         var lat = points[i][0].latitude
         vanMarkers.push([
             points[i][0],
-            new mapboxgl.Marker({color: '#65737D'}) 
+            new mapboxgl.Marker({color: '#65737D'})
+            .setPopup(new mapboxgl.Popup({
+                closeButton: false,
+                closeOnClick: true,
+                closeOnMove: false,
+            }).setHTML(long.toString() + " " + lat.toString() + '<br><a href="http://www.google.com">Visit Google</a>'))
             .setLngLat([long, lat]) // Marker [lng, lat] coordinates
             .addTo(map)]); // Add the marker to the map
     }
@@ -87,13 +102,22 @@ geolocate.on('geolocate', function() {
     setTimeout(function () {
         curPosition.remove();
         curPosition = createLocationMarker()}, 5000);
-        point_distance = createVanArray(map, curPosition, vans);
-        point_distance.sort((a, b) => (a[1] > b[1] ? 1: -1));
-        vanMarkers = createVanMarker(point_distance)
+        for (i in vanMarkers) {
+            vanMarkers[i][1].remove()
+        }
+        vanMarkers = []
+        vanMarkers = createMarkers(curPosition, vans)
         // curPosition = map.getCenter()
     });
 var curPosition = createLocationMarker()
 var vanMarkers = createMarkers(curPosition, vans)
+curPosition.on('dragend', function () {
+    for (i in vanMarkers) {
+        vanMarkers[i][1].remove()
+    }
+    vanMarkers = []
+    vanMarkers = createMarkers(curPosition, vans)
+})
 
 // map.on('load', function() {
 //     geolocate.trigger(); //<- Automatically activates geolocation
@@ -121,13 +145,3 @@ var vanMarkers = createMarkers(curPosition, vans)
 // mapboxgl.setRTLTextPlugin(
 //   "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js"
 // );
-
-
-// var geocoder = new MapboxGeocoder({ // Initialize the geocoder
-//     accessToken: mapboxgl.accessToken, // Set the access token
-//     mapboxgl: mapboxgl, // Set the mapbox-gl instance
-//     marker: true, // Do not use the default marker style
-//   });
-  
-//   // Add the geocoder to the map
-//   map.addControl(geocoder);
