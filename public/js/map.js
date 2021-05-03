@@ -72,7 +72,7 @@ function createVanMarker(points) {
                 closeButton: false,
                 closeOnClick: true,
                 closeOnMove: false,
-            }).setHTML(long.toString() + " " + lat.toString() + '<br><a href="http://www.google.com">Visit Google</a>'))
+            }).setHTML(long.toString() + " " + lat.toString() + '<br><a href="/customer/' + points[i][0].loginID +'/menu">Select Van</a>'))
             .setLngLat([long, lat]) // Marker [lng, lat] coordinates
             .addTo(map)]); // Add the marker to the map
     }
