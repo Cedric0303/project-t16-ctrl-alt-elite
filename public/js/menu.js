@@ -39,6 +39,7 @@ function filterMenu() {
 }
 
 // shopping cart api--------------------------
+// based off of "Shopping cart JS" by Burlaka Dmytro (https://codepen.io/Dimasion/pen/oBoqBM)
 var shoppingCart = (function () {
     // ---------------------
     // private methods
