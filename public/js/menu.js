@@ -167,7 +167,8 @@ var shoppingCart = (function () {
         return cartCopy;
     }
 
-    // empties cart
+    // empties cart, for development purposes, can be accessed in console via shoppingCart.clearCart()
+    // this function is not registered to event listeners, should be commented out for deployment to prevent accidents
     obj.clearCart = function() {
         cart = [];
         saveCart();
