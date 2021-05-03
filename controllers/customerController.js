@@ -186,13 +186,14 @@ const getOrders = async (req, res) => {
         }).project({}).sort({"timestamp": -1}).toArray()
         if (orders) {
             res.render('orders', {
-                "orders": orders // passing orders from db into orders.hbs as orders
+                "orders": orders, // passing orders from db into orders.hbs as orders
+                layout: 'orderspage'
             })
         } else {
             res.send("ERROR")
         }
     } else {
-        res.redirect('/customer/login');
+        res.render('notloggedin');
     }
 }
 
