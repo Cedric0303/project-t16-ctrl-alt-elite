@@ -39,6 +39,7 @@ function filterMenu() {
 }
 
 // shopping cart api--------------------------
+// based off of "Shopping cart JS" by Burlaka Dmytro (https://codepen.io/Dimasion/pen/oBoqBM)
 var shoppingCart = (function () {
     // ---------------------
     // private methods
@@ -55,15 +56,16 @@ var shoppingCart = (function () {
 
     // save cart in local storage
     function saveCart() {
-        localStorage.setItem('shoppingCart', JSON.stringify(cart));
+        localStorage.setItem("shoppingCart", JSON.stringify(cart));
     }
     // load cart into 'cart' array
     function loadCart() {
-        cart = JSON.parse(localStorage.getItem('shoppingCart'));
+        cart = JSON.parse(localStorage.getItem("shoppingCart"));
     }
     // if cart in localstorage is not empty, load the cart automatically
-    if (sessionStorage.getItem('shoppingCart') != null) {
+    if (localStorage.getItem("shoppingCart") != null) {
         loadCart();
+        // console.log("Loaded existing cart")
     }
 
     // ---------------------
@@ -81,19 +83,29 @@ var shoppingCart = (function () {
             return;
             }
         }
+        // if not, add the item to cart with respective price/count
         var item = new Item(name, price, count);
         cart.push(item);
         saveCart();
     }
 
     // update count for item
-    obj.setCountForItem = function(name, count) {
-        for(var i in cart) {
-            if (cart[i].name === name) {
-                cart[i].count = count;
-                break;
+    obj.setCountForItem = function(name, count, price) {
+        for(var item in cart) {
+            // if item in cart, update count
+            if (cart[item].name === name) {
+                cart[item].count = count;
+                // if item count is 0, remove item
+                if(cart[item].count == 0) {
+                    cart.splice(item, 1);
+                }
+                saveCart();
+                return;
             }
         }
+        // if new item, add with count 
+        var item = new Item(name, price, count);
+        cart.push(item);
         saveCart();
     }
 
@@ -103,6 +115,7 @@ var shoppingCart = (function () {
         for(var item in cart) {
             if(cart[item].name === name) {
                 cart[item].count --;
+                // if item count is 0, remove item
                 if(cart[item].count === 0) {
                     cart.splice(item, 1);
                 }
@@ -111,10 +124,10 @@ var shoppingCart = (function () {
         saveCart();
     }
 
-    // remove all items from cart
+    // remove all of an item from cart
     obj.removeItemFromCartAll = function(name) {
         for(var item in cart) {
-            if(cart[item].name === name) {
+            if(cart[item].name == name) {
                 cart.splice(item, 1);
                 break;
             }
@@ -137,10 +150,10 @@ var shoppingCart = (function () {
         for(var item in cart) {
             totalCart += cart[item].price * cart[item].count;
         }
-        return Number(totalCart.toFixed(2));
+        return Number(totalCart).toFixed(2);
     }
 
-    // get cart, returns a copy of the current cart
+    // get cart, returns a copy of the current cart as array
     obj.getCart = function() {
         var cartCopy = [];
         for(i in cart) {
@@ -154,7 +167,16 @@ var shoppingCart = (function () {
         }
         return cartCopy;
     }
-})
+
+    // empties cart, for development purposes, can be accessed in console via shoppingCart.clearCart()
+    // this function is not registered to event listeners, should be commented out for deployment to prevent accidents
+    obj.clearCart = function() {
+        cart = [];
+        saveCart();
+      }
+
+    return obj;
+})();
 
 // expand/collapse cart
 function toggleCart() {
@@ -165,15 +187,27 @@ function toggleCart() {
         cartcontainer.style.height = 'initial';
         // hide cart contents
         document.getElementById('cart').style.display = 'none';
-        // change view cart button to 'view cart' 
-        document.getElementById('vcartbutton').innerHTML = 'Cart&nbsp;(<span class="cart-count"></span>)';
+        // change view cart button to 'cart(x)' 
+        document.getElementById('vcartbutton').innerHTML = 'Cart&nbsp;(<span id="cart-count"></span>)';
+        document.getElementById('cart-count').innerHTML = shoppingCart.totalCount();
+        displayCart();
     } else {
         // expand cart
         cartcontainer.style.height = '30vh';
         // show cart contents
         document.getElementById('cart').style.display = 'grid';
         // change view cart button to 'close cart'
+        displayCart();
         document.getElementById('vcartbutton').innerHTML = 'Hide Cart';
+    }
+}
+
+function cartToggled() {
+    // returns true if showing cart, false if cart is hidden
+    if (document.getElementById('vcartbutton').innerHTML == 'Hide Cart') {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -187,5 +221,105 @@ for (var i=0; i < categoryCheckboxes.length; i++) {
 // view cart button
 document.getElementById('vcartbutton').addEventListener("click", toggleCart, false)
 
-// run the filter on load
-filterMenu()
+// cart api events
+// ----------------------
+function displayCart() {
+    var cartArray = shoppingCart.getCart();
+    var output = "";
+    for (var item in cartArray) {
+        output += "<div class=\"cartitem\">"
+                + "<div class=\"delete-item-cart itemdel\"><i class=\"fas fa-times\"></i></div>"
+                + "<div class=\"itemname\">"+cartArray[item].name.replace("_", " ")+"</div>"
+                + "<div class=\"itemquant number-input\"><button class=\"minus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepDown();\"><i class=\"fas fa-minus-circle\"></i></button><input class=\"itemcount\" name=\""+cartArray[item].name+"\" type=\"number\" value="+cartArray[item].count+" min=\"0\" max=\"99\"><button class=\"plus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepUp();\"><i class=\"fas fa-plus-circle\"></i></button>\</div>"
+                + "<div class=\"itemprice\">$"+cartArray[item].total+"</div>"
+                + "</div>";
+    }
+    // update menu counts as well
+    var itemcounts = document.getElementsByClassName('itemcount');
+    for (var field in itemcounts) {
+        // for every field in the menu, check if the field is in the cart
+        var changed = false;
+        for (var item in cartArray) {
+            // if field is in cart, update the field value with the cart
+            if (itemcounts[field].name == cartArray[item].name) {
+                itemcounts[field].value = cartArray[item].count;
+                changed = true;
+            }
+        }
+        // if the field is not in the cart then set to 0
+        if (!changed) {
+            itemcounts[field].value = 0;
+        }
+    }
+     
+    // update text on screen
+    document.getElementById('cartlist').innerHTML = output;
+    if (!cartToggled()) {
+        document.getElementById('cart-count').innerHTML = shoppingCart.totalCount();
+    }
+    document.getElementById('carttotaltext').innerHTML = shoppingCart.totalCart();
+
+    // register functions
+    // add to cart (+) on menu, increment/add
+    var itemplusbuttons = document.getElementsByClassName('plus-item');
+    for (var i=0; i<itemplusbuttons.length; i++) {
+        itemplusbuttons[i].addEventListener("click", registerAddItem);
+    };
+
+    // remove from cart (-) on menu, decrement/remove
+    var itemminusbuttons = document.getElementsByClassName('minus-item');
+    for (var i=0; i<itemminusbuttons.length; i++) {
+        itemminusbuttons[i].addEventListener("click", registerRemItem);
+    };
+
+    // delete item button on cart
+    var cartitemdelbuttons = document.getElementsByClassName('delete-item-cart');
+    for (var i=0; i<cartitemdelbuttons.length; i++) {
+        cartitemdelbuttons[i].addEventListener("click", registerRemItemAll);
+    };
+
+    // update count of item
+    for (var i=0; i<itemcounts.length; i++) {
+        itemcounts[i].addEventListener("change", registerItemCount);
+    };
+}
+
+function registerAddItem(event) {
+    event.preventDefault();
+    var name = this.parentNode.querySelector('input[type=number]').name;
+    var price = Number(this.dataset.price);
+    shoppingCart.addItemToCart(name, price, 1);
+    displayCart();
+}
+
+function registerRemItem(event) {
+    event.preventDefault();
+    var name = this.parentNode.querySelector('input[type=number]').name;
+    shoppingCart.removeItemFromCart(name);
+    displayCart();
+}
+
+function registerRemItemAll(event) {
+    event.preventDefault();
+    var name = this.parentNode.querySelector('input[type=number]').name;
+    shoppingCart.removeItemFromCartAll(name);
+    displayCart();
+}
+
+function registerItemCount(event) {
+    event.preventDefault();
+    var name = this.name;
+    var count = Number(this.value);
+    var price = this.parentNode.querySelector('button.plus-item').dataset.price;
+    console.log(name+" "+count+" "+price)
+    if (count == 0) {
+        shoppingCart.setCountForItem(name, count);
+    } else {
+        shoppingCart.setCountForItem(name, count, price);
+    }
+    displayCart();
+}
+
+// run on load
+filterMenu();
+displayCart();

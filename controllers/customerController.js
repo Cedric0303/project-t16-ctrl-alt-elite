@@ -21,6 +21,16 @@ db.once('open', () => {
     console.log('connected to Mongo ...')
 })
 
+// return login state
+function loggedIn(req) {
+    // if an username (email) is bound to session, return true for LOGGED IN
+    if (req.session.username != null) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
 // return default customer homescreen
 const getCustomerHome = async (req, res) => {
     const vans = await db.db.collection('vendor').find({}).project({
@@ -131,11 +141,10 @@ const authLogin = async (req, res) => {
                         expiryDate : new Date(Date.now() + hour)
                     }
                 })
-                req.session.loggedin = true;
                 req.session.username = email;
                 req.session.maxAge = new Date(Date.now() + hour)
                 req.session.cookie.maxAge = hour;
-                res.redirect('/customer/menu/');
+                res.redirect('/customer/');
             }
             else {
                 res.render('loginerror')
@@ -164,20 +173,27 @@ const addCustomer = async (req, res) => {
             loginID: req.body.email,
             password: hash_pw
         })
-        res.redirect('/customer/login');
+        res.render('loginnewacc');
     } else {
         res.render('registeremaildupe');
     }
 }
 
 const getOrders = async (req, res) => {
-    const result = await db.db.collection('order').find({
-        "customerID": req.session.username
-    }).project({}).sort({"timestamp": -1}).toArray()
-    if (result) {
-        res.send(result)
+    if (loggedIn(req)) {
+        const orders = await db.db.collection('order').find({
+            "customerID": req.session.username
+        }).project({}).sort({"timestamp": -1}).toArray()
+        if (orders) {
+            res.render('orders', {
+                "orders": orders, // passing orders from db into orders.hbs as orders
+                layout: 'orderspage'
+            })
+        } else {
+            res.send("ERROR")
+        }
     } else {
-        res.send("ERROR")
+        res.render('notloggedin');
     }
 }
 
