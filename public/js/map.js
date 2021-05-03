@@ -119,23 +119,6 @@ curPosition.on('dragend', function () {
     vanMarkers = createMarkers(curPosition, vans)
 })
 
-// map.on('load', function() {
-//     geolocate.trigger(); //<- Automatically activates geolocation
-
-// });
-// if (!geolocated) {
-//     var marker = new mapboxgl.Marker({
-//         color: '#000000'
-//         }) // initialize a new marker
-//         .setLngLat([144.95878, -37.7983416]) // Marker [lng, lat] coordinates
-//         .addTo(map); // Add the marker to the map
-// }
-// else {
-//     var marker = new mapboxgl.Marker({
-//         color: '#000000'
-//         }) // initialize a new marker
-//         .setLngLat([cur_position.coords.longitude, cur_position.coords.latitude]) // Marker [lng, lat] coordinates
-//         .addTo(map); // Add the marker to the map
 // var map = new mapboxgl.Map({
 //     container: 'map',
 //     style: "https://api.jawg.io/styles/jawg-streets.json?access-token=WNOUDThn1YkriWZNGrnIqTGPSf40C2FkPsYJ1anAcEAcjBHopzZfVO0OddI9bRLI",
