@@ -218,10 +218,27 @@ function displayCart() {
     for (var item in cartArray) {
         output += "<div class=\"cartitem\">"
                 + "<div class=\"delete-item-cart itemdel\"><i class=\"fas fa-times\"></i></div>"
-                + "<div class=\"itemname\">"+cartArray[item].name+"</div>"
+                + "<div class=\"itemname\">"+cartArray[item].name.replace("_", " ")+"</div>"
                 + "<div class=\"itemquant number-input\"><button class=\"minus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepDown();\"><i class=\"fas fa-minus-circle\"></i></button><input name=\""+cartArray[item].name+"\" type=\"number\" value="+cartArray[item].count+" min=\"0\" max=\"99\"><button class=\"plus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepUp();\"><i class=\"fas fa-plus-circle\"></i></button>\</div>"
                 + "<div class=\"itemprice\">$"+cartArray[item].total+"</div>"
                 + "</div>";
+    }
+    // update menu counts as well
+    var itemcounts = document.getElementsByClassName('itemcount');
+    for (var field in itemcounts) {
+        // for every field in the menu, check if the field is in the cart
+        var changed = false;
+        for (var item in cartArray) {
+            // if field is in cart, update the field value with the cart
+            if (itemcounts[field].name == cartArray[item].name) {
+                itemcounts[field].value = cartArray[item].count;
+                changed = true;
+            }
+        }
+        // if the field is not in the cart then set to 0
+        if (!changed) {
+            itemcounts[field].value = 0;
+        }
     }
      
     // update text on screen
@@ -268,9 +285,16 @@ function registerRemItem(event) {
 
 function registerRemItemAll(event) {
     event.preventDefault();
-    var name = this.parentNode.querySelector('.itemname').innerHTML;
+    var name = this.parentNode.querySelector('input[type=number]').name;
     shoppingCart.removeItemFromCartAll(name);
     displayCart();
+}
+
+function registerItemCount(event) {
+    event.preventDefault();
+    if (this.parentNode.parentNode.className == "cartlist") {
+
+    }
 }
 
 // run on load
