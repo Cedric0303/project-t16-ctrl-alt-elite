@@ -89,18 +89,20 @@ var shoppingCart = (function () {
     }
 
     // update count for item
-    obj.setCountForItem = function(name, price, count) {
+    obj.setCountForItem = function(name, count, price) {
         for(var item in cart) {
+            // if item in cart, update count
             if (cart[item].name === name) {
                 cart[item].count = count;
                 // if item count is 0, remove item
-                if(cart[item].count === 0) {
+                if(cart[item].count == 0) {
                     cart.splice(item, 1);
                 }
                 saveCart();
                 return;
             }
         }
+        // if new item, add with count 
         var item = new Item(name, price, count);
         cart.push(item);
         saveCart();
@@ -164,6 +166,13 @@ var shoppingCart = (function () {
         }
         return cartCopy;
     }
+
+    // empties cart
+    obj.clearCart = function() {
+        cart = [];
+        saveCart();
+      }
+
     return obj;
 })();
 
@@ -219,7 +228,7 @@ function displayCart() {
         output += "<div class=\"cartitem\">"
                 + "<div class=\"delete-item-cart itemdel\"><i class=\"fas fa-times\"></i></div>"
                 + "<div class=\"itemname\">"+cartArray[item].name.replace("_", " ")+"</div>"
-                + "<div class=\"itemquant number-input\"><button class=\"minus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepDown();\"><i class=\"fas fa-minus-circle\"></i></button><input name=\""+cartArray[item].name+"\" type=\"number\" value="+cartArray[item].count+" min=\"0\" max=\"99\"><button class=\"plus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepUp();\"><i class=\"fas fa-plus-circle\"></i></button>\</div>"
+                + "<div class=\"itemquant number-input\"><button class=\"minus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepDown();\"><i class=\"fas fa-minus-circle\"></i></button><input class=\"itemcount\" name=\""+cartArray[item].name+"\" type=\"number\" value="+cartArray[item].count+" min=\"0\" max=\"99\"><button class=\"plus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepUp();\"><i class=\"fas fa-plus-circle\"></i></button>\</div>"
                 + "<div class=\"itemprice\">$"+cartArray[item].total+"</div>"
                 + "</div>";
     }
@@ -266,6 +275,11 @@ function displayCart() {
     for (var i=0; i<cartitemdelbuttons.length; i++) {
         cartitemdelbuttons[i].addEventListener("click", registerRemItemAll);
     };
+
+    // update count of item
+    for (var i=0; i<itemcounts.length; i++) {
+        itemcounts[i].addEventListener("change", registerItemCount);
+    };
 }
 
 function registerAddItem(event) {
@@ -292,9 +306,16 @@ function registerRemItemAll(event) {
 
 function registerItemCount(event) {
     event.preventDefault();
-    if (this.parentNode.parentNode.className == "cartlist") {
-
+    var name = this.name;
+    var count = Number(this.value);
+    var price = this.parentNode.querySelector('button.plus-item').dataset.price;
+    console.log(name+" "+count+" "+price)
+    if (count == 0) {
+        shoppingCart.setCountForItem(name, count);
+    } else {
+        shoppingCart.setCountForItem(name, count, price);
     }
+    displayCart();
 }
 
 // run on load
