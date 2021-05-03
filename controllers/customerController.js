@@ -181,11 +181,13 @@ const addCustomer = async (req, res) => {
 
 const getOrders = async (req, res) => {
     if (loggedIn(req)) {
-        const result = await db.db.collection('order').find({
+        const orders = await db.db.collection('order').find({
             "customerID": req.session.username
         }).project({}).sort({"timestamp": -1}).toArray()
-        if (result) {
-            res.send(result)
+        if (orders) {
+            res.render('orders', {
+                "orders": orders // passing orders from db into orders.hbs as orders
+            })
         } else {
             res.send("ERROR")
         }
