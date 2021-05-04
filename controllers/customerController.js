@@ -84,23 +84,28 @@ const getMenuVan = async (req, res) => {
 const postNewOrder = async (req, res) => {
     if (loggedIn(req)) {
         var order = {}
-        console.log("LOGGED IN AND POSTED");
-        console.log(req.body);
-        // {
-        //     item: [{
-        //         foodID: {
-        //             $toString: food._ID
-        //         },
-        //         name: food.name,
-        //         count: req.body.count
-        //     }],
-        //     timestamp: new Date(),
-        //     vendorID: req.body.vendorID,
-        //     customerID: customer.loginID,
-        //     customerGivenName: customer.nameGiven,
-        //     orderStatus: "Ordering",
-        //     orderID: Math.floor((Math.random() * 1000000) + 1)
+        orderInfo = req.body.payload;
+        // example orderInfo content
+        // orderInfo = {
+        //   payload: '{"item":[{"name":"Cappucino","price":4.5,"count":3,"total":"13.50"},
+        //                      {"name":"Long_black","price":4,"count":1,"total":"4.00"}],
+        //              "vendorID":"Tasty_Trailer"}'
         // }
+        console.log(orderInfo)
+        console.log(orderInfo.item)
+        console.log(orderInfo.vendorID)
+        
+        order = {
+            item: orderInfo["item"],
+            timestamp: new Date(),
+            vendorID: orderInfo["vendorID"],
+            customerID: req.session.username,
+            customerGivenName: req.session.givenname,
+            orderStatus: "Ordering",
+            orderID: Math.floor((Math.random() * 1000000) + 1)
+        };
+        console.log(order);
+        res.redirect('/customer/orders');
     } else {
         res.render('notloggedin');
     }
@@ -168,12 +173,14 @@ const authLogin = async (req, res) => {
                         expiryDate : new Date(Date.now() + hour)
                     }
                 })
-                console.log(user.nameGiven)
                 req.session.username = email;
                 req.session.givenname = user.nameGiven;
                 req.session.maxAge = new Date(Date.now() + hour);
                 req.session.cookie.maxAge = hour;
-                res.redirect('/customer/');
+                // return the user to their previous page
+                // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
+                backURL=req.header('Referer') || '/';
+                res.redirect(backURL);
             }
             else {
                 // if account did not exist
