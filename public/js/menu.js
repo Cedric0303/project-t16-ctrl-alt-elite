@@ -311,7 +311,6 @@ function registerItemCount(event) {
     var name = this.name;
     var count = Number(this.value);
     var price = this.parentNode.querySelector('button.plus-item').dataset.price;
-    console.log(name+" "+count+" "+price)
     if (count == 0) {
         shoppingCart.setCountForItem(name, count);
     } else {
@@ -326,15 +325,18 @@ displayCart();
 
 function postOrder() {
     // https://stackoverflow.com/questions/6396101/pure-javascript-send-post-data-without-a-form
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", window.location.href, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("POST", window.location.href, true);
+    // xhr.setRequestHeader('Content-Type', 'application/json');
     cart = shoppingCart.getCart();
     var payload = {
         item: cart,
         vendorID: vaninfo.loginID
     };
-    xhr.send(JSON.stringify(payload));
+    payload = JSON.stringify(payload);
+    document.getElementById('payloadInput').value = payload;
+    console.log("posting order")
+    document.getElementById('orderForm').submit(); 
 }
 
 // register checkout button
