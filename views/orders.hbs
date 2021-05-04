@@ -1,11 +1,27 @@
 {{#each orders}}
 {{!-- This code will pull each order from the database and perform this code on each subsequently --}}
-    <div>
-        <br><p1>Order: {{this.orderID}} </p1><br>
-        <p1> {this.timestamp} </p1>
-        Name: {{this.customerGivenName}}
-        
-      
-
+<div class="orderbox-container"> 
+    
+    <div id="orderdate">
+        Monday 11:30 AM on 22 March 2021
     </div>
+    
+    <div id="ordercontent"> 
+        order items 
+    </div>
+    
+    <div id="ordertotal">
+        total
+    </div>
+
+    <div id="orderstatus">
+        status
+    </div>
+
+    <div id="ordertrailer">
+        trailor
+    </div>
+
+</div>
+
 {{/each}} 

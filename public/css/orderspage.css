@@ -1,0 +1,67 @@
+.ordersstickytop {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    pointer-events: auto;
+    overflow: hidden;
+    width: 100%;
+    background-color: #ffffff;
+    text-align: left;
+    padding-left: 10%;   
+}
+
+.orderbox{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: left 10%;
+    padding: 2vh 4vw;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    background-color: #ffffff;
+    text-align: left;
+    border: #000000;
+}
+
+.orderbox-container {
+    display: grid; 
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-gap: 1rem;
+    grid-template-areas: 
+    "orderdate orderdate"
+    "ordercontent orderstatus"
+    "ordertotal ordertrailer";
+    border: #000000;
+}
+
+#orderdate {
+    grid-area: "orderdate";
+    font-size: 1.2em;
+}
+
+#ordercontent {
+    grid-area: "ordercontent";
+    font-size: 0.8em;
+}
+
+#orderstatus {
+    grid-area: "orderstatus";
+    font-size: 0.8em;
+}
+
+#ordertotal {
+    grid-area: "ordertotal";
+    font-size: 0.8em;
+}
+
+#ordertrailer {
+    grid-area: "ordertrailer";
+    font-size: 0.8em;
+}
+
+
+
+
+
