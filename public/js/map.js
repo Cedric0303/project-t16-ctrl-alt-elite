@@ -1,6 +1,5 @@
 // harvesine distance between 2 location
 // code modified and obtained from https://stackoverflow.com/a/48805273
-
 function distance([long1, lat1], [long2, lat2]) {
     const toRad = angle => (Math.PI / 180) * angle;
     const dist = (a, b) => (Math.PI / 180) * (a - b);
@@ -21,9 +20,20 @@ function distance([long1, lat1], [long2, lat2]) {
     return finalDistance;
 }
 
+// create map
 function createMap() {
     mapboxgl.accessToken = 'pk.eyJ1IjoianVubGljIiwiYSI6ImNrbzVpY3psNjAzODMydnBiYWVycXd2cDIifQ.sEdF7QZVuor4EbMa3hWdfA'
     // generates map
+
+    // var map = new mapboxgl.Map({
+    //         container: 'map',
+    //         style: "https://api.jawg.io/styles/jawg-streets.json?access-token=WNOUDThn1YkriWZNGrnIqTGPSf40C2FkPsYJ1anAcEAcjBHopzZfVO0OddI9bRLI",
+    //         zoom: 14,
+    //         center: [144.95878, -37.7983416]
+    //     })
+    //     mapboxgl.setRTLTextPlugin(
+    //       "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js"
+    //     )
     var map = new mapboxgl.Map({
         container: 'map', // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
@@ -42,6 +52,7 @@ function createMap() {
     return {map, geolocate};
 }
 
+// create map centre location marker
 function createLocationMarker() {
     var pos = map.getCenter()
     return new mapboxgl.Marker({
@@ -57,6 +68,7 @@ function createLocationMarker() {
     .addTo(map)
 }
 
+// create van markers
 function createVanMarker(points) {
     var vanMarkers = []
     for (i in points) {
@@ -67,7 +79,7 @@ function createVanMarker(points) {
         var lat = points[i][0].latitude
         vanMarkers.push([
             points[i][0],
-            new mapboxgl.Marker({color: '#65737D'})
+            new mapboxgl.Marker({color: (i == 0) ? '#fc0345':'#65737D'})
             .setPopup(new mapboxgl.Popup({
                 closeButton: false,
                 closeOnClick: true,
@@ -111,20 +123,12 @@ geolocate.on('geolocate', function() {
     });
 var curPosition = createLocationMarker()
 var vanMarkers = createMarkers(curPosition, vans)
+var nearestVan = vanMarkers[0][0] // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< this is the nearestVan
 curPosition.on('dragend', function () {
     for (i in vanMarkers) {
         vanMarkers[i][1].remove()
     }
     vanMarkers = []
     vanMarkers = createMarkers(curPosition, vans)
+    nearestVan = vanMarkers[0][0]
 })
-
-// var map = new mapboxgl.Map({
-//     container: 'map',
-//     style: "https://api.jawg.io/styles/jawg-streets.json?access-token=WNOUDThn1YkriWZNGrnIqTGPSf40C2FkPsYJ1anAcEAcjBHopzZfVO0OddI9bRLI",
-//     zoom: 14,
-//     center: [144.95878, -37.7983416]
-// });
-// mapboxgl.setRTLTextPlugin(
-//   "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js"
-// );
