@@ -29,7 +29,7 @@ function loggedIn(req) {
     } else {
         return false;
     }
-};
+}
 
 // return default customer homescreen
 const getCustomerHome = async (req, res) => {
@@ -78,6 +78,31 @@ const getMenuVan = async (req, res) => {
             layout: 'vanselectedsearchcart'})
     } else {
         res.send('<h1> Error getting vendor/menu info </h1>')
+    }
+}
+
+const postNewOrder = async (req, res) => {
+    if (loggedIn(req)) {
+        var order = {}
+        console.log("LOGGED IN AND POSTED");
+        console.log(req.body);
+        // {
+        //     item: [{
+        //         foodID: {
+        //             $toString: food._ID
+        //         },
+        //         name: food.name,
+        //         count: req.body.count
+        //     }],
+        //     timestamp: new Date(),
+        //     vendorID: req.body.vendorID,
+        //     customerID: customer.loginID,
+        //     customerGivenName: customer.nameGiven,
+        //     orderStatus: "Ordering",
+        //     orderID: Math.floor((Math.random() * 1000000) + 1)
+        // }
+    } else {
+        res.render('notloggedin');
     }
 }
 
@@ -131,8 +156,10 @@ const authLogin = async (req, res) => {
     if (email && pw) {
         const user = await db.db.collection('customer').findOne({loginID: email})
         if (user != null) {
+            // if account exists
             const valid = await bcrypt.compare(pw, user.password)
             if (user && valid) {
+                // if account exists and pw is correct
                 await db.db.collection('customer').findOneAndUpdate({
                     loginID: user.loginID
                 }, { 
@@ -141,15 +168,19 @@ const authLogin = async (req, res) => {
                         expiryDate : new Date(Date.now() + hour)
                     }
                 })
+                console.log(user.nameGiven)
                 req.session.username = email;
-                req.session.maxAge = new Date(Date.now() + hour)
+                req.session.givenname = user.nameGiven;
+                req.session.maxAge = new Date(Date.now() + hour);
                 req.session.cookie.maxAge = hour;
                 res.redirect('/customer/');
             }
             else {
-                res.render('loginerror')
+                // if account did not exist
+                res.render('loginerror');
             }
         } else {
+            // if email and/or pw were empty
             res.render('loginerror')
         }
     } 
@@ -201,6 +232,7 @@ module.exports = {
     getCustomerHome,
     getMenu,
     getMenuVan,
+    postNewOrder,
     getFoodDetails,
     addFoodToOrder,
     getLogin,

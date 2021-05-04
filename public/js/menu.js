@@ -323,3 +323,21 @@ function registerItemCount(event) {
 // run on load
 filterMenu();
 displayCart();
+
+function postOrder() {
+    // https://stackoverflow.com/questions/6396101/pure-javascript-send-post-data-without-a-form
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", window.location.href, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    cart = shoppingCart.getCart();
+    var payload = {
+        item: cart,
+        vendorID: vaninfo.loginID
+    };
+    xhr.send(JSON.stringify(payload));
+}
+
+// register checkout button
+document.getElementById('chkoutbutton').addEventListener("click",postOrder);
+// shoppingCart.getCart() - returns array of cart
+// vaninfo - returns a json object with selected van info
