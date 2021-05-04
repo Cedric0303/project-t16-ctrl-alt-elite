@@ -90,7 +90,12 @@ const postNewOrder = async (req, res) => {
         //   payload: '{"item":[{"name":"Cappucino","price":4.5,"count":3,"total":"13.50"},
         //                      {"name":"Long_black","price":4,"count":1,"total":"4.00"}],
         //              "vendorID":"Tasty_Trailer"}'
-        // }        
+        // }
+        // remove price and total from object
+        for (var item in orderInfo.item) {
+            delete orderInfo.item[item].price;
+            delete orderInfo.item[item].total;
+        }
         order = {
             item: orderInfo["item"],
             timestamp: new Date(),
@@ -175,11 +180,15 @@ const authLogin = async (req, res) => {
                 req.session.cookie.maxAge = hour;
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
-                backURL=req.header('Referer') || '/';
-                res.redirect(backURL);
+                prevPageURL = req.header('Referer');
+                if (prevPageURL.search("auth") != -1) {
+                    res.redirect('/customer/')
+                } else {
+                    res.redirect(prevPageURL);
+                }
             }
             else {
-                // if account did not exist
+                // if account did not exist or incorrect password
                 res.render('loginerror');
             }
         } else {

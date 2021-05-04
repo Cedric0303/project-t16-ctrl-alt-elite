@@ -168,8 +168,7 @@ var shoppingCart = (function () {
         return cartCopy;
     }
 
-    // empties cart, for development purposes, can be accessed in console via shoppingCart.clearCart()
-    // this function is not registered to event listeners, should be commented out for deployment to prevent accidents
+    // empties cart, can be accessed in console via shoppingCart.clearCart()
     obj.clearCart = function() {
         cart = [];
         saveCart();
@@ -329,13 +328,16 @@ function postOrder() {
     // xhr.open("POST", window.location.href, true);
     // xhr.setRequestHeader('Content-Type', 'application/json');
     cart = shoppingCart.getCart();
+    if (cart.length == 0) {
+        alert("Your cart is empty!");
+        return;
+    }
     var payload = {
         item: cart,
         vendorID: vaninfo.loginID
     };
     payload = JSON.stringify(payload);
     document.getElementById('payloadInput').value = payload;
-    console.log("posting order")
     document.getElementById('orderForm').submit(); 
 }
 
