@@ -60,33 +60,21 @@ function createLocationMarker(curPos) {
 // create van markers
 // points is iterable of van location points
 function createVanMarker(vanPoints) {
-    var el;
-    var el1 = document.createElement('div')
-    var el2 = document.createElement('div')
-    var el3 = document.createElement('div')
-    var el4 = document.createElement('div')
-    var el5 = document.createElement('div')
-    el1.className = 'nearestMarker'
-    el2.className = 'marker'
-    el3.className = 'marker'
-    el4.className = 'marker'
-    el5.className = 'marker'
     var vanMarkers = []
-    for (i in vanPoints) { // only show 5 closest vans
-        if (i==0) el = el1;
-        else if (i==1) el =el2;
-        else if (i==2) el =el3;
-        else if (i==3) el =el4;
-        else if (i==4) el =el5;
-        if (i==5) {
-            break;
+    vanPoints.forEach((van, index) => {
+        var el = document.createElement('div');
+        if (index==0) {
+            el.className = 'nearestMarker'
         }
-        var long = vanPoints[i][0].longitude
-        var lat = vanPoints[i][0].latitude
-        var vanID = vanPoints[i][0].loginID
-        var dist = vanPoints[i][1]
+        else {
+            el.className = 'marker'
+        }
+        var long = van[0].longitude
+        var lat = van[0].latitude
+        var vanID = van[0].loginID
+        var dist = van[1]
         vanMarkers.push([
-            vanPoints[i][0],
+            van[0],
             new mapboxgl.Marker(el)
             .setPopup(new mapboxgl.Popup({
                 closeButton: false,
@@ -96,7 +84,7 @@ function createVanMarker(vanPoints) {
             .setHTML(long.toString() + " " + lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>'))
             .setLngLat([long, lat]) // Marker [lng, lat] coordinates
             .addTo(map)]); // Add the marker to the map
-    }
+    })
     return vanMarkers
 }
 
