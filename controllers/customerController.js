@@ -84,17 +84,13 @@ const getMenuVan = async (req, res) => {
 const postNewOrder = async (req, res) => {
     if (loggedIn(req)) {
         var order = {}
-        orderInfo = req.body.payload;
+        orderInfo = JSON.parse(req.body.payload);
         // example orderInfo content
         // orderInfo = {
         //   payload: '{"item":[{"name":"Cappucino","price":4.5,"count":3,"total":"13.50"},
         //                      {"name":"Long_black","price":4,"count":1,"total":"4.00"}],
         //              "vendorID":"Tasty_Trailer"}'
-        // }
-        console.log(orderInfo)
-        console.log(orderInfo.item)
-        console.log(orderInfo.vendorID)
-        
+        // }        
         order = {
             item: orderInfo["item"],
             timestamp: new Date(),
@@ -104,7 +100,7 @@ const postNewOrder = async (req, res) => {
             orderStatus: "Ordering",
             orderID: Math.floor((Math.random() * 1000000) + 1)
         };
-        console.log(order);
+        await db.db.collection('order').insertOne(order);
         res.redirect('/customer/orders');
     } else {
         res.render('notloggedin');
