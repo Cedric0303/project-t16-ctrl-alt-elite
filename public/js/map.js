@@ -52,12 +52,12 @@ function createMap() {
     return {map, geolocate};
 }
 
-// create map centre location marker
+// create user location marker in center of map
 function createLocationMarker() {
     var pos = map.getCenter()
     return new mapboxgl.Marker({
         color: '#000000',
-        draggable: true
+        draggable: true // development purposes to test different user locations 
     }) 
     .setLngLat([pos.lng, pos.lat]) // Marker [lng, lat] coordinates
     .setPopup(new mapboxgl.Popup({
@@ -69,10 +69,11 @@ function createLocationMarker() {
 }
 
 // create van markers
+// points is iterable of van location points
 function createVanMarker(points) {
     var vanMarkers = []
     for (i in points) {
-        if (i==5) {
+        if (i==5) { // only show 5 closest vans
             break;
         }
         var long = points[i][0].longitude
