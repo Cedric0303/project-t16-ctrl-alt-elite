@@ -1,14 +1,12 @@
-.ordersstickytop {
-    position: -webkit-sticky; /* Safari */
-    position: sticky;
-    top: 0;
-    z-index: 9999;
-    pointer-events: auto;
-    overflow: hidden;
+#ordersTitleBox {
     width: 100%;
     background-color: #ffffff;
-    text-align: left;
-    padding-left: 10%;   
+    text-align: left;   
+}
+
+#ordersTitleBox h1 {
+    padding: 5vh 0 0 10vw;
+    margin: 0; 
 }
 
 .orderbox-container {
