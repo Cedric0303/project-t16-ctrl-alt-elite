@@ -104,7 +104,7 @@ sup {
 }
 
 #cart {
-    grid-area: "cart";
+    grid-area: cart;
     height: 100%;
     
     display: none;
@@ -116,7 +116,7 @@ sup {
 }
 
 #cartlist {
-    grid-area: "cartlist";
+    grid-area: cartlist;
     overflow-y: auto;
     height: 17vh;
     display: grid;
@@ -126,7 +126,7 @@ sup {
 }
 
 .carttotal {
-    grid-area: "carttotal";
+    grid-area: carttotal;
     text-align: end;
     font-weight: 600;
 }
@@ -146,7 +146,7 @@ sup {
 }
 
 .itemdel { 
-    grid-area: "itemdel";
+    grid-area: itemdel;
     padding: 0;
     display: flex;
     justify-content: center;
@@ -154,10 +154,10 @@ sup {
     font-size: 1em;
 }
 .itemdel i:hover { color: #686868; cursor: pointer; }
-.itemname { grid-area: "itemname" }
-.itemquant { grid-area: "itemquant" }
+.itemname { grid-area: itemname }
+.itemquant { grid-area: itemquant }
 .itemprice {
-    grid-area: "itemprice";
+    grid-area: itemprice;
     text-align: left;
 }
 
@@ -166,7 +166,7 @@ sup {
 }
 
 .cartbuttons {
-    grid-area: "buttons";
+    grid-area: buttons;
     align-self: flex-end;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -230,13 +230,13 @@ sup {
 }
 
 .vanfloat #vanfloatleft {
-    grid-area: "vanfloatleft";
+    grid-area: vanfloatleft;
     justify-self: start;
     align-content: start;
 }
 
 .vanfloat #vanfloatright {
-    grid-area: "vanfloatright";
+    grid-area: vanfloatright;
     justify-self: end;
     align-content: start;
 }
