@@ -34,4 +34,7 @@ customerRouter.post('/register', customerController.addCustomer)
 
 customerRouter.get('/orders', customerController.getOrders)
 
+customerRouter.get('/profile', customerController.getProfile)
+
+
 module.exports = customerRouter
