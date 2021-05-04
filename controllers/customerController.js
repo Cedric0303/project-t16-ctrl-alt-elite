@@ -231,6 +231,11 @@ const getOrders = async (req, res) => {
     }
 }
 
+const getProfile = async (req, res) => {
+    res.send("Profile page");
+}
+
+
 module.exports = {
     getCustomerHome,
     getMenu,
@@ -242,5 +247,6 @@ module.exports = {
     authLogin,
     getRegister,
     addCustomer,
-    getOrders
+    getOrders,
+    getProfile
 }
