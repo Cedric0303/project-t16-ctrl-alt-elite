@@ -25,16 +25,31 @@ main {
 .marker {
     background-image: url('/icons/grey-selector.png');
     background-size: cover;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 0%;
     cursor: pointer;
 }
 .nearestMarker {
     background-image: url('/icons/red-selector.png');
     background-size: cover;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 0%;
     cursor: pointer;
+}
+
+@media screen and (min-width: 700px) {
+    .selfMarker {
+        width: 32px;
+        height: 32px;
+    }
+    .marker {
+        width: 40px;
+        height: 40px;
+    }
+    .nearestMarker {
+        width: 40px;
+        height: 40px;
+    }
 }
