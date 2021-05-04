@@ -123,23 +123,26 @@ geolocate.on('geolocate', function() {
     setTimeout(function () {
         curPos.long = geolocate._lastKnownPosition.coords.longitude
         curPos.lat = geolocate._lastKnownPosition.coords.latitude
-        curPosition.remove();
-        curPosition = createLocationMarker(curPos)}, 100);
+        curMarker.remove();
+        curMarker = createLocationMarker(curPos)}, 100);
         for (i in vanMarkers) {
             vanMarkers[i][1].remove()
         }
-        vanMarkers = []
-        var vanMarkers = createVanMarker(vanDist);
+        vanMarkers = createVanMarker(vanDist);
     });
 var curMarker = createLocationMarker(curPos)
 var vanDist = calcVanDist(curPos, vans);
 var vanMarkers = createVanMarker(vanDist);
-// var nearestVan = vanMarkers[0][0] // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< this is the nearestVan
+var nearestVan = vanDist[0][0] // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< this is the nearestVan
 curMarker.on('dragend', function () {
     for (i in vanMarkers) {
         vanMarkers[i][1].remove()
     }
+    var marker_pos = curMarker.getLngLat()
+    curPos.long = marker_pos.lng;
+    curPos.lat = marker_pos.lat;
+    vanDist = calcVanDist(curPos, vans);
     vanMarkers = []
-    var vanMarkers = createVanMarker(vanDist);
-    // nearestVan = vanMarkers[0][0]
+    vanMarkers = createVanMarker(vanDist);
+    nearestVan = vanDist[0][0]
 })
