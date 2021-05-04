@@ -1,7 +1,10 @@
 {{#each orders}}
 {{!-- This code will pull each order from the database and perform this code on each subsequently --}}
-    <div><p1>Order: {{this.orderID}} </p1><br>
+    <div>
+        <br><p1>Order: {{this.orderID}} </p1><br>
+        <p1> {this.timestamp} </p1>
         Name: {{this.customerGivenName}}
+        
       
 
     </div>
