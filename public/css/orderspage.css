@@ -37,27 +37,27 @@
 }
 
 #orderdate {
-    grid-area: "orderdate";
+    grid-area: orderdate;
     font-size: 1.2em;
 }
 
 #ordercontent {
-    grid-area: "ordercontent";
+    grid-area: ordercontent;
     font-size: 0.8em;
 }
 
 #orderstatus {
-    grid-area: "orderstatus";
+    grid-area: orderstatus;
     font-size: 0.8em;
 }
 
 #ordertotal {
-    grid-area: "ordertotal";
+    grid-area: ordertotal;
     font-size: 0.8em;
 }
 
 #ordertrailer {
-    grid-area: "ordertrailer";
+    grid-area: ordertrailer;
     font-size: 0.8em;
 }
 
