@@ -70,8 +70,10 @@ const getMenuVan = async (req, res) => {
         }
     })
     .catch(e => console.err(e))
+    var dist = req.query.dist
     if (menu && vendorinfo) {
         res.render('menu', {
+            "dist":dist,
             "menu":menu, // passing menu array as "menu"
             "menucat":menucategories, // passing menu categories array as "menucat""
             "van":vendorinfo, // passing selected vendor info json object as "van"
