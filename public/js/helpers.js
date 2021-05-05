@@ -12,19 +12,17 @@ var register = function(Handlebars) {
         },
         // https://stackoverflow.com/questions/10645994/how-to-format-a-utc-date-as-a-yyyy-mm-dd-hhmmss-string-using-nodejs
         formatDate: function (datetime) {
+            var dt = new Date(datetime);
             formatted = "";
             ampm = ""
-            date = datetime.toDateString();
-            time = datetime.getHours();
-            if (datetime.getHours() > 12) {
-                ampm = "PM";
-            } else {
-                ampm = "AM";
-            }
-            if (ampm == "PM") {
-                time -= 12;
-            }
-            formatted = date+" at "+time+":"+datetime.getMinutes()+" "+ampm;
+            date = dt.toDateString();
+            time = dt.toLocaleTimeString("en-AU", {
+                timeZone: "Australia/Melbourne",
+                hour: '2-digit', 
+                minute:'2-digit'
+            });
+
+            formatted = date+" at "+time;
             return formatted;
         },
         // https://stackoverflow.com/questions/10232574/handlebars-js-parse-object-instead-of-object-object
