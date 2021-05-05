@@ -1,7 +1,7 @@
 // filter menu by categories
 function filterMenu() {
     var searchTerm = document.getElementById("searchbar").value;
-    var regex = new RegExp(`^${searchTerm}`, 'i');
+    var regex = new RegExp(`${searchTerm}`, 'i');
 
     // check which categories are selected
     const itemsInCategory = [];
