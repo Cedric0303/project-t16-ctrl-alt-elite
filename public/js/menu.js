@@ -1,7 +1,11 @@
 // filter menu by categories
 function filterMenu() {
+    var searchTerm = document.getElementById("searchbar").value;
+    var regex = new RegExp(`^${searchTerm}`, 'i');
+
     // check which categories are selected
     const itemsInCategory = [];
+
     categoryCheckboxes = document.getElementsByName('catcheck');
     for (var i=0; i < categoryCheckboxes.length; i++) {
         // if the current category is checked append all menu items of that category to the list: itemsInCategory
@@ -21,6 +25,7 @@ function filterMenu() {
     // if the current element (item) is found (indexOf returns the index i.e. not -1) then discard the element (filter test is false)
     itemsNotInCategory = allItems.filter(item => itemsInCategory.indexOf(item) === -1)
 
+
     // if nothing is selected, show all the menu items
     if (itemsInCategory.length == 0) {
         for (var i = 0; i < allItems.length; i++) {
@@ -36,6 +41,14 @@ function filterMenu() {
             itemsNotInCategory[i].style.display = 'none';
         }
     }
+
+    // hide items which do not match the search term
+    for(var i = 0; i < allItems.length; i++){
+        if(!((regex).test(allItems[i].id))){
+            allItems[i].style.display = 'none';
+        }
+    }
+    
 }
 
 // shopping cart api--------------------------
@@ -219,6 +232,10 @@ for (var i=0; i < categoryCheckboxes.length; i++) {
 
 // view cart button
 document.getElementById('vcartbutton').addEventListener("click", toggleCart, false)
+
+// write in search bar
+document.getElementById('searchbar').addEventListener("input", filterMenu, false)
+
 
 // cart api events
 // ----------------------

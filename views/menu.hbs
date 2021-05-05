@@ -11,7 +11,7 @@
 </ul>
 <ul id="menu">
     {{#each menu}}
-    <li class="{{this.category}} menuitemcontainer">
+    <li class="{{this.category}} menuitemcontainer" id="{{#removeunderscore this.name}}{{/removeunderscore}}">
         <div class="menuitem">
             <div class="menuitemclick">
                 <img src="https://source.unsplash.com/{{this.image}}" 
