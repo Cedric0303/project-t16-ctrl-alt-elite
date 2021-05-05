@@ -67,7 +67,7 @@ sup {
 #navicon {
     font-size: 1.3em;
 }
-
+/* --------------floating element class-------------- */
 /* sticky to top */
 .stickytop {
     position: -webkit-sticky; /* Safari */
@@ -85,6 +85,20 @@ sup {
     width: 100%;
     pointer-events: none;
 }
+/* --------------homepage van list float ------------- */
+#vanlistcontainer {
+    overflow: hidden;
+    box-sizing: border-box;
+    pointer-events: auto;
+    margin: 0 1vw 2vh;
+    padding: 2vh 7vw;
+    background-color: #ffffff;
+    border-radius: 30px;
+
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
 /* --------------cart float--------------- */
 #cartcontainer {
     overflow: hidden;
