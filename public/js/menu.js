@@ -47,10 +47,7 @@ function filterMenu() {
         // compare search term with each word in item name
         var words = allItems[i].id.split(" ")
         var matchFound = false;
-        console.log(words.length)
         for(var j = 0; j < words.length; j++){
-            console.log(words[j])
-            console.log((regex).test(words[j]))
             if((regex).test(words[j])){
                 matchFound = true;
                 break;
