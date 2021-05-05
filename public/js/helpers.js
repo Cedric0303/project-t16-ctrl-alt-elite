@@ -12,10 +12,11 @@ var register = function(Handlebars) {
         },
         // https://stackoverflow.com/questions/10645994/how-to-format-a-utc-date-as-a-yyyy-mm-dd-hhmmss-string-using-nodejs
         formatDate: function (datetime) {
+            var dt = datetime;
             formatted = "";
             ampm = ""
-            date = datetime.toDateString();
-            time = datetime.toLocaleTimeString("en-AU", {
+            date = dt.toDateString();
+            time = dt.toLocaleTimeString("en-AU", {
                 timeZone: "Australia/Melbourne",
                 hour: '2-digit', 
                 minute:'2-digit'
