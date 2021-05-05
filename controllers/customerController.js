@@ -205,7 +205,7 @@ const authLogin = async (req, res) => {
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
                 prevPageURL = req.header('Referer');
-                if (prevPageURL.search("auth") != -1) {
+                if (prevPageURL.search("auth") != -1 || prevPageURL.search("register") != -1) {
                     res.redirect('/customer/')
                 } else {
                     res.redirect(prevPageURL);
