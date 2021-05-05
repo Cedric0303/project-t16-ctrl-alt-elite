@@ -15,13 +15,14 @@ var register = function(Handlebars) {
             formatted = "";
             ampm = ""
             date = datetime.toDateString();
+            time = datetime.getHours()
             if (datetime.getHours() > 12) {
                 ampm = "PM";
             } else {
                 ampm = "AM";
             }
             if (ampm == "PM") {
-                time = datetime.getHours() - 12;
+                time -= 12;
             }
             formatted = date+" at "+time+":"+datetime.getMinutes()+" "+ampm;
             return formatted;
