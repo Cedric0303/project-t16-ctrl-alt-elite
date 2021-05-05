@@ -15,16 +15,13 @@ var register = function(Handlebars) {
             formatted = "";
             ampm = ""
             date = datetime.toDateString();
-            time = datetime.getHours();
-            if (datetime.getHours() > 12) {
-                ampm = "PM";
-            } else {
-                ampm = "AM";
-            }
-            if (ampm == "PM") {
-                time -= 12;
-            }
-            formatted = date+" at "+time+":"+datetime.getMinutes()+" "+ampm;
+            time = datetime.toLocaleTimeString("en-AU", {
+                timeZone: "Australia/Melbourne",
+                hour: '2-digit', 
+                minute:'2-digit'
+            });
+
+            formatted = date+" at "+time;
             return formatted;
         },
         // https://stackoverflow.com/questions/10232574/handlebars-js-parse-object-instead-of-object-object
