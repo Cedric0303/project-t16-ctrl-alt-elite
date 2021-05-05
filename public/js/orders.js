@@ -1,14 +1,15 @@
-function pendingcolour() {
-    var target = document.getElementsByClassName('orderstatus')
-    console.log(target)
-    for (var i = 0; i < target.length; i++) {
-        console.log (target[i].innerHTML)
-        if (target[i].innerHTML == "Pending") { 
-            target[i].style.color = orange;
-        } 
+function pendingColour() {
+    var targets = document.getElementsByClassName('orderstatus')
+    for (var i = 0; i < targets.length; i++) {
+        if (targets[i].innerHTML == "Ordering") { 
+            targets[i].style.color = "#ff8800";
+            targets[i].innerHTML = "Pending"
+        } else if (targets[i].innerHTML == "Fulfilled") {
+            targets[i].style.color = "#8fdb02"
+            targets[i].innerHTML = "Ready for pickup"
+        } else {
+            targets[i].innerHTML = ""
+        }
     }
 }
-
-pendingcolour()
-
-
+pendingColour()

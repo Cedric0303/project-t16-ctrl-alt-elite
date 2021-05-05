@@ -85,19 +85,41 @@ const postNewOrder = async (req, res) => {
     if (loggedIn(req)) {
         var order = {}
         orderInfo = JSON.parse(req.body.payload);
-        // example orderInfo content
+        // example orderInfo structure
         // orderInfo = {
-        //   payload: '{"item":[{"name":"Cappucino","price":4.5,"count":3,"total":"13.50"},
-        //                      {"name":"Long_black","price":4,"count":1,"total":"4.00"}],
-        //              "vendorID":"Tasty_Trailer"}'
+        //   payload: '{
+        //      "item":[{
+        //          "name":str,
+        //          "price":float,
+        //          "count":int,
+        //          "total":float
+        //      }], 
+        //      "vendorID":str
+        //   }'
         // }
-        // remove price and total from object
+
+        orderTotal = 0;
         for (var item in orderInfo.item) {
-            delete orderInfo.item[item].price;
-            delete orderInfo.item[item].total;
+            // replace price and total from customer app with values from db
+            // prevents changing the prices from customer app
+            const price = await db.db.collection('food').findOne({
+                    name: orderInfo.item[item].name
+                }, {
+                    projection: {
+                        "_id": false,
+                        "price": true
+                    }
+                })
+                .catch(e => console.err(e));
+            priceNum = parseFloat(price.price)
+            orderInfo.item[item].price = priceNum;
+            orderInfo.item[item].total = priceNum*orderInfo.item[item].count;
+            orderTotal += orderInfo.item[item].total;
         }
+        
         order = {
             item: orderInfo["item"],
+            orderTotal: orderTotal,
             timestamp: new Date(),
             vendorID: orderInfo["vendorID"],
             customerID: req.session.username,

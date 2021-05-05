@@ -1,28 +1,24 @@
-{{#each orders}}
-{{!-- This code will pull each order from the database and perform this code on each subsequently --}}
+{{#each orders}} {{!-- This code will pull each order from the database and perform this code on each subsequently --}}
 <div class="orderbox-container"> 
     
-    <div class="orderdate">
-        Date (need to update link)
+    <div class="orderdate">{{#formatDate this.timestamp}}{{/formatDate}}</div>
+    
+    <div class="ordercontent">
+        {{#each item}}
+            <div class="orderitem">
+                <div>{{this.count}}x</div>
+                <div>{{#removeunderscore this.name}}{{/removeunderscore}}</div>
+                <div>${{#toFixed2 this.total}}{{/toFixed2}}</div>
+            </div>
+        {{/each}}
     </div>
     
-    <div class="ordercontent"> 
-        Order Content 
-    </div>
-    
-    <div class="ordertotal">
-        Total
-    </div>
+    <div class="ordertotal">Order Total: ${{#toFixed2 this.orderTotal}}{{/toFixed2}}</div>
 
-    <div class="orderstatus">
-        Pending
-    </div>
+    <div class="orderstatus">{{this.orderStatus}}</div>
 
-    <div class="ordertrailer">
-        Trailor
-    </div>
+    <div class="ordertrailer">{{#removeunderscore this.vendorID}}{{/removeunderscore}}</div>
 
 </div>
-
 {{/each}} 
 <script src="/js/orders.js"></script>

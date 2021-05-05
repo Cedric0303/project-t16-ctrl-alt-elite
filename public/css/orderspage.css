@@ -11,13 +11,13 @@
 
 .orderbox-container {
     display: grid; 
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr 2fr 1fr;
     grid-gap: 1rem;
     grid-template-areas: 
-    "orderdate orderdate"
-    "ordercontent orderstatus"
-    "ordertotal ordertrailer";
+    "orderdate orderdate orderdate"
+    "ordercontent . orderstatus"
+    "ordertotal ordertotal ordertrailer";
     background-color: #ffffff;
     padding-left: 2.5%;
     margin-bottom: 5%;
@@ -52,7 +52,8 @@
     font-size: 0.8em;
 }
 
-
-
-
-
+.orderitem {
+    display: grid;
+    grid-template-columns: 1fr 5fr 5fr;
+    justify-content: flex-start;
+}
