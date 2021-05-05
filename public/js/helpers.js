@@ -15,7 +15,7 @@ var register = function(Handlebars) {
             formatted = "";
             ampm = ""
             date = datetime.toDateString();
-            time = datetime.getHours()
+            time = datetime.getHours();
             if (datetime.getHours() > 12) {
                 ampm = "PM";
             } else {
