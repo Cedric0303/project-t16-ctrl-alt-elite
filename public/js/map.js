@@ -62,28 +62,29 @@ function createLocationMarker(curPos) {
 function createVanMarker(vanPoints) {
     var vanMarkers = []
     vanPoints.forEach((van, index) => {
-        var el = document.createElement('div');
-        if (index==0) {
-            el.className = 'nearestMarker'
+        if (index < 5) {
+            var el = document.createElement('div');
+            if (index==0) {
+                el.className = 'nearestMarker'
+            }
+            else {
+                el.className = 'marker'
+            }
+            var long = van[0].longitude
+            var lat = van[0].latitude
+            var vanID = van[0].loginID
+            var dist = van[1]
+            var marker = new mapboxgl.Marker(el)
+                .setPopup(new mapboxgl.Popup({
+                    closeButton: false,
+                    closeOnClick: true,
+                    closeOnMove: false,
+                })
+                .setHTML(long.toString() + " " + lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>'))
+                .setLngLat([long, lat]) // Marker [lng, lat] coordinates
+                .addTo(map); // Add the marker to the map
+            vanMarkers.push([van[0], marker])
         }
-        else {
-            el.className = 'marker'
-        }
-        var long = van[0].longitude
-        var lat = van[0].latitude
-        var vanID = van[0].loginID
-        var dist = van[1]
-        vanMarkers.push([
-            van[0],
-            new mapboxgl.Marker(el)
-            .setPopup(new mapboxgl.Popup({
-                closeButton: false,
-                closeOnClick: true,
-                closeOnMove: false,
-            })
-            .setHTML(long.toString() + " " + lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>'))
-            .setLngLat([long, lat]) // Marker [lng, lat] coordinates
-            .addTo(map)]); // Add the marker to the map
     })
     return vanMarkers
 }
@@ -119,9 +120,11 @@ geolocate.on('geolocate', function() {
         vanMarkers = createVanMarker(vanDist);
     });
 var curMarker = createLocationMarker(curPos)
-var vanDist = calcVanDist(curPos, vans);
-var vanMarkers = createVanMarker(vanDist);
+var vanDist = calcVanDist(curPos, vans); // [ [van Object, dist Number], ........]
+var vanMarkers = createVanMarker(vanDist); // [ [van Object, marker Object], ........]
 var nearestVan = vanDist[0][0] // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< this is the nearestVan
+
+
 curMarker.on('dragend', function () {
     for (i in vanMarkers) {
         vanMarkers[i][1].remove()
@@ -133,4 +136,48 @@ curMarker.on('dragend', function () {
     vanMarkers = []
     vanMarkers = createVanMarker(vanDist);
     nearestVan = vanDist[0][0]
+})
+map.on('click', () => { 
+    vanMarkers.forEach((marker, index) => {
+        if (index < 5) {
+            var vanID = marker[0].loginID
+            var lnglat = marker[1].getLngLat()
+            var dist = vanDist[index][1]
+            marker[1].getElement().addEventListener('click', () => {
+                if (!marker[1].getElement().classList.contains('nearestMarker')) {
+                    vanMarkers.forEach((marker2, index2)=> {
+                        if (index2 < 5 && index2 != index) {
+                            var vanID = marker2[0].loginID
+                            var lnglat = marker2[1].getLngLat()
+                            var dist = vanDist[index2][1]
+                            var el = document.createElement('div')
+                            el.className = 'marker'
+                            marker2[1].remove()
+                            marker2[1] = new mapboxgl.Marker(el)
+                            .setPopup(new mapboxgl.Popup({
+                                closeButton: false,
+                                closeOnClick: true,
+                                closeOnMove: false,
+                            })
+                            .setHTML(lnglat.lng.toString() + " " + lnglat.lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>'))
+                            .setLngLat([lnglat.lng, lnglat.lat]) // Marker [lng, lat] coordinates
+                            .addTo(map); // Add the marker to the map
+                        }
+                    })
+                    var el = document.createElement('div')
+                    el.className = 'nearestMarker'
+                    marker[1].remove()
+                    marker[1] = new mapboxgl.Marker(el)
+                    .setPopup(new mapboxgl.Popup({
+                        closeButton: false,
+                        closeOnClick: true,
+                        closeOnMove: false,
+                    })
+                    .setHTML(lnglat.lng.toString() + " " + lnglat.lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>'))
+                    .setLngLat([lnglat.lng, lnglat.lat]) // Marker [lng, lat] coordinates
+                    .addTo(map); // Add the marker to the map
+                }
+            })
+        }
+    })
 })
