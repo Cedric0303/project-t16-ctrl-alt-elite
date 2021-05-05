@@ -62,7 +62,7 @@ function createLocationMarker(curPos) {
 function createVanMarker(vanPoints) {
     var vanMarkers = []
     vanPoints.forEach((van, index) => {
-        if (index<5) {
+        if (index < 5) {
             var el = document.createElement('div');
             if (index==0) {
                 el.className = 'nearestMarker'
@@ -75,9 +75,14 @@ function createVanMarker(vanPoints) {
             var vanID = van[0].loginID
             var dist = van[1]
             var marker = new mapboxgl.Marker(el)
-                // .setHTML(long.toString() + " " + lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>')
-                .setLngLat([long, lat]) // Marker [lng, lat] coordinates
-                .addTo(map); // Add the marker to the map
+                    .setPopup(new mapboxgl.Popup({
+                        closeButton: false,
+                        closeOnClick: true,
+                        closeOnMove: false,
+                    })
+                    .setHTML(long.toString() + " " + lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>'))
+                    .setLngLat([long, lat]) // Marker [lng, lat] coordinates
+                    .addTo(map); // Add the marker to the map
             vanMarkers.push([van[0], marker])
         }
     })
@@ -150,9 +155,8 @@ map.on('click', () => {
                             el.className = 'marker'
                             marker2[1].remove()
                             marker2[1] = new mapboxgl.Marker(el)
-                            // .setHTML(lnglat.lng.toString() + " " + lnglat.lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>')
-                            .setLngLat([lnglat.lng, lnglat.lat]) // Marker [lng, lat] coordinates
-                            .addTo(map); // Add the marker to the map
+                                .setLngLat([lnglat.lng, lnglat.lat]) // Marker [lng, lat] coordinates
+                                .addTo(map); // Add the marker to the map
                         }
                     }
                 })
@@ -160,9 +164,9 @@ map.on('click', () => {
                 el.className = 'nearestMarker'
                 marker[1].remove()
                 marker[1] = new mapboxgl.Marker(el)
-
-                .setLngLat([lnglat.lng, lnglat.lat]) // Marker [lng, lat] coordinates
-                .addTo(map); // Add the marker to the map
+                    .setLngLat([lnglat.lng, lnglat.lat]) // Marker [lng, lat] coordinates
+                    .addTo(map); // Add the marker to the map
+                vanMarkers[index][1] = marker[1]
             })
         }
     })
