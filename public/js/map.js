@@ -72,15 +72,15 @@ function createVanMarker(vanPoints) {
             }
             var long = van[0].longitude
             var lat = van[0].latitude
-            var vanID = van[0].loginID
-            var dist = van[1]
+            var cur_van = van[0]
+            var dist = Math.round(van[1])
             var marker = new mapboxgl.Marker(el)
                 .setPopup(new mapboxgl.Popup({
                     closeButton: false,
                     closeOnClick: true,
                     closeOnMove: false,
                 })
-                .setHTML(long.toString() + " " + lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>'))
+                .setHTML(cur_van.vanName + '<br>' + dist + 'm away' +'<br><a href="/customer/' + cur_van.loginID +'/menu/?dist=' + dist + '">Select Van</a>'))
                 .setLngLat([long, lat]) // Marker [lng, lat] coordinates
                 .addTo(map); // Add the marker to the map
             vanMarkers.push([van[0], marker])
@@ -140,16 +140,16 @@ curMarker.on('dragend', function () {
 map.on('click', () => { 
     vanMarkers.forEach((marker, index) => {
         if (index < 5) {
-            var vanID = marker[0].loginID
+            var cur_van = marker[0]
             var lnglat = marker[1].getLngLat()
-            var dist = vanDist[index][1]
+            var dist = Math.round(vanDist[index][1])
             marker[1].getElement().addEventListener('click', () => {
                 if (!marker[1].getElement().classList.contains('nearestMarker')) {
                     vanMarkers.forEach((marker2, index2)=> {
                         if (index2 < 5 && index2 != index) {
-                            var vanID = marker2[0].loginID
+                            var cur_van = marker2[0]
                             var lnglat = marker2[1].getLngLat()
-                            var dist = vanDist[index2][1]
+                            var dist = Math.round(vanDist[index2][1])
                             var el = document.createElement('div')
                             el.className = 'marker'
                             marker2[1].remove()
@@ -159,7 +159,7 @@ map.on('click', () => {
                                 closeOnClick: true,
                                 closeOnMove: false,
                             })
-                            .setHTML(lnglat.lng.toString() + " " + lnglat.lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>'))
+                            .setHTML(cur_van.vanName + '<br>' + dist + 'm away' +'<br><a href="/customer/' + cur_van.loginID +'/menu/?dist=' + dist + '">Select Van</a>'))
                             .setLngLat([lnglat.lng, lnglat.lat]) // Marker [lng, lat] coordinates
                             .addTo(map); // Add the marker to the map
                         }
@@ -173,7 +173,7 @@ map.on('click', () => {
                         closeOnClick: true,
                         closeOnMove: false,
                     })
-                    .setHTML(lnglat.lng.toString() + " " + lnglat.lat.toString() + '<br><a href="/customer/' + vanID +'/menu/?dist=' + Math.round(dist) + '">Select Van</a>'))
+                    .setHTML(cur_van.vanName + '<br>' + dist + 'm away' +'<br><a href="/customer/' + cur_van.loginID +'/menu/?dist=' + dist + '">Select Van</a>'))
                     .setLngLat([lnglat.lng, lnglat.lat]) // Marker [lng, lat] coordinates
                     .addTo(map); // Add the marker to the map
                 }
