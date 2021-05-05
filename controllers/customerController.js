@@ -87,7 +87,7 @@ const postNewOrder = async (req, res) => {
     if (loggedIn(req)) {
         var order = {}
         orderInfo = JSON.parse(req.body.payload);
-        // example orderInfo structure
+        // orderInfo structure
         // orderInfo = {
         //   payload: '{
         //      "item":[{

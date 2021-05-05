@@ -323,10 +323,6 @@ filterMenu();
 displayCart();
 
 function postOrder() {
-    // https://stackoverflow.com/questions/6396101/pure-javascript-send-post-data-without-a-form
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("POST", window.location.href, true);
-    // xhr.setRequestHeader('Content-Type', 'application/json');
     cart = shoppingCart.getCart();
     if (cart.length == 0) {
         alert("Your cart is empty!");
