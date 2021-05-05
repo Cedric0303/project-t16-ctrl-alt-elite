@@ -1,7 +1,7 @@
 // filter menu by categories
 function filterMenu() {
     var searchTerm = document.getElementById("searchbar").value;
-    var regex = new RegExp(`${searchTerm}`, 'i');
+    var regex = new RegExp(`^${searchTerm}`, 'i');
 
     // check which categories are selected
     const itemsInCategory = [];
@@ -44,7 +44,20 @@ function filterMenu() {
 
     // hide items which do not match the search term
     for(var i = 0; i < allItems.length; i++){
-        if(!((regex).test(allItems[i].id))){
+        // compare search term with each word in item name
+        var words = allItems[i].id.split(" ")
+        var matchFound = false;
+        console.log(words.length)
+        for(var j = 0; j < words.length; j++){
+            console.log(words[j])
+            console.log((regex).test(words[j]))
+            if((regex).test(words[j])){
+                matchFound = true;
+                break;
+            }
+        }
+        // hide item if no word is a match
+        if(!matchFound){
             allItems[i].style.display = 'none';
         }
     }
