@@ -345,3 +345,30 @@ function postOrder() {
 document.getElementById('chkoutbutton').addEventListener("click",postOrder);
 // shoppingCart.getCart() - returns array of cart
 // vaninfo - returns a json object with selected van info
+
+// register openModal to all menu items
+var menuitems = document.getElementsByClassName('menuitemclick');
+for (var i=0; i<menuitems.length; i++) {
+    console.log(menuitems[i])
+    menuitems[i].addEventListener("click", openModal);
+}; 
+// register close action for X button and modal space
+document.getElementById('modalclose').addEventListener("click", function() {
+    modal.style.display = "none";
+});
+document.getElementById('modal').addEventListener("click", function() {
+    modal.style.display = "none";
+});
+
+// image modal code
+function openModal() {
+    imgToZoom = this.firstElementChild;
+    console.log("RUN MODAL")
+    var modal = document.getElementById("modal");
+    var modalImg = document.getElementById("modal-content");
+    var caption = document.getElementById("caption");
+    modal.style.display = "block";
+    modalImg.src = imgToZoom.src;
+    caption.innerHTML = imgToZoom.alt;
+    return false;
+}
