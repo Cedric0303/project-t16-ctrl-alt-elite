@@ -12,7 +12,7 @@ var register = function(Handlebars) {
         },
         // https://stackoverflow.com/questions/10645994/how-to-format-a-utc-date-as-a-yyyy-mm-dd-hhmmss-string-using-nodejs
         formatDate: function (datetime) {
-            var dt = datetime;
+            var dt = new Date(datetime);
             formatted = "";
             ampm = ""
             date = dt.toDateString();
