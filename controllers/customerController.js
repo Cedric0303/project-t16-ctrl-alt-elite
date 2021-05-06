@@ -2,8 +2,7 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const path = require('path')
 const bcrypt = require('bcrypt')
-const salt = 10
-const hour = 3600000
+const jwt = require('jsonwebtoken');
 
 // connect to database
 CONNECTION_STRING = "mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/database?retryWrites=true&w=majority"
@@ -21,10 +20,21 @@ db.once('open', () => {
     console.log('connected to Mongo ...')
 })
 
+// get all cookies from current page
+var get_cookies = function(request) {
+    var cookies = {};
+    request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
+      var parts = cookie.match(/(.*?)=(.*)$/)
+      cookies[ parts[1].trim() ] = (parts[2] || '').trim();
+    });
+    return cookies;
+  };
+
 // return login state
 function loggedIn(req) {
     // if an username (email) is bound to session, return true for LOGGED IN
-    if (req.session.username != null) {
+    const token = get_cookies(req)['jwt']
+    if (token && jwt.verify(token, process.env.SECRET_OR_PUBLIC_KEY)) {
         return true;
     } else {
         return false;
@@ -118,14 +128,15 @@ const postNewOrder = async (req, res) => {
             orderInfo.item[item].total = priceNum*orderInfo.item[item].count;
             orderTotal += orderInfo.item[item].total;
         }
-        
+        const token = get_cookies(req)['jwt']
+        const payload = jwt.decode(token)
         order = {
             item: orderInfo["item"],
             orderTotal: orderTotal,
             timestamp: new Date(),
             vendorID: orderInfo["vendorID"],
-            customerID: req.session.username,
-            customerGivenName: req.session.givenname,
+            customerID: payload.body.username,
+            customerGivenName: payload.body.nameGiven,
             orderStatus: "Ordering",
             orderID: Math.floor((Math.random() * 1000000) + 1)
         };
@@ -195,13 +206,14 @@ const authLogin = async (req, res) => {
                 }, { 
                     $set:{
                         sessionID : req.sessionID,
-                        expiryDate : new Date(Date.now() + hour)
+                        // expiryDate : new Date(Date.now() + hour)
                     }
                 })
-                req.session.username = email;
-                req.session.givenname = user.nameGiven;
-                req.session.maxAge = new Date(Date.now() + hour);
-                req.session.cookie.maxAge = hour;
+                const body = {username: email, nameGiven: user.nameGiven};
+                const token = jwt.sign({body}, process.env.SECRET_OR_PUBLIC_KEY);
+                res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true})
+                // res.session.maxAge = new Date(Date.now() + hour);
+                // res.session.cookie.maxAge = hour;
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
                 prevPageURL = req.header('Referer');
@@ -248,8 +260,11 @@ const addCustomer = async (req, res) => {
 
 const getOrders = async (req, res) => {
     if (loggedIn(req)) {
+        const token = get_cookies(req)['jwt']
+        const payload = jwt.decode(token)
+        const username = payload.body.username
         const orders = await db.db.collection('order').find({
-            "customerID": req.session.username
+            "customerID": username
         }).project({}).sort({"timestamp": -1}).toArray()
         if (orders) {
             res.render('orders', {

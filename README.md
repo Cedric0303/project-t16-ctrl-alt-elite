@@ -56,6 +56,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 * **dotenv**
 * **bcrypt**
 * **Mapbox GL JS** (no package install needed)
+* **jsonwebtoken**
 
 **Now Get ready to complete all the tasks:**
 
