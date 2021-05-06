@@ -21,6 +21,7 @@ db.once('open', () => {
 })
 
 // get all cookies from current page
+// https://stackoverflow.com/a/51812642
 var get_cookies = function(req) {
     var cookies = {};
     req.headers && req.headers.cookie.split(';').forEach(function(cookie) {
@@ -280,6 +281,7 @@ const getOrders = async (req, res) => {
 }
 
 const getProfile = async (req, res) => {
+    console.log(new Date().getTime())
     res.write("<h1>Profile page</h1>");
     res.end('<p><a href="logout">Logout</a></p>')
 }
