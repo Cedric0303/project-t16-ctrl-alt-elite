@@ -134,21 +134,3 @@ curMarker.on('dragend', function () {
     })
     nearestVan = vanDist[0][0]
 })
-
-// update selected marker function
-function updateSelection() {
-    vanMarkers.forEach((marker) => {
-        if (marker[1].getElement() != this) {
-            marker[1].getElement().classList.remove('selectedMarker');
-            marker[1].getElement().classList.add('marker');
-        } else {
-            this.classList.remove('marker');
-            this.classList.add('selectedMarker');
-        }
-    })
-}
-
-// assign click event listeners to van markers to allow user to change selected van
-vanMarkers.forEach((marker) => {
-    marker[1].getElement().addEventListener('click', updateSelection);
-})

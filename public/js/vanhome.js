@@ -17,6 +17,7 @@ for (var i=0; i<5; i++) {
 }
 
 ordered = [0,1,2,3,4];
+// the currently selected van as index of vanListHtml, vanDist
 selectedVanIndex = 0;
 
 function displayVanList(order) {
@@ -42,6 +43,17 @@ function displayVanList(order) {
     }
 }
 
+// update collapsed van list to show selected van
+function updateCollapsed() {
+    // change "closest van" text to "selected van" if selected van isn't the closest
+    if (selectedVanIndex == 0) {
+        document.getElementById('vanlisttop').querySelector('h1').innerHTML = "Closest Van";
+    } else {
+        document.getElementById('vanlisttop').querySelector('h1').innerHTML = "Selected Van";
+    }
+    document.getElementById('vanlisttopcontent').innerHTML = vanListHtml[selectedVanIndex];
+}
+
 // expand/collapse van list
 function toggleVanList() {
     vanlistbottom = document.getElementById('vanlistbottom');
@@ -50,13 +62,7 @@ function toggleVanList() {
         // collapse list
         vanlistbottom.style.display = 'none';
         updateBorder(null);
-        // change "closest van" text to "selected van" if selected van isn't the closest
-        if (selectedVanIndex == 0) {
-            document.getElementById('vanlisttop').querySelector('h1').innerHTML = "Closest Van";
-        } else {
-            document.getElementById('vanlisttop').querySelector('h1').innerHTML = "Selected Van";
-        }
-        document.getElementById('vanlisttopcontent').innerHTML = vanListHtml[selectedVanIndex];
+        updateCollapsed();
     } else {
         // expand cart
         vanlistbottom.style.display = 'flex';
@@ -96,6 +102,7 @@ function selectVan() {
         if (vans[i] == this) {
             selectedVanIndex = i;
             displayVanList(ordered);
+            updateMarkers()
             updateBorder(i);
         }
     }
@@ -104,6 +111,42 @@ function selectVan() {
 // display vans in order of nearest to furthest
 displayVanList(ordered);
 
+// update selected marker function
+function updateSelection() {
+    vanMarkers.forEach((marker, index) => {
+        if (marker[1].getElement() == this) {
+            // for the selected marker
+            selectedVanIndex = index;
+            updateBorder(index);
+            if (document.getElementById('vanlistbottom').style.display != 'flex') {
+                updateCollapsed();
+            }
+        }
+    })
+}
+
+// update marker display
+function updateMarkers() {
+    vanMarkers.forEach((marker, index) => {
+        if (index != selectedVanIndex) {
+            // for all markers that aren't the selected one
+            marker[1].getElement().classList.remove('selectedMarker');
+            marker[1].getElement().classList.add('marker');
+        } else {
+            // for the selected marker
+            vanMarkers[selectedVanIndex][1].getElement().classList.remove('marker');
+            vanMarkers[selectedVanIndex][1].getElement().classList.add('selectedMarker');
+        }
+    })
+}
+
+
 // -----------register events---------
 // register van list expand/collapse button on top of van float
 document.getElementById('vanlistexpand').addEventListener("click", toggleVanList);
+
+// assign click event listeners to van markers to allow user to change selected van
+vanMarkers.forEach((marker, index) => {
+    marker[1].getElement().addEventListener('click', updateSelection);
+    marker[1].getElement().addEventListener('click', updateMarkers);
+})
