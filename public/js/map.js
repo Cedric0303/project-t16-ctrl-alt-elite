@@ -49,11 +49,6 @@ function createLocationMarker(curPos) {
     el.className = 'selfMarker'
     return new mapboxgl.Marker(el, {draggable:true}) // development purposes to test different user locations  
     .setLngLat([curPos.long, curPos.lat]) // Marker [lng, lat] coordinates
-    .setPopup(new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: true,
-        closeOnMove: true,
-    }).setHTML("Current location:<br>" + curPos.long.toString() + " " + curPos.lat.toString()))
     .addTo(map)
 }
 
@@ -74,15 +69,9 @@ function createVanMarker(vanPoints) {
             }
             var long = van[0].longitude
             var lat = van[0].latitude
-            var cur_van = van[0]
-            var dist = Math.round(van[1])
+            // var cur_van = van[0]
+            // var dist = Math.round(van[1])
             var marker = new mapboxgl.Marker(el)
-                .setPopup(new mapboxgl.Popup({
-                    closeButton: false,
-                    closeOnClick: true,
-                    closeOnMove: false,
-                })
-                .setHTML(cur_van.vanName + '<br>' + dist + 'm away' +'<br><a href="/customer/' + cur_van.loginID +'/menu/?dist=' + dist + '">Select Van</a>'))
                 .setLngLat([long, lat]) // Marker [lng, lat] coordinates
                 .addTo(map); // Add the marker to the map
             vanMarkers.push([van[0], marker])
@@ -140,7 +129,7 @@ curMarker.on('dragend', function () {
     vanDist = calcVanDist(curPos, vans);
     vanMarkers = []
     vanMarkers = createVanMarker(vanDist);
-    vanMarkers.forEach((marker, index) => {
+    vanMarkers.forEach((marker) => {
         marker[1].getElement().addEventListener('click', updateSelection);
     })
     nearestVan = vanDist[0][0]
@@ -148,7 +137,7 @@ curMarker.on('dragend', function () {
 
 // update selected marker function
 function updateSelection() {
-    vanMarkers.forEach((marker, index) => {
+    vanMarkers.forEach((marker) => {
         if (marker[1].getElement() != this) {
             marker[1].getElement().classList.remove('selectedMarker');
             marker[1].getElement().classList.add('marker');
@@ -160,6 +149,6 @@ function updateSelection() {
 }
 
 // assign click event listeners to van markers to allow user to change selected van
-vanMarkers.forEach((marker, index) => {
+vanMarkers.forEach((marker) => {
     marker[1].getElement().addEventListener('click', updateSelection);
 })
