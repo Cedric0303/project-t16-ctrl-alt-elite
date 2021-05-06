@@ -110,15 +110,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 ## Project Website
 URL: `http://project-t16-ctrl-alt-elite.herokuapp.com/`
 
-Customer Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/customer`
-Customer Email : `default@default.com `
-Customer Password : `default `
+<br>Customer Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/customer`
+<br>Customer Email : `default@default.com `
+<br>Customer Password : `default `
 
-Vendor Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/vendor`
-Vendor loginID : `Tasty_Trailer`
-Vendor Password : `12345678`
+<br>Vendor Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/vendor`
+<br>Vendor loginID : `Tasty_Trailer`
+<br>Vendor Password : `12345678`
 
 ## Database Access
 Connection String (using MongoDB Compass): `mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/test`
-Username : `defaultuser` (replace `<username>`)<br> Password : `defaultuser` (replace `<password>`)
+<br>Username : `defaultuser` (replace `<username>`)
+<br> Password : `defaultuser` (replace `<password>`)
 
