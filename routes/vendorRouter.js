@@ -14,8 +14,10 @@ vendorRouter.get('/', vendorController.getVendorHome)
 vendorRouter.post('/:id', vendorController.postVendor)
 
 // return a specific vendor van
-
 vendorRouter.get('/:id', vendorController.getVendor)
+
+// authenticate vendor login
+vendorRouter.post('/auth', vendorController.authLogin)
 
 // return orders of a specific vendor van
 vendorRouter.get('/:id/orders', vendorController.getOrders)
