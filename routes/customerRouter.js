@@ -36,5 +36,7 @@ customerRouter.get('/orders', customerController.getOrders)
 
 customerRouter.get('/profile', customerController.getProfile)
 
+customerRouter.get('/logout', customerController.getLogout)
+
 
 module.exports = customerRouter

@@ -21,9 +21,9 @@ db.once('open', () => {
 })
 
 // get all cookies from current page
-var get_cookies = function(request) {
+var get_cookies = function(req) {
     var cookies = {};
-    request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
+    req.headers && req.headers.cookie.split(';').forEach(function(cookie) {
       var parts = cookie.match(/(.*?)=(.*)$/)
       cookies[ parts[1].trim() ] = (parts[2] || '').trim();
     });
@@ -280,7 +280,19 @@ const getOrders = async (req, res) => {
 }
 
 const getProfile = async (req, res) => {
-    res.send("Profile page");
+    res.write("<h1>Profile page</h1>");
+    res.end('<p><a href="logout">Logout</a></p>')
+}
+
+const getLogout = async (req, res) => {
+    if (loggedIn(req)) {
+        const token = get_cookies(req)['jwt']
+        res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
+    }
+    else {
+        // RETURN NOT LOGGED IN ERROR
+    }
+    res.redirect('/customer/')
 }
 
 
@@ -296,5 +308,6 @@ module.exports = {
     getRegister,
     addCustomer,
     getOrders,
-    getProfile
+    getProfile,
+    getLogout
 }
