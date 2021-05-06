@@ -12,35 +12,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
-    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css' type='text/css' />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
 </head>
 
 <body>
     <div class="fixedbot">
-        <div id="vanlistcontainer">
-            <div id="vanlisttop">
-                <div id="selectedvan" class="vanlistitem">
-                    <div class="vaninfo">
-                        <h3><span class="vanname"></span></h3>
-                        <h4><span class="vanaddress"></span></h4>
-                        <h5><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;<span class="vandist"></span> m&nbsp;away</h5>
-                    </div>
-                    <div class="vancontinue">
-                        <a>Continue</a>
-                    </div>
+        <div id="vanlistfloat">
+            <div id="vanlistexpand"><i class="fas fa-minus"></i></div>
+            <div id="vanlistcontainer">
+                <div id="vanlisttop">
+                    <h1>Closest Van</h1>
+                    <span id="vanlisttopcontent">{{!-- filled via vanhome.js --}}</span>
+                    {{!-- <div id="selectedvan" class="vanlistitem">
+                        <div class="vaninfo">
+                            <h3><span class="vanname"></span></h3>
+                            <h4><span class="vanaddress"></span></h4>
+                            <h5><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;<span class="vandist"></span> m&nbsp;away</h5>
+                        </div>
+                        <div class="vancontinue">
+                            <a>Continue</a>
+                        </div>
+                    </div> --}}
                 </div>
-            </div>
-            <div id="vanlistbottom">
-                <div class="vanlistitem">
-                    <div class="vaninfo">
-                        <h3><span class="vanname"></span></h3>
-                        <h4><span class="vanaddress"></span></h4>
-                        <h5><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;<span class="vandist"></span> m&nbsp;away</h5>
-                    </div>
-                    <div class="vancontinue">
-                        <a>Continue</a>
-                    </div>
+                <div id="vanlistbottom">
+                    <h1>Vans Nearby</h1>
+                    <span id="vanlistbottomcontent">{{!-- filled via vanhome.js --}}</span>
                 </div>
             </div>
         </div>

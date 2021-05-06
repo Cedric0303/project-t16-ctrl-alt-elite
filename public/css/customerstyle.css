@@ -86,15 +86,46 @@ sup {
     pointer-events: none;
 }
 /* --------------homepage van list float ------------- */
+#vanlistfloat {
+    overflow: hidden;
+    box-sizing: border-box;
+    pointer-events: auto;
+    background-color: #ffffff;
+    border-radius: 30px;
+
+    margin: 0 1vw 2vh;
+}
+
+#vanlistexpand {
+    margin: 0;
+    pointer-events: auto;
+
+    color: #919191;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+#vanlistexpand i {
+    transform-origin: center;
+    -webkit-transform:scale(2,1); /* Safari and Chrome */
+    -moz-transform:scale(2,1); /* Firefox */
+    -ms-transform:scale(2,1); /* IE 9 */
+    -o-transform:scale(2,1); /* Opera */
+    transform:scale(2,1);
+}
+
+#vanlistexpand:hover {
+    background-color: #ececec;
+    cursor: pointer;
+}
+
 #vanlistcontainer {
     overflow: hidden;
     box-sizing: border-box;
     pointer-events: auto;
-    margin: 0 1vw 2vh;
-    padding: 2vh 7vw;
-    background-color: #ffffff;
-    border-radius: 30px;
 
+    padding: 0 7vw 2vh;
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-rows: min-content;
@@ -103,12 +134,22 @@ sup {
         "vanlistbottom";
 }
 
-#vanlisttop {
-    grid-area: vanlisttop;
-}
+#vanlisttop { grid-area: vanlisttop; }
 
 #vanlistbottom {
     grid-area: vanlistbottom;
+    display: none;
+    /* changes to flex when list expanded */
+    flex-direction: column;
+}
+
+/* closest van, vans nearby */
+#vanlistcontainer h1 {
+    margin: 0.5vh 0 0;
+    padding: 0 0 0 1vw;
+    font-size: 0.9em;
+    font-weight: 700;
+    color: #5490f5;
 }
 
 .vanlistitem {
@@ -116,11 +157,12 @@ sup {
     padding: 0.5vh 1vw;
     box-sizing: border-box;
 
-    border-radius: 10px;
-    border: 1px solid #5490f5;
+    /* when selected, show a border */
+    /* border-radius: 10px;
+    border: 1px solid #5490f5; */
 
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto min-content;
     grid-template-areas: 
         "vaninfo vancontinue";
 }
@@ -129,18 +171,49 @@ sup {
     grid-area: vaninfo;
 }
 
+/* van name */
+.vaninfo h3 {
+    margin: 0 0 0.1vh;
+    padding: 0;
+    font-size: 1em;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+}
+
+/* van address */
+.vaninfo h4 {
+    margin: 0 0 0.1vh;
+    font-size: 0.8em;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 500;
+    color: #727272;
+    text-transform: capitalize;
+}
+
+/* van distance */
+.vaninfo h5 {
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+}
+
 .vancontinue {
     grid-area: vancontinue;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    align-items: center;
+    margin-left: 5vw;
 }
 
 .vancontinue a {
     margin: 0;
-    padding: 0.7vh 3vw;
-    min-width: 90px;
-    border-radius: 100px;
+    padding: 1vh 3vw;
+    min-width: 110px;
+    max-width: 150px;
+    max-height: 50px;
+    border-radius: 50px;
+    box-sizing: border-box;
 
     display: flex;
     justify-content: center;
@@ -148,7 +221,7 @@ sup {
 
     background-color: #5490f5;
     color: #ffffff;
-    font-size: 0.8em;
+    font-size: 1em;
     font-weight: 700;
 
     cursor: pointer;
@@ -322,7 +395,7 @@ sup {
 }
 
 /* van name */
-.vanfloat h3,.vaninfo h3 {
+.vanfloat h3 {
     margin: 1vh 0 0.2vh;
 
     font-family: "Roboto", sans-serif;
@@ -330,7 +403,7 @@ sup {
 }
 
 /* address */
-.vanfloat h4,.vaninfo h4 {
+.vanfloat h4 {
     margin: 0.5vh 0 0.2vh;
     font-size: 0.8em;
     font-family: "Work Sans", sans-serif;
@@ -340,7 +413,7 @@ sup {
 }
 
 /* distance */
-.vanfloat h5,.vaninfo h5 {
+.vanfloat h5 {
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     margin: 0.5vh 0 0.2vh;
@@ -747,8 +820,12 @@ input[type=number]::-webkit-outer-spin-button {
         margin-right: min(0.5vw, 10px);
     }
 
-    #vanlistcontainer {
+    #vanlistfloat {
         width: max-content;
+    }
+
+    #vanlistcontainer {
+        padding: 0.5vh 2vw 2vh;
     }
 
     #cartcontainer {
