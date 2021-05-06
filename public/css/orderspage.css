@@ -7,53 +7,80 @@
 #ordersTitleBox h1 {
     padding: 5vh 0 0 10vw;
     margin: 0; 
+
 }
 
 .orderbox-container {
     display: grid; 
+    height: min-content;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr 2fr 1fr;
-    grid-gap: 1rem;
+    grid-template-rows: auto auto auto;
     grid-template-areas: 
     "orderdate orderdate orderdate"
-    "ordercontent . orderstatus"
+    "ordercontent ordercontent orderstatus"
     "ordertotal ordertotal ordertrailer";
     background-color: #ffffff;
-    padding-left: 2.5%;
-    margin-bottom: 5%;
-    margin-top: 5%;
+    padding: 1vh 2vw;
+    margin: 2vh 0;
+
+    border-top: 1px solid #414141;
+    border-bottom: 1px solid #414141;;
 }
 
 .orderdate {
     grid-area: orderdate;
     font-size: 1.2em;
     font-weight: bold;
+    margin-bottom: 0.3vh;
 }
 
 .ordercontent {
     grid-area: ordercontent;
     font-size: 0.8em;
+    margin-bottom: 1vh;
 }
 
 .orderstatus {
     grid-area: orderstatus;
-    font-size: 0.8em;
-    
-}
-
-.ordertotal {
-    grid-area: ordertotal;
     font-size: 1.2em;
     font-weight: bold;
 }
 
+.ordertotal {
+    grid-area: ordertotal;
+    font-size: 1em;
+    font-weight: bold;
+
+    display: flex;
+    align-items: flex-end;
+}
+
 .ordertrailer {
     grid-area: ordertrailer;
-    font-size: 0.8em;
+    font-size: 1em;
 }
 
 .orderitem {
     display: grid;
-    grid-template-columns: 1fr 5fr 5fr;
+    grid-template-columns: 1fr 6fr 3fr;
     justify-content: flex-start;
 }
+
+@media screen and (min-width: 700px) {
+    .orderitem {
+        grid-template-columns: 1fr 6fr 10fr;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .orderitem {
+        grid-template-columns: 1fr 6fr 20fr;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .orderitem {
+        grid-template-columns: 1fr 6fr 30fr;
+    }
+}
+
