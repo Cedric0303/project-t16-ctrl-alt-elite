@@ -158,13 +158,18 @@ sup {
     box-sizing: border-box;
 
     /* when selected, show a border */
-    /* border-radius: 10px;
-    border: 1px solid #5490f5; */
+    border-radius: 10px;
+    /* border: 1px solid #5490f5; */
 
     display: grid;
     grid-template-columns: auto min-content;
     grid-template-areas: 
         "vaninfo vancontinue";
+}
+
+.vanlistitem:hover {
+    background-color: #e6e6e6;
+    cursor: pointer;
 }
 
 .vaninfo {
