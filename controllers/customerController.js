@@ -201,14 +201,14 @@ const authLogin = async (req, res) => {
             const valid = await bcrypt.compare(pw, user.password)
             if (user && valid) {
                 // if account exists and pw is correct
-                await db.db.collection('customer').findOneAndUpdate({
-                    loginID: user.loginID
-                }, { 
-                    $set:{
-                        sessionID : req.sessionID,
-                        // expiryDate : new Date(Date.now() + hour)
-                    }
-                })
+                // await db.db.collection('customer').findOneAndUpdate({
+                //     loginID: user.loginID
+                // }, { 
+                //     $set:{
+                //         sessionID : req.sessionID,
+                //         // expiryDate : new Date(Date.now() + hour)
+                //     }
+                // })
                 const body = {username: email, nameGiven: user.nameGiven};
                 const token = jwt.sign({body}, process.env.SECRET_OR_PUBLIC_KEY);
                 res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true})
