@@ -5,6 +5,8 @@ const vendorRouter = require('./routes/vendorRouter')
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const exphbs = require('express-handlebars')
+var favicon = require('serve-favicon')
+var path = require('path')
 
 const app = express();
 const port = process.env.PORT || 8080
@@ -18,6 +20,7 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true
 }));
+app.use(favicon(path.join(__dirname,'public','icons','favicon.ico')));
 
 app.engine('hbs', exphbs({
 	defaultLayout: 'main',

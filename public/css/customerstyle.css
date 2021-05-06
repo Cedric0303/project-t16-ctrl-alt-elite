@@ -96,7 +96,66 @@ sup {
     border-radius: 30px;
 
     display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: min-content;
+    grid-template-areas: 
+        "vanlisttop"
+        "vanlistbottom";
+}
+
+#vanlisttop {
+    grid-area: vanlisttop;
+}
+
+#vanlistbottom {
+    grid-area: vanlistbottom;
+}
+
+.vanlistitem {
+    margin: 0 0 0.5vh;
+    padding: 0.5vh 1vw;
+    box-sizing: border-box;
+
+    border-radius: 10px;
+    border: 1px solid #5490f5;
+
+    display: grid;
     grid-template-columns: auto auto;
+    grid-template-areas: 
+        "vaninfo vancontinue";
+}
+
+.vaninfo {
+    grid-area: vaninfo;
+}
+
+.vancontinue {
+    grid-area: vancontinue;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.vancontinue a {
+    margin: 0;
+    padding: 0.7vh 3vw;
+    min-width: 90px;
+    border-radius: 100px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #5490f5;
+    color: #ffffff;
+    font-size: 0.8em;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.vancontinue a:hover {
+    background-color: #7ca7f1;
 }
 
 /* --------------cart float--------------- */
@@ -227,7 +286,7 @@ sup {
     background-color: #7ca7f1;
 }
 
-/* -----------van selected float------------- */
+/* -----------van selected float for menu pages------------- */
 .vanfloat {
     overflow: hidden;
     box-sizing: border-box;
@@ -263,7 +322,7 @@ sup {
 }
 
 /* van name */
-.vanfloat h3 {
+.vanfloat h3,.vaninfo h3 {
     margin: 1vh 0 0.2vh;
 
     font-family: "Roboto", sans-serif;
@@ -271,7 +330,7 @@ sup {
 }
 
 /* address */
-.vanfloat h4 {
+.vanfloat h4,.vaninfo h4 {
     margin: 0.5vh 0 0.2vh;
     font-size: 0.8em;
     font-family: "Work Sans", sans-serif;
@@ -281,7 +340,7 @@ sup {
 }
 
 /* distance */
-.vanfloat h5 {
+.vanfloat h5,.vaninfo h5 {
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     margin: 0.5vh 0 0.2vh;
@@ -686,6 +745,10 @@ input[type=number]::-webkit-outer-spin-button {
 
     .navbar li a i {
         margin-right: min(0.5vw, 10px);
+    }
+
+    #vanlistcontainer {
+        width: max-content;
     }
 
     #cartcontainer {
