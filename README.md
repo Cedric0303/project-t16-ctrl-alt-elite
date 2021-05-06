@@ -22,6 +22,7 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
   - [Team Members](#team-members)
   - [General info](#general-info)
   - [Technologies](#technologies)
+    - [Packages](#packages)
   - [Postman Requests](#postman-requests)
     - [Customer App](#customer-app)
     - [Vendor App](#vendor-app)
@@ -36,7 +37,7 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 | Name | Task | State |
 | :---         |     :---:      |          ---: |
 | Jack Lenard  | Back End     |  In Progress|
-| Jun Li Chen (Cedric)    | Back End      |  In Progress |
+| Jun Li Chen     | Back End      |  In Progress |
 | Paris Eckert    | Front End      |  In Progress |
 | Zac Beaumont    | Front End      |  In Progress |
 | Jeongwoo Seo    | Front End      |  In Progress |
@@ -46,10 +47,7 @@ This is a project ...
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
 
 ## Technologies
-Project is created with:
-* NodeJs 14.16.X
-* Ipsum version: 2.33
-* Ament library version: 999
+### Packages
 * **mongoose**
 * **express**
 * **express-handlebars**
@@ -57,58 +55,13 @@ Project is created with:
 * **handlebars**
 * **dotenv**
 * **bcrypt**
-
-<!-- ## Code Implementation
-
-You can include a code snippet here.
-
-```HTML
-<!--
-Example code from: https://www.w3schools.com/jsref/met_win_alert.asp
-__>
-
-<!DOCTYPE html>
-<html>
-<body>
-
-<p>Click the button to display an alert box.</p>
-
-<button onclick="myFunction()">Try it</button>
-
-<script>
-function myFunction() {
-  alert("Hello! I am an alert box!");
-}
-</script>
-
-</body>
-</html>
-```
-
-## Adding Images
-
-You can use images/gif hosted online:
-
-<p align="center">
-  <img src="https://github.com/Martin-Reinoso/sandpit-Profile/raw/main/Images_Readme/01.gif"  width="300" >
-</p>
-
-Or you can add your own images from a folder in your repo with the following code. The example has a folder `Gifs` with an image file `Q1-1.gif`:
-```HTML
-<p align="center">
-  <img src="Gifs/Q1-1.gif"  width="300" >
-</p>
-```
-
-To create a gif from a video you can follow this [link](https://ezgif.com/video-to-gif/ezgif-6-55f4b3b086d4.mov).
-
-You can use emojis :+1: but do not over use it, we are looking for professional work. If you would not add them in your job, do not use them here! :shipit: -->
+* **Mapbox GL JS** (no package install needed)
 
 **Now Get ready to complete all the tasks:**
 
 - [x] Read the Project handouts carefully
 - [x] User Interface (UI)mockup
-- [ ] App server mockup
+- [x] App server mockup
 - [ ] Front-end + back-end (one feature)
 - [ ] Complete system + source code
 - [ ] Report on your work(+ test1 feature)
@@ -157,7 +110,15 @@ You can use emojis :+1: but do not over use it, we are looking for professional 
 ## Project Website
 URL: `http://project-t16-ctrl-alt-elite.herokuapp.com/`
 
+Customer Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/customer`
+Customer Email : `default@default.com `
+Customer Password : `default `
+
+Vendor Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/vendor`
+Vendor loginID : `Tasty_Trailer`
+Vendor Password : `12345678`
+
 ## Database Access
 Connection String (using MongoDB Compass): `mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/test`
-<br> Username : defaultuser (replace `<username>`)<br> Password : defaultuser (replace `<password>`)
+Username : `defaultuser` (replace `<username>`)<br> Password : `defaultuser` (replace `<password>`)
 
