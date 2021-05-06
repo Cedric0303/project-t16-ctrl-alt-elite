@@ -57,15 +57,17 @@ function createLocationMarker(curPos) {
     .addTo(map)
 }
 
-// create van markers
-// points is iterable of van location points
+// create van markers, array of the 5 nearest vans with the van object and its respective marker
+// [ [van Object, marker Object], ........]
+// vanPoints is iterable of van location points
 function createVanMarker(vanPoints) {
     var vanMarkers = []
     vanPoints.forEach((van, index) => {
         if (index < 5) {
             var el = document.createElement('div');
+            // closest van is automatically selected
             if (index==0) {
-                el.className = 'nearestMarker'
+                el.className = 'selectedMarker'
             }
             else {
                 el.className = 'marker'
@@ -89,6 +91,7 @@ function createVanMarker(vanPoints) {
     return vanMarkers
 }
 
+// returns array of vans and their distance to the user ordered from nearest to furthest 
 function calcVanDist(curPos, vans) {
     var point_distance = []
     for (var van in vans) {
@@ -107,6 +110,7 @@ function calcVanDist(curPos, vans) {
 var curPos = {"long":144.95878, "lat": -37.7983416}
 var {map, geolocate} = createMap(curPos)
 map.addControl(geolocate)
+// when user refreshes location, update all markers
 geolocate.on('geolocate', function() {
     geolocate.trigger();
     setTimeout(function () {
@@ -122,9 +126,10 @@ geolocate.on('geolocate', function() {
 var curMarker = createLocationMarker(curPos)
 var vanDist = calcVanDist(curPos, vans); // [ [van Object, dist Number], ........]
 var vanMarkers = createVanMarker(vanDist); // [ [van Object, marker Object], ........]
-var nearestVan = vanDist[0][0] // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< this is the nearestVan
+var nearestVan = vanDist[0][0] // nearestVan contains the van object closest to the user's current location
 
-
+// update markers and positions when user marker is dragged
+// for testing purposes
 curMarker.on('dragend', function () {
     for (i in vanMarkers) {
         vanMarkers[i][1].remove()
@@ -135,49 +140,26 @@ curMarker.on('dragend', function () {
     vanDist = calcVanDist(curPos, vans);
     vanMarkers = []
     vanMarkers = createVanMarker(vanDist);
+    vanMarkers.forEach((marker, index) => {
+        marker[1].getElement().addEventListener('click', updateSelection);
+    })
     nearestVan = vanDist[0][0]
 })
-map.on('click', () => { 
+
+// update selected marker function
+function updateSelection() {
     vanMarkers.forEach((marker, index) => {
-        if (index < 5) {
-            var cur_van = marker[0]
-            var lnglat = marker[1].getLngLat()
-            var dist = Math.round(vanDist[index][1])
-            marker[1].getElement().addEventListener('click', () => {
-                if (!marker[1].getElement().classList.contains('nearestMarker')) {
-                    vanMarkers.forEach((marker2, index2)=> {
-                        if (index2 < 5 && index2 != index) {
-                            var cur_van = marker2[0]
-                            var lnglat = marker2[1].getLngLat()
-                            var dist = Math.round(vanDist[index2][1])
-                            var el = document.createElement('div')
-                            el.className = 'marker'
-                            marker2[1].remove()
-                            marker2[1] = new mapboxgl.Marker(el)
-                            .setPopup(new mapboxgl.Popup({
-                                closeButton: false,
-                                closeOnClick: true,
-                                closeOnMove: false,
-                            })
-                            .setHTML(cur_van.vanName + '<br>' + dist + 'm away' +'<br><a href="/customer/' + cur_van.loginID +'/menu/?dist=' + dist + '">Select Van</a>'))
-                            .setLngLat([lnglat.lng, lnglat.lat]) // Marker [lng, lat] coordinates
-                            .addTo(map); // Add the marker to the map
-                        }
-                    })
-                    var el = document.createElement('div')
-                    el.className = 'nearestMarker'
-                    marker[1].remove()
-                    marker[1] = new mapboxgl.Marker(el)
-                    .setPopup(new mapboxgl.Popup({
-                        closeButton: false,
-                        closeOnClick: true,
-                        closeOnMove: false,
-                    })
-                    .setHTML(cur_van.vanName + '<br>' + dist + 'm away' +'<br><a href="/customer/' + cur_van.loginID +'/menu/?dist=' + dist + '">Select Van</a>'))
-                    .setLngLat([lnglat.lng, lnglat.lat]) // Marker [lng, lat] coordinates
-                    .addTo(map); // Add the marker to the map
-                }
-            })
+        if (marker[1].getElement() != this) {
+            marker[1].getElement().classList.remove('selectedMarker');
+            marker[1].getElement().classList.add('marker');
+        } else {
+            this.classList.remove('marker');
+            this.classList.add('selectedMarker');
         }
     })
+}
+
+// assign click event listeners to van markers to allow user to change selected van
+vanMarkers.forEach((marker, index) => {
+    marker[1].getElement().addEventListener('click', updateSelection);
 })

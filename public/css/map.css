@@ -30,7 +30,7 @@ main {
     border-radius: 0%;
     cursor: pointer;
 }
-.nearestMarker {
+.selectedMarker {
     background-image: url('/icons/red-selector.png');
     background-size: cover;
     width: 30px;
@@ -44,7 +44,7 @@ main {
         width: 40px;
         height: 40px;
     }
-    .nearestMarker {
+    .selectedMarker {
         width: 40px;
         height: 40px;
     }
