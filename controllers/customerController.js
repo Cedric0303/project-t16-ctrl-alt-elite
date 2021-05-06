@@ -233,7 +233,7 @@ const addCustomer = async (req, res) => {
     // if email does not exist in database, then add an account, if not render dupe account handlebar
     const user = await db.db.collection('customer').findOne({loginID: req.body.email});
     if (user == null) {
-        const hash_pw = await bcrypt.hash(req.body.password, salt)
+        const hash_pw = await bcrypt.hash(req.body.password, parseInt(process.env.SALT))
         await db.db.collection('customer').insertOne({
             nameGiven: req.body.firstName,
             nameFamily: req.body.lastName,
