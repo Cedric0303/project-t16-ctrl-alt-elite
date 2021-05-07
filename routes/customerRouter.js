@@ -34,6 +34,12 @@ customerRouter.post('/register', customerController.addCustomer)
 
 customerRouter.get('/orders', customerController.getOrders)
 
+customerRouter.get('/orders/:orderID', null)
+
+customerRouter.get('orders/:orderID/review', null)
+
+customerRouter.post('orders/:orderID/review', null)
+
 customerRouter.get('/profile', customerController.getProfile)
 
 customerRouter.get('/logout', customerController.getLogout)
