@@ -282,7 +282,7 @@ const getOrders = async (req, res) => {
 
 const getProfile = async (req, res) => {
     console.log(new Date().getTime())
-    res.write("<h1>Profile page</h1>");
+    res.write("<h1>Profile page #WIP</h1>");
     res.end('<p><a href="logout">Logout</a></p>')
 }
 
