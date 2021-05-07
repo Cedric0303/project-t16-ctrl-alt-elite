@@ -20,6 +20,13 @@ ordered = [0,1,2,3,4];
 // the currently selected van as index of vanListHtml, vanDist
 selectedVanIndex = 0;
 
+function upadteVanStats() {
+    vanListHtml = []
+    for (var i=0; i<5; i++) {
+        vanListHtml.push(htmlifyVan(vanDist[i][0].vanName, vanDist[i][0].address, vanDist[i][1], vanDist[i][0].loginID, i));
+    }
+}
+
 function displayVanList(order) {
     // 'order' is an array of length 5, containing the index of a htmlified van in vanListHtml
     // e.g. order = [0,1,2,3,4]
@@ -37,9 +44,9 @@ function displayVanList(order) {
     document.getElementById('vanlistbottomcontent').innerHTML = vanlistbottomcontent;
 
     // register each van list item with selectVan
-    vans = document.getElementsByClassName('vanlistitem');
-    for (var i=0;i<vans.length;i++) {
-        vans[i].addEventListener("click",selectVan);
+    vans_html = document.getElementsByClassName('vanlistitem');
+    for (var i=0;i<vans_html.length;i++) {
+        vans_html[i].addEventListener("click",selectVan);
     }
 }
 
@@ -76,30 +83,30 @@ function toggleVanList() {
 function updateBorder(index) {
     // 'index' is index of van in list that is being selected 
     if (index == null) {
-        for (var i=0;i<vans.length;i++) {
-            vans[i].style.border = "none";
+        for (var i=0;i<vans_html.length;i++) {
+            vans_html[i].style.border = "none";
         }
         return;
     }
-    vans = document.getElementsByClassName('vanlistitem');
-    for (var i=0;i<vans.length;i++) {
+    vans_html = document.getElementsByClassName('vanlistitem');
+    for (var i=0;i<vans_html.length;i++) {
         if (i != index) {
             // remove border from all other vans
-            vans[i].style.border = "none";
+            vans_html[i].style.border = "none";
         } else {
             // draw border around clicked van only if vanlist is expanded
             if (document.getElementById('vanlistbottom').style.display == 'flex') {
-                vans[i].style.border = "1px solid #5490f5";
+                vans_html[i].style.border = "1px solid #5490f5";
             }
         }
     }
 }
 
 function selectVan() {
-    vans = document.getElementsByClassName('vanlistitem');
-    for (var i=0;i<vans.length;i++) {
+    vans_html = document.getElementsByClassName('vanlistitem');
+    for (var i=0;i<vans_html.length;i++) {
         // select clicked van
-        if (vans[i] == this) {
+        if (vans_html[i] == this) {
             selectedVanIndex = i;
             displayVanList(ordered);
             updateMarkers()
@@ -149,4 +156,24 @@ document.getElementById('vanlistexpand').addEventListener("click", toggleVanList
 vanMarkers.forEach((marker, index) => {
     marker[1].getElement().addEventListener('click', updateSelection);
     marker[1].getElement().addEventListener('click', updateMarkers);
+})
+
+// simulate user moving around
+curMarker.on('dragend', function () {
+    for (i in vanMarkers) {
+        vanMarkers[i][1].remove()
+    }
+    var marker_pos = curMarker.getLngLat()
+    curPos.long = marker_pos.lng;
+    curPos.lat = marker_pos.lat;
+    vanDist = calcVanDist(curPos, vans);
+    vanMarkers = []
+    vanMarkers = createVanMarker(vanDist);
+    vanMarkers.forEach((marker) => {
+        marker[1].getElement().addEventListener('click', updateSelection);
+        marker[1].getElement().addEventListener('click', updateMarkers);
+    })
+    nearestVan = vanDist[0][0]
+    upadteVanStats()
+    displayVanList(ordered)
 })
