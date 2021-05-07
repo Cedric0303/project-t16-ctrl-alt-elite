@@ -7,6 +7,9 @@ function pendingColour() {
         } else if (targets[i].innerHTML == "Fulfilled") {
             targets[i].style.color = "#8fdb02"
             targets[i].innerHTML = "Ready for pickup"
+        } else if (targets[i].innerHTML == "Picked Up") {
+            targets[i].style.color = "#06db02"
+            targets[i].innerHTML = "Complete"
         } else {
             targets[i].innerHTML = ""
         }

@@ -123,11 +123,25 @@ const fulfilledOrder = async (req, res) => {
     res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
 }
 
+const pickedUpOrder = async (req, res) => {
+    await db.db.collection('order').updateOne({
+        orderID: {
+            $eq: Number(req.params.orderID)
+        }
+    }, {
+        $set: {
+            orderStatus: "Picked Up"
+        }
+    })
+    res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
+}
+
 module.exports = {
     getVendorHome,
     postVendor,
     getVendor,
     authLogin,
     getOrders,
-    fulfilledOrder
+    fulfilledOrder,
+    pickedUpOrder
 }
