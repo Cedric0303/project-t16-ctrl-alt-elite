@@ -63,7 +63,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 - [x] Read the Project handouts carefully
 - [x] User Interface (UI)mockup
 - [x] App server mockup
-- [ ] Front-end + back-end (one feature)
+- [x] Front-end + back-end (one feature)
 - [ ] Complete system + source code
 - [ ] Report on your work(+ test1 feature)
 
@@ -109,14 +109,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 </p>
 
 ## Project Website
-URL: `http://project-t16-ctrl-alt-elite.herokuapp.com/`
+URL: `https://project-t16-ctrl-alt-elite.herokuapp.com/`
 
 <br>Customer Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/customer`
-<br>Customer Email : `default@default.com `
+<br>Customer Email    : `default@default.com `
 <br>Customer Password : `default `
 
 <br>Vendor Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/vendor`
-<br>Vendor loginID : `Tasty_Trailer`
+<br>Vendor loginID  : `Tasty_Trailer`
 <br>Vendor Password : `12345678`
 
 ## Database Access
