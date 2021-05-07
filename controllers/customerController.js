@@ -139,7 +139,7 @@ const postNewOrder = async (req, res) => {
             customerID: payload.body.username,
             customerGivenName: payload.body.nameGiven,
             orderStatus: "Ordering",
-            orderID: Math.floor((Math.random() * 1000000) + 1)
+            orderID: new Date().getTime()
         };
         await db.db.collection('order').insertOne(order);
         res.redirect('/customer/orders');
