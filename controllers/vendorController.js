@@ -130,7 +130,7 @@ const pickedUpOrder = async (req, res) => {
         }
     }, {
         $set: {
-            orderStatus: "Picked Up"
+            orderStatus: "Completed"
         }
     })
     res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
