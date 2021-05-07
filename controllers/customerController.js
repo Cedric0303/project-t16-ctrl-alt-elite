@@ -131,6 +131,7 @@ const postNewOrder = async (req, res) => {
         }
         const token = get_cookies(req)['jwt']
         const payload = jwt.decode(token)
+        const orderID = parseInt(new Date().getTime())
         order = {
             item: orderInfo["item"],
             orderTotal: orderTotal,
@@ -139,13 +140,41 @@ const postNewOrder = async (req, res) => {
             customerID: payload.body.username,
             customerGivenName: payload.body.nameGiven,
             orderStatus: "Ordering",
-            orderID: new Date().getTime()
+            orderID: orderID
         };
         await db.db.collection('order').insertOne(order);
-        res.redirect('/customer/orders');
+        res.redirect('/customer/orders/' + orderID)
     } else {
         res.render('notloggedin');
     }
+}
+
+// return individual order page
+const getOrderDetail = async (req, res) => {
+    const order = await db.db.collection('order').findOne({
+        orderID: parseInt(req.params.orderID)
+    })
+    res.send(JSON.stringify(order))
+}
+
+// return order review page
+const getReview = async (req, res) => {
+    res.send('<h1>review page</h1>')
+}
+
+// add order review into database
+const postReview = async (req, res) => {
+    const orderID = parseInt(req.params.orderID)
+    // const review = req.body.blablabla
+    await db.db.collection('order').findOneAndUpdate({
+        orderID: orderID
+    }, {
+        $set: {
+            rating: "",
+            comment: ""
+        }
+    })
+    res.send("<h1>Thanks.</h1>")
 }
 
 // return information for a given food item
@@ -280,6 +309,8 @@ const getOrders = async (req, res) => {
     }
 }
 
+
+
 const getProfile = async (req, res) => {
     res.write("<h1>Profile page #WIP</h1>");
     res.end('<p><a href="logout">Logout</a></p>')
@@ -302,7 +333,10 @@ module.exports = {
     getMenu,
     getMenuVan,
     postNewOrder,
+    getOrderDetail,
     getFoodDetails,
+    getReview,
+    postReview,
     addFoodToOrder,
     getLogin,
     authLogin,

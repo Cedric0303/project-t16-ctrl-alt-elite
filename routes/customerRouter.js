@@ -34,11 +34,11 @@ customerRouter.post('/register', customerController.addCustomer)
 
 customerRouter.get('/orders', customerController.getOrders)
 
-customerRouter.get('/orders/:orderID', null)
+customerRouter.get('/orders/:orderID', customerController.getOrderDetail)
 
-customerRouter.get('orders/:orderID/review', null)
+customerRouter.get('orders/:orderID/review', customerController.getReview)
 
-customerRouter.post('orders/:orderID/review', null)
+customerRouter.post('orders/:orderID/review', customerController.postReview)
 
 customerRouter.get('/profile', customerController.getProfile)
 
