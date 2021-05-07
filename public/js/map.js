@@ -101,7 +101,6 @@ var {map, geolocate} = createMap(curPos)
 map.addControl(geolocate)
 // when user refreshes location, update all markers
 geolocate.on('geolocate', function() {
-    geolocate.trigger();
     curPos.long = geolocate._lastKnownPosition.coords.longitude
     curPos.lat = geolocate._lastKnownPosition.coords.latitude
     curMarker.remove();
