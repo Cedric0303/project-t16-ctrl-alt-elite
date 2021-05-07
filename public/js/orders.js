@@ -1,15 +1,15 @@
 function pendingColour() {
+    var container = document.getElementsByClassName("orderbox-container")
     var targets = document.getElementsByClassName('orderstatus')
     for (var i = 0; i < targets.length; i++) {
         if (targets[i].innerHTML == "Ordering") { 
-            targets[i].style.color = "#ff8800";
+            container[i].style.backgroundColor = "#FFFEEB"
+            targets[i].style.color = "#8F3900";
             targets[i].innerHTML = "Pending"
         } else if (targets[i].innerHTML == "Fulfilled") {
-            targets[i].style.color = "#8fdb02"
+            container[i].style.backgroundColor = "#EBFFEB"
+            targets[i].style.color = "#445D04"
             targets[i].innerHTML = "Ready for pickup"
-        } else if (targets[i].innerHTML == "Picked Up") {
-            targets[i].style.color = "#06db02"
-            targets[i].innerHTML = "Complete"
         } else {
             targets[i].innerHTML = ""
         }
