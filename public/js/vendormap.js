@@ -24,7 +24,7 @@ function createMap(curPos) {
 function createLocationMarker(curPos) {
     var el = document.createElement('div');
     el.className = 'selfMarker'
-    return new mapboxgl.Marker(el, {draggable:true}) // development purposes to test different user locations  
+    return new mapboxgl.Marker(el, {}) // development purposes to test different user locations  
     .setLngLat([curPos.long, curPos.lat]) // Marker [lng, lat] coordinates
     .addTo(map)
 }
