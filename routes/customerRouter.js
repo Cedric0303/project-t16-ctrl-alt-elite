@@ -24,24 +24,36 @@ customerRouter.get('/:vanId/menu', customerController.getMenuVan)
 // create a new order
 customerRouter.post('/:vanId/menu', customerController.postNewOrder)
 
+// login page
 customerRouter.get('/login', customerController.getLogin)
 
+// user attemps login
 customerRouter.post('/auth', customerController.authLogin)
 
+// register page
 customerRouter.get('/register', customerController.getRegister)
 
+// user makes new account
 customerRouter.post('/register', customerController.addCustomer)
 
+// get orders page
 customerRouter.get('/orders', customerController.getOrders)
 
+// get specific order page (live status or for completed orders, a detailed view of the order)
 customerRouter.get('/orders/:orderID', customerController.getOrderDetail)
 
 customerRouter.get('/orders/:orderID/update', customerController.updateOrderStatus)
 
-customerRouter.post('/orders/:orderID/review', customerController.postReview)
+// user adds review to order
+customerRouter.post('orders/:orderID/review', customerController.postReview)
 
+// profile page
 customerRouter.get('/profile', customerController.getProfile)
 
+// user updates account
+customerRouter.post('/profile', customerController.updateAccount)
+
+// logout action
 customerRouter.get('/logout', customerController.getLogout)
 
 

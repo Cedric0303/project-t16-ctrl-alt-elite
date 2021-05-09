@@ -726,7 +726,78 @@ sup {
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
 }
+/* --------------profile page-------------- */
+#profileicon {
+    font-size: 7em;
+    color: #000000;
+    margin: 15vh 0 0;
+    padding: 0;
+    height: min-content;
+}
 
+#userDisplayNames {
+    font-size: 2em;
+    font-weight: 700;
+}
+
+#logoutbutton {
+    margin-top: 5vh;
+    font-family: "Roboto",sans-serif;
+    font-weight: 700;
+    font-size: 1.1em;
+    line-height: 1.2em;
+    text-decoration: none;
+    color: #5490f5;
+}
+
+#logoutbutton:hover {
+    text-decoration: underline;
+}
+
+#updatename label {
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+    font-size: 0.8em;
+}
+
+#saveName {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+    color: #5490f5;
+    background: none;
+    border: none;
+
+    font-family: inherit;
+    font-weight: 300;
+    font-size: 1em;
+}
+
+#saveName:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.profileEditField {
+    width: 50vw;
+    max-width: 300px;
+    min-width: 180px;
+
+    padding: 0.7vh 6px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+
+    background-color: #ffffff;
+    border: none;
+    border-radius: 6px;
+
+    font-family: inherit;
+    font-size: 0.8em;
+}
+
+/* -------------menu page modal-------------- */
 /* modal bg */
 #modal {
     display: none;

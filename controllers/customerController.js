@@ -309,20 +309,38 @@ const getOrders = async (req, res) => {
     }
 }
 
-
-
 const getProfile = async (req, res) => {
-    res.write("<h1>Profile page #WIP</h1>");
-    res.end('<p><a href="logout">Logout</a></p>')
+    if (loggedIn(req)) {
+        const token = get_cookies(req)['jwt']
+        const payload = jwt.decode(token)
+        const email = payload.body.username
+        const user = await db.db.collection('customer').findOne({loginID: email},{
+            "projection": {
+                "_id": false,
+                "password": false
+            }
+        });
+        res.render('profile', {
+            "user": user
+        })
+    } else {
+        res.render('notloggedin');
+    }
+}
+
+const updateAccount = async (req, res) => {
+    if (req.body) {
+
+    }
 }
 
 const getLogout = async (req, res) => {
     if (loggedIn(req)) {
         const token = get_cookies(req)['jwt']
         res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
-    }
-    else {
-        // RETURN NOT LOGGED IN ERROR
+    } else {
+        res.render('notloggedin');
+        return;
     }
     res.redirect('/customer/')
 }
@@ -344,5 +362,6 @@ module.exports = {
     addCustomer,
     getOrders,
     getProfile,
+    updateAccount,
     getLogout
 }

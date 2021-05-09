@@ -1,0 +1,12 @@
+<div id="profilepage" class="centerflex">
+    <i id="profileicon" class="fas fa-user-circle"></i>
+    <div id="userDisplayNames">{{user.nameGiven}}&nbsp;{{user.nameFamily}}</div>
+    <form action="/customer/profile" id="updatename" method="post">
+        <label for="firstName">First Name (Or Preferred Name)<sup>&ast;</sup></label><br>
+        <input type="text" class="profileEditField" name="firstName" onkeyup="checkform(form);"><br>
+        <label for="lastName">Last Name<sup>&ast;</sup></label><br>
+        <input type="text" class="profileEditField" name="lastName" onkeyup="checkform(form);"><br>
+        <input type="submit" id="saveName" value="Save">
+    </form>
+    <a id="logoutbutton" href="logout">Logout</a>
+</div>
