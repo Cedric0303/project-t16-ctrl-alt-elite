@@ -43,8 +43,7 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 | Jeongwoo Seo    | Front End      |  In Progress |
 
 ## General info
-This is a project ...
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+This is a project containing the product developed by our team for a business, for which we received a set of business requirements. This project demonstrates the culmination of skills acquired from lectures and workshops, while also practising the dynamics of working within a team for web development. 
 
 ## Technologies
 ### Packages
