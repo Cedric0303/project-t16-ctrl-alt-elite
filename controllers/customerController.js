@@ -29,7 +29,7 @@ var get_cookies = function(req) {
       cookies[ parts[1].trim() ] = (parts[2] || '').trim();
     });
     return cookies;
-  };
+};
 
 // return login state
 function loggedIn(req) {

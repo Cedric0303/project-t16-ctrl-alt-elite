@@ -25,4 +25,6 @@ vendorRouter.get('/:id/orders', vendorController.getOrders)
 // sets a specific order as fulfilled
 vendorRouter.post('/:id/orders/:orderID', vendorController.fulfilledOrder)
 
+vendorRouter.get('/logout', vendorController.getLogout)
+
 module.exports = vendorRouter
