@@ -36,9 +36,9 @@ customerRouter.get('/orders', customerController.getOrders)
 
 customerRouter.get('/orders/:orderID', customerController.getOrderDetail)
 
-customerRouter.get('orders/:orderID/review', customerController.updateOrderStatus)
+customerRouter.get('/orders/:orderID/update', customerController.updateOrderStatus)
 
-customerRouter.post('orders/:orderID/review', customerController.postReview)
+customerRouter.post('/orders/:orderID/review', customerController.postReview)
 
 customerRouter.get('/profile', customerController.getProfile)
 
