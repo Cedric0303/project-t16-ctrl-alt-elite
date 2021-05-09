@@ -737,11 +737,39 @@ input[type=number]::-webkit-outer-spin-button {
 
 #userDisplayNames {
     font-size: 2em;
-    font-weight: 700;
+    font-weight: 800;
+}
+
+#userEmail {
+    color: #575757;
+}
+
+.editbutton {
+    margin: 0;
+    font-family: "Roboto",sans-serif;
+    font-weight: 300;
+    font-size: 1em;
+    text-decoration: none;
+    color: #4980df;
+}
+
+#editPw {
+    margin-top: 10vh;
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+#userEmail {
+    margin-top: 0.7vh;
+}
+
+.editbutton:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 #logoutbutton {
-    margin-top: 5vh;
+    margin-top: 15vh;
     font-family: "Roboto",sans-serif;
     font-weight: 700;
     font-size: 1.1em;
@@ -754,16 +782,27 @@ input[type=number]::-webkit-outer-spin-button {
     text-decoration: underline;
 }
 
-#updatename label {
+/* update name form */
+#updatename {
+    display: none;
+}
+
+/* update pw form */
+#updatepw {
+    margin-top: 2vh;
+    display: none;
+}
+
+#profilepage label {
     display: inline-block;
     text-align: left;
     width: 100%;
     font-size: 0.8em;
 }
 
-#saveName {
+.saveButton {
     padding: 0;
-    margin: 0;
+    margin: 0 0 1vh;
     box-sizing: border-box;
 
     color: #5490f5;
@@ -771,17 +810,26 @@ input[type=number]::-webkit-outer-spin-button {
     border: none;
 
     font-family: inherit;
-    font-weight: 300;
+    font-weight: 600;
     font-size: 1em;
 }
 
-#saveName:hover {
+.saveButton:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
+.saveButton:disabled {
+    color: #858585;
+}
+
+.saveButton:disabled:hover {
+    text-decoration: none;
+    cursor: default;
+}
+
 .profileEditField {
-    width: 50vw;
+    width: 60vw;
     max-width: 300px;
     min-width: 180px;
 

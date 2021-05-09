@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snacks in a Van</title>
+    <link rel="stylesheet" type="text/css" href="/css/customerstyle.css">
+    <script src="https://kit.fontawesome.com/40c25fb1ee.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+</head>
+
+<body>
+    <div class="stickytop">
+        <div class="vanfloat">
+            <div id="vanfloatleft">
+                <p>CURRENTLY ORDERING FROM</p>
+                <h3>{{van.vanName}}</h3>
+                <h4>{{van.address}}</h4>
+            </div>
+        </div>
+        <div class="searchmenu">
+            <p>Search</p>
+            <input type="text" id="searchbar">
+        </div>
+    </div>
+    <div class="fixedbot">
+        <div id="cartcontainer">
+            <div id="cart">
+                <div id="cartlist">
+                    {{!-- filled via menu.js --}}
+                </div>
+                <div class="carttotal">Order Total:&nbsp;$<span id="carttotaltext"></span></div>
+            </div>
+            <div class="cartbuttons">
+                <button id="vcartbutton" class="cartbutton">Cart&nbsp;(<span id="cart-count"></span>)</button>
+                <button id="chkoutbutton" class="cartbutton">Checkout</button>
+                <form id="orderForm" method="POST">
+                     <input id="payloadInput" type="hidden" name="payload">
+                </form>
+            </div>
+        </div>
+        <div class="navbar">
+            <ul>
+                <li><a href="/customer"><i id="navicon" class="fas fa-home"></i>Home</a></li>
+                <li><a href="/customer/orders"><i id="navicon" class="fas fa-clipboard-list"></i>Orders</a></li>
+                <li><a href="/customer/profile"><i id="navicon" class="fas fa-user"></i>Profile</a></li>
+            </ul>
+        </div>
+    </div>
+    <main>
+        {{{body}}}
+    </main>
+</body>
+
+</html>

@@ -1,12 +1,28 @@
 <div id="profilepage" class="centerflex">
     <i id="profileicon" class="fas fa-user-circle"></i>
-    <div id="userDisplayNames">{{user.nameGiven}}&nbsp;{{user.nameFamily}}</div>
+    <div id="userDisplayNames">{{user.nameGiven}} {{user.nameFamily}}</div>
     <form action="/customer/profile" id="updatename" method="post">
-        <label for="firstName">First Name (Or Preferred Name)<sup>&ast;</sup></label><br>
-        <input type="text" class="profileEditField" name="firstName" onkeyup="checkform(form);"><br>
-        <label for="lastName">Last Name<sup>&ast;</sup></label><br>
-        <input type="text" class="profileEditField" name="lastName" onkeyup="checkform(form);"><br>
-        <input type="submit" id="saveName" value="Save">
+        <input type="hidden" name="updatetype" value="name">
+        <label for="firstName">First Name (Or Preferred Name)</label><br>
+        <input type="text" class="profileEditField" name="firstName" placeholder="{{user.nameGiven}}" oninput="nameChanged();"><br>
+        <label for="lastName">Last Name</label><br>
+        <input type="text" class="profileEditField" name="lastName" placeholder="{{user.nameFamily}}" oninput="nameChanged();"><br>
+        <input type="submit" id="saveName" class="saveButton" value="Save" disabled>
     </form>
+    <div id="editName" class="editbutton">Edit</div>
+    <div id="userEmail">{{user.loginID}}</div>
+    <form action="/customer/profile" id="updatepw" method="post">
+        <input type="hidden" name="updatetype" value="pw">
+        <label for="password">Change Password<sup>&ast;</sup></label><br>
+        <input type="password" class="loginfield" id="password" name="password" onkeyup="check_pass(); pwMatchErrorDisableButton('savePw');" required><br>
+        <label for="confirm_password">Confirm Password<sup>&ast;</sup></label><br>
+        <input type="password" class="loginfield" id="confirm_password" onkeyup="check_pass(); pwMatchErrorDisableButton('savePw');" required><br>
+        <div id="pwmatcherror">Passwords must be matching.<br></div>
+        <input type="submit" id="savePw" class="saveButton" value="Save" disabled>
+    </form>
+    <div id="editPw" class="editbutton">Change Password</div>
+    <div id="serverresponse"></div>
     <a id="logoutbutton" href="logout">Logout</a>
 </div>
+<script src="/js/profile.js"></script>
+<script src="/js/formcheck.js"></script>

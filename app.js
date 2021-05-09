@@ -2,7 +2,6 @@
 const express = require('express')
 const customerRouter = require('./routes/customerRouter')
 const vendorRouter = require('./routes/vendorRouter')
-const bodyParser = require('body-parser');
 const session = require('express-session');
 const exphbs = require('express-handlebars')
 var favicon = require('serve-favicon')
@@ -13,8 +12,7 @@ const port = process.env.PORT || 8080
 
 app.use(express.json())
 app.use(express.static('public'))
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
 app.use(session({
 	secret:	process.env.SECRET_KEY,
 	resave: true,

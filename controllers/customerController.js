@@ -328,10 +328,66 @@ const getProfile = async (req, res) => {
     }
 }
 
-const updateAccount = async (req, res) => {
-    if (req.body) {
-
+// update account details
+const updateAccount = async (req, res) => { 
+    const token = get_cookies(req)['jwt']
+    const payload = jwt.decode(token)
+    const email = payload.body.username
+    const user = await db.db.collection('customer').findOne({loginID: email},{
+        "projection": {
+            "_id": false,
+            "password": false
+        }
+    });
+    if (req.body.updatetype == "name") {
+        firstname = req.body.firstName.trim()
+        lastname = req.body.lastName.trim()
+        if (!firstname && !lastname) {
+            // no changes to name
+        } else if (firstname && lastname) {
+            // both first and last name changed
+            await db.db.collection('customer').findOneAndUpdate({
+                loginID: user.loginID
+            }, { 
+                $set:{
+                    nameGiven : req.body.firstName.trim(),
+                    nameFamily : req.body.lastName.trim()
+                }
+            });
+        } else if (firstname) {
+            // first name changed
+            await db.db.collection('customer').findOneAndUpdate({
+                loginID: user.loginID
+            }, { 
+                $set:{
+                    nameGiven : req.body.firstName.trim()
+                }
+            });
+        } else if (lastname) {
+            // last name changed
+            await db.db.collection('customer').findOneAndUpdate({
+                loginID: user.loginID
+            }, { 
+                $set:{
+                    nameFamily : req.body.lastName.trim()
+                }
+            });
+        }
+    } else if (req.body.updatetype == "pw") {
+        if (!req.body.password) {
+            // no change to password
+        } else if (req.body.password) {
+            const hash_pw = await bcrypt.hash(req.body.password, parseInt(process.env.SALT));
+            await db.db.collection('customer').findOneAndUpdate({
+                loginID: user.loginID
+            }, { 
+                $set:{
+                    password : hash_pw
+                }
+            });
+        }
     }
+    res.redirect('profile');
 }
 
 const getLogout = async (req, res) => {

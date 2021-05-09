@@ -1,3 +1,11 @@
+function pwMatchErrorDisableButton(buttonid) {
+    if (document.getElementById('pwmatcherror').style.display == 'none') {
+        document.getElementById(buttonid).disabled = false;
+    } else {
+        document.getElementById(buttonid).disabled = true;
+    }
+}
+
 // https://stackoverflow.com/questions/21727317/how-to-check-confirm-password-field-in-form-without-reloading-page/21727518
 // https://stackoverflow.com/questions/18640051/check-if-html-form-values-are-empty-using-javascript
 function checkform(form) {
@@ -16,11 +24,7 @@ function checkform(form) {
     }
     document.getElementById('formnotfill').style.display = 'none';
     // if it went through all required inputs and all were filled, check if the pws are matching
-    if (document.getElementById('pwmatcherror').style.display == 'none') {
-        document.getElementById('loginbutton').disabled = false;
-    } else {
-        document.getElementById('loginbutton').disabled = true;
-    }
+    pwMatchErrorDisableButton('loginbutton');
 }
 
 function check_pass() {
