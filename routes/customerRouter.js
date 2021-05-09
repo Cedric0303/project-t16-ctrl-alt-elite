@@ -36,7 +36,7 @@ customerRouter.get('/orders', customerController.getOrders)
 
 customerRouter.get('/orders/:orderID', customerController.getOrderDetail)
 
-customerRouter.get('orders/:orderID/review', customerController.getReview)
+customerRouter.get('orders/:orderID/review', customerController.updateOrderStatus)
 
 customerRouter.post('orders/:orderID/review', customerController.postReview)
 

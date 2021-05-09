@@ -158,8 +158,8 @@ const getOrderDetail = async (req, res) => {
 }
 
 // return order review page
-const getReview = async (req, res) => {
-    res.send('<h1>review page</h1>')
+const updateOrderStatus  = async (req, res) => {
+    res.send('<h1>Update order status</h1>')
 }
 
 // add order review into database
@@ -335,7 +335,7 @@ module.exports = {
     postNewOrder,
     getOrderDetail,
     getFoodDetails,
-    getReview,
+    updateOrderStatus,
     postReview,
     addFoodToOrder,
     getLogin,
