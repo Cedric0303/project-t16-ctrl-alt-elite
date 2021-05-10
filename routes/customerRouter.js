@@ -42,7 +42,17 @@ customerRouter.get('/orders', customerController.getOrders)
 // get specific order page (live status or for completed orders, a detailed view of the order)
 customerRouter.get('/orders/:orderID', customerController.getOrderDetail)
 
-customerRouter.get('/orders/:orderID/update', customerController.updateOrderStatus)
+// get order modification page
+customerRouter.get('/orders/:orderID/modify', customerController.getModifyPage)
+
+// submit modified order into database
+customerRouter.get('/orders/:orderID/reorder', customerController.modifyOrder)
+
+// remove order from database
+customerRouter.get('/orders/:orderID/cancel', customerController.cancelOrder)
+
+// get current status of user's order
+customerRouter.get('/orders/:orderID/status', customerController.updateOrderStatus)
 
 // user adds review to order
 customerRouter.post('orders/:orderID/review', customerController.postReview)

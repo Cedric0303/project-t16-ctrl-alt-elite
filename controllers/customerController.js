@@ -157,6 +157,75 @@ const getOrderDetail = async (req, res) => {
     res.send(JSON.stringify(order))
 }
 
+// return order modification page
+const getModifyPage = async (req, res) => {
+    if (loggedIn(req)) {
+        res.send('modify order page')
+    }
+    else {
+        res.render('notloggedin')
+    }
+}
+
+// update order in database with new modified order
+const modifyOrder = async (req, res) => {
+    if (loggedIn(req)) {
+        orderInfo = JSON.parse(req.body.payload);
+        orderTotal = 0;
+        for (var item in orderInfo.item) {
+            // replace price and total from customer app with values from db
+            // prevents changing the prices from customer app
+            const price = await db.db.collection('food').findOne({
+                    name: orderInfo.item[item].name
+                }, {
+                    projection: {
+                        "_id": false,
+                        "price": true
+                    }
+                })
+                .catch(e => console.err(e));
+            priceNum = parseFloat(price.price)
+            orderInfo.item[item].price = priceNum;
+            orderInfo.item[item].total = priceNum*orderInfo.item[item].count;
+            orderTotal += orderInfo.item[item].total;
+        }
+        const token = get_cookies(req)['jwt']
+        const payload = jwt.decode(token)
+        const orderID = req.params.orderID
+        await db.db.collection('order').findOneAndUpdate({
+            orderID: parseInt(orderID)
+        }, {
+            $set: {
+                item: orderInfo["item"],
+                orderTotal: orderTotal,
+                timestamp: new Date(),
+                vendorID: orderInfo["vendorID"],
+                customerID: payload.body.username,
+                customerGivenName: payload.body.nameGiven,
+                orderStatus: "Ordering",
+            }
+        })
+        res.redirect('/customer/orders/' + orderID)
+    }
+    else {
+        res.render('notloggedin')
+    }
+}
+
+// delete an order in the database
+const cancelOrder = async (req, res) => {
+    if (loggedIn(req)) {
+        const orderID = req.params.orderID
+        await db.db.collection('order').deleteOne({
+            orderID: parseInt(orderID)
+        })
+        res.redirect('/customer/')
+    }
+    else {
+        res.render('notloggedin')
+    }
+}
+
 // return order review page
 const updateOrderStatus  = async (req, res) => {
     res.send('<h1>Update order status</h1>')
@@ -216,7 +285,7 @@ const addFoodToOrder = async (req, res) => {
     res.send(`<h1> Added ${food.name} to order </h1>`)
 }
 
-
+// return customer login page
 const getLogin = (req, res) => {
     res.render('login')
 }
@@ -390,6 +459,7 @@ const updateAccount = async (req, res) => {
     res.redirect('profile');
 }
 
+// logout current user from website and remove user token
 const getLogout = async (req, res) => {
     if (loggedIn(req)) {
         const token = get_cookies(req)['jwt']
@@ -407,7 +477,10 @@ module.exports = {
     getMenu,
     getMenuVan,
     postNewOrder,
+    getModifyPage,
     getOrderDetail,
+    modifyOrder,
+    cancelOrder,
     getFoodDetails,
     updateOrderStatus,
     postReview,
