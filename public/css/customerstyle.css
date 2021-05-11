@@ -10,6 +10,7 @@ p {
 }
 
 a {
+    color: initial;
     text-decoration: none;
 }
 
@@ -27,6 +28,12 @@ main {
 sup {
     color: #d83200;
 }
+
+.hoverable:hover {
+    filter: brightness(0.85);
+    cursor: pointer;
+}
+
 /* --------------navigation bar-------------- */
 .navbar {
     pointer-events: auto;
