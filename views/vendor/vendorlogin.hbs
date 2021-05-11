@@ -1,23 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Screen</title>
-    <link rel="stylesheet" type="text/css" href="/css/vendorstyle.css">
-    <script src="https://kit.fontawesome.com/40c25fb1ee.js" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="centerflex centerabsolute">
-        <i id="logo" class="fas fa-truck"></i>
-        <h1 id="title">Snacks in a Van</h1>
-        <form action="/vendor/auth" id="login_form" method="post">
-            <input type="text" id="loginfield" name="vanID" placeholder="Van Name"><br>
-            <input type="password" id="loginfield" name="van_pw" placeholder="Password"><br>
-            <input type="submit" id="loginbutton" value="Sign In">
-        </form>
-    </div>
-</body>
-</html>
+<div class="centerflex centerabsolute">
+    <i id="logo" class="fas fa-truck"></i>
+    <h1 id="title">Snacks in a Van</h1>
+    <form action="/vendor/login/auth" id="login_form" method="post">
+        <input type="text" class="loginfield" name="vanID" placeholder="Van ID"><br>
+        <input type="password" class="loginfield" name="password" placeholder="Password"><br>
+        <input type="submit" id="loginbutton" value="Sign In">
+    </form>
+</div>
