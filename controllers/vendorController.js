@@ -44,7 +44,8 @@ function loggedIn(req) {
 
 // return default vendor home screen (login page)
 const getVendorHome = (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'html', 'vendor', 'index.html'))
+    res.render('vendorlogin',{layout: false});
+    // res.sendFile(path.join(__dirname, '..', 'html', 'vendor', 'index.html'))
 }
 
 // set van status using location provided

@@ -10,8 +10,7 @@ const vendorController = require('../controllers/vendorController.js')
 vendorRouter.get('/', vendorController.getVendorHome)
 
 // set van status using location provided
-
-vendorRouter.post('/:id', vendorController.postVendor)
+// vendorRouter.post('/:id', vendorController.postVendor)
 
 // return a specific vendor van
 vendorRouter.get('/:id', vendorController.getVendor)
