@@ -21,7 +21,7 @@ app.use(session({
 app.use(favicon(path.join(__dirname,'public','icons','favicon.ico')));
 
 app.engine('hbs', exphbs({
-	defaultLayout: 'main',
+	defaultLayout: 'default',
 	extname: 'hbs',
 	helpers: require(__dirname + "/public/js/helpers.js").helpers
 }))
