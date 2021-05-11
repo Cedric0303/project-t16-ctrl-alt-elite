@@ -48,9 +48,9 @@ const getCustomerHome = async (req, res) => {
         "_id": false,
         "password": false
     }).toArray()
-    res.render('home', {
+    res.render('customer/home', {
         "vans": vans,
-        layout: 'home_main'})
+        layout: 'customer/homepage'})
 }
 
 // get food items from the database and return it
@@ -83,12 +83,12 @@ const getMenuVan = async (req, res) => {
     .catch(e => console.err(e))
     var dist = req.query.dist
     if (menu && vendorinfo) {
-        res.render('menu', {
+        res.render('customer/menu', {
             "dist":dist,
             "menu":menu, // passing menu array as "menu"
             "menucat":menucategories, // passing menu categories array as "menucat""
             "van":vendorinfo, // passing selected vendor info json object as "van"
-            layout: 'vanselectedsearchcart'})
+            layout: 'customer/vanselectedsearchcart'})
     } else {
         res.send('<h1> Error getting vendor/menu info </h1>')
     }
@@ -145,7 +145,7 @@ const postNewOrder = async (req, res) => {
         await db.db.collection('order').insertOne(order);
         res.redirect('/customer/orders/' + orderID)
     } else {
-        res.render('notloggedin');
+        res.render('customer/notloggedin', {layout: 'customer/navbar'});
     }
 }
 
@@ -163,7 +163,7 @@ const getModifyPage = async (req, res) => {
         res.send('modify order page')
     }
     else {
-        res.render('notloggedin')
+        res.render('customer/notloggedin', {layout: 'customer/navbar'})
     }
 }
 
@@ -208,7 +208,7 @@ const modifyOrder = async (req, res) => {
         res.redirect('/customer/orders/' + orderID)
     }
     else {
-        res.render('notloggedin')
+        res.render('customer/notloggedin', {layout: 'customer/navbar'})
     }
 }
 
@@ -222,7 +222,7 @@ const cancelOrder = async (req, res) => {
         res.redirect('/customer/')
     }
     else {
-        res.render('notloggedin')
+        res.render('customer/notloggedin', {layout: 'customer/navbar'})
     }
 }
 
@@ -287,7 +287,7 @@ const addFoodToOrder = async (req, res) => {
 
 // return customer login page
 const getLogin = (req, res) => {
-    res.render('login')
+    res.render('customer/login', {layout: 'customer/navbar'})
 }
 
 const authLogin = async (req, res) => {
@@ -324,20 +324,20 @@ const authLogin = async (req, res) => {
             }
             else {
                 // if account did not exist or incorrect password
-                res.render('loginerror');
+                res.render('customer/loginerror', {layout: 'customer/navbar'});
             }
         } else {
             // if email and/or pw were empty
-            res.render('loginerror')
+            res.render('customer/loginerror', {layout: 'customer/navbar'})
         }
     } 
     else {
-        res.render('loginerror')
+        res.render('customer/loginerror', {layout: 'customer/navbar'})
     }
 }
 
 const getRegister = async (req, res) => {
-    res.render('register')
+    res.render('customer/register', {layout: 'customer/navbar'})
 }
 
 const addCustomer = async (req, res) => {
@@ -351,9 +351,9 @@ const addCustomer = async (req, res) => {
             loginID: req.body.email,
             password: hash_pw
         })
-        res.render('loginnewacc');
+        res.render('customer/loginnewacc', {layout: 'customer/navbar'});
     } else {
-        res.render('registeremaildupe');
+        res.render('customer/registeremaildupe', {layout: 'customer/navbar'});
     }
 }
 
@@ -366,15 +366,15 @@ const getOrders = async (req, res) => {
             "customerID": username
         }).project({}).sort({"timestamp": -1}).toArray()
         if (orders) {
-            res.render('orders', {
+            res.render('customer/orders', {
                 "orders": orders, // passing orders from db into orders.hbs as orders
-                layout: 'orderspage'
+                layout: 'customer/orderspage'
             })
         } else {
             res.send("ERROR")
         }
     } else {
-        res.render('notloggedin');
+        res.render('customer/notloggedin', {layout: 'customer/navbar'});
     }
 }
 
@@ -389,11 +389,12 @@ const getProfile = async (req, res) => {
                 "password": false
             }
         });
-        res.render('profile', {
-            "user": user
+        res.render('customer/profile', {
+            "user": user,
+            layout: 'customer/navbar'
         })
     } else {
-        res.render('notloggedin');
+        res.render('customer/notloggedin', {layout: 'customer/navbar'});
     }
 }
 
@@ -465,7 +466,7 @@ const getLogout = async (req, res) => {
         const token = get_cookies(req)['jwt']
         res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
     } else {
-        res.render('notloggedin');
+        res.render('customer/notloggedin', {layout: 'customer/navbar'});
         return;
     }
     res.redirect('/customer/')

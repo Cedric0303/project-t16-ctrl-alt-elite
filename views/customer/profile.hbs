@@ -14,9 +14,9 @@
     <form action="/customer/profile" id="updatepw" method="post">
         <input type="hidden" name="updatetype" value="pw">
         <label for="password">Change Password<sup>&ast;</sup></label><br>
-        <input type="password" class="loginfield" id="password" name="password" onkeyup="check_pass(); pwMatchErrorDisableButton('savePw');" required><br>
+        <input type="password" class="profileEditField" id="password" name="password" onkeyup="check_pass(); pwMatchErrorDisableButton('savePw');" required><br>
         <label for="confirm_password">Confirm Password<sup>&ast;</sup></label><br>
-        <input type="password" class="loginfield" id="confirm_password" onkeyup="check_pass(); pwMatchErrorDisableButton('savePw');" required><br>
+        <input type="password" class="profileEditField" id="confirm_password" onkeyup="check_pass(); pwMatchErrorDisableButton('savePw');" required><br>
         <div id="pwmatcherror">Passwords must be matching.<br></div>
         <input type="submit" id="savePw" class="saveButton" value="Save" disabled>
     </form>
