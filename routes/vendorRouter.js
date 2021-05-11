@@ -21,6 +21,8 @@ vendorRouter.get('/:id', vendorController.getVendor)
 // return orders of a specific vendor van
 vendorRouter.get('/:id/orders', vendorController.getOrders)
 
+vendorRouter.get('/:id/pastorders', vendorController.getPastOrders)
+
 // sets a specific order as fulfilled
 vendorRouter.post('/:id/orders/:orderID', vendorController.fulfilledOrder)
 
