@@ -78,7 +78,7 @@ const getVendor = async (req, res) => {
         })
         .catch(e => console.err(e))
     if (vendor) {
-        res.sendFile(path.join(__dirname, '..', 'html', 'vendor', 'openvan.html'))
+        res.render('vendor/vendoropenvan', {layout: 'vendor/main'});
     } else {
         res.send('<h1> Invalid vendor loginID </h1>')
     }
@@ -152,7 +152,9 @@ const getPastOrders = async (req, res) => {
         const orders = await db.db.collection('order').find({
             vendorID: req.params.id,
         }).toArray()
-        res.send(orders)
+        res.render('vendor/vendorpastorders', {
+            orders: orders,
+            layout: 'vendor/main'})
     }
     else {
         res.render('notloggedin')
