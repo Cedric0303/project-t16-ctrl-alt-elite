@@ -120,7 +120,7 @@ const closeVan = async (req, res) => {
         db.db.collection('vendor').findOneAndUpdate({
             loginID: vanID
         }, {
-            isOpen = false
+            isOpen: false
         })
         res.redirect('/vendor/' + vanID)
     }
