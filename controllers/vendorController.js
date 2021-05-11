@@ -78,7 +78,7 @@ const getVendor = async (req, res) => {
         })
         .catch(e => console.err(e))
     if (vendor) {
-        res.render('vendor/vendoropenvan', {layout: 'vendor/main'})
+        res.render('vendor/vendoropenvan', {layout: 'vendor/main'});
     } else {
         res.send('<h1> Invalid vendor loginID </h1>')
     }
@@ -137,14 +137,24 @@ const getOrders = async (req, res) => {
         const orders = await db.db.collection('order').find({
             vendorID: req.params.id,
             orderStatus: { 
-                $or: [{
                     $not: {$eq: "Fulfilled"}
-                },{
-                    $not: {$eq: "Completed"}
-                }]
-            }
+                }
         }).toArray()
         res.send(orders)
+    }
+    else {
+        res.render('notloggedin')
+    }
+}
+
+const getPastOrders = async (req, res) => {
+    if (loggedIn(req)) {
+        const orders = await db.db.collection('order').find({
+            vendorID: req.params.id,
+        }).toArray()
+        res.render('vendor/vendorpastorders', {
+            orders: orders,
+            layout: 'vendor/main'})
     }
     else {
         res.render('notloggedin')
@@ -195,6 +205,7 @@ module.exports = {
     getVendor,
     authLogin,
     getOrders,
+    getPastOrders,
     fulfilledOrder,
     pickedUpOrder,
     getLogout
