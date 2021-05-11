@@ -18,6 +18,8 @@ vendorRouter.post('/:id', vendorController.postVendor)
 // return a specific vendor van
 vendorRouter.get('/:id', vendorController.getVendor)
 
+vendorRouter.get('/:id/close', vendorController.closeVan)
+
 // return orders of a specific vendor van
 vendorRouter.get('/:id/orders', vendorController.getOrders)
 
