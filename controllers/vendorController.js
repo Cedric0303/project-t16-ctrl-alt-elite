@@ -93,29 +93,12 @@ const authLogin = async (req, res) => {
             // if account exists
             const valid = await bcrypt.compare(pw, vendor.password)
             if (vendor && valid) {
-                // if account exists and pw is correct
-                // await db.db.collection('customer').findOneAndUpdate({
-                //     loginID: user.loginID
-                // }, { 
-                //     $set:{
-                //         sessionID : req.sessionID,
-                //         // expiryDate : new Date(Date.now() + hour)
-                //     }
-                // })
                 const body = {username: vanID, vanName: vendor.vanName};
                 const token = jwt.sign({body}, process.env.SECRET_OR_PUBLIC_KEY);
                 res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true})
-                // res.session.maxAge = new Date(Date.now() + hour);
-                // res.session.cookie.maxAge = hour;
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
                 res.redirect('/vendor/' + vanID)
-                // prevPageURL = req.header('Referer');
-                // if (prevPageURL.search("auth") != -1) {
-                //     res.redirect('/vendor/')
-                // } else {
-                //     res.redirect(prevPageURL);
-                // }
             }
             else {
                 // if account did not exist or incorrect password
@@ -131,6 +114,21 @@ const authLogin = async (req, res) => {
     }
 }
 
+const closeVan = async (req, res) => {
+    const vanID = req.body.vanID
+    if (loggedIn(req)) {
+        db.db.collection('vendor').findOneAndUpdate({
+            loginID: vanID
+        }, {
+            isOpen: false
+        })
+        res.redirect('/vendor/' + vanID)
+    }
+    else {
+        res.render('notloggedin')
+    }
+}
+
 // return orders of a specific vendor van
 const getOrders = async (req, res) => {
     if (loggedIn(req)) {
@@ -138,7 +136,7 @@ const getOrders = async (req, res) => {
             vendorID: req.params.id,
             orderStatus: { 
                     $not: {$eq: "Fulfilled"}
-                }
+            }
         }).toArray()
         res.send(orders)
     }
@@ -204,6 +202,7 @@ module.exports = {
     postVendor,
     getVendor,
     authLogin,
+    closeVan,
     getOrders,
     getPastOrders,
     fulfilledOrder,
