@@ -85,13 +85,15 @@ const getVendor = async (req, res) => {
 }
 
 const authLogin = async (req, res) => {
+    console.log(req.body)
     const vanID = req.body.vanID
-    const pw = req.body.password
+    const pw = req.body.van_pw
     if (email && pw) {
         const vendor = await db.db.collection('vendor').findOne({loginID: vanID})
         if (vendor != null) {
             // if account exists
-            const valid = await bcrypt.compare(pw, vendor.password)
+            const valid = (pw == vendor.password)
+            // const valid = await bcrypt.compare(pw, vendor.password)
             if (vendor && valid) {
                 // if account exists and pw is correct
                 // await db.db.collection('customer').findOneAndUpdate({
@@ -113,20 +115,20 @@ const authLogin = async (req, res) => {
                 if (prevPageURL.search("auth") != -1) {
                     res.redirect('/vendor/')
                 } else {
-                    res.redirect(prevPageURL);
+                    res.send('hi')
                 }
             }
             else {
                 // if account did not exist or incorrect password
-                res.render('loginerror');
+                res.send('wtf')
             }
         } else {
             // if email and/or pw were empty
-            res.render('loginerror')
+            res.send('wtf2')
         }
     } 
     else {
-        res.render('loginerror')
+        res.send('wtf3')
     }
 }
 
