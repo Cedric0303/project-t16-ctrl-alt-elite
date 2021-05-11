@@ -43,7 +43,7 @@ a {
     font-family: inherit;
 }
 
-#loginfield {
+.loginfield {
     width: 40vw;
     max-width: 480px;
     min-width: 180px;

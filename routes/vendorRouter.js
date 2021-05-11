@@ -9,15 +9,14 @@ const vendorController = require('../controllers/vendorController.js')
 // return default vendor home screen
 vendorRouter.get('/', vendorController.getVendorHome)
 
-// set van status using location provided
+// authenticate vendor login
+vendorRouter.post('/login/auth', vendorController.authLogin)
 
+// set van status using location provided
 vendorRouter.post('/:id', vendorController.postVendor)
 
 // return a specific vendor van
 vendorRouter.get('/:id', vendorController.getVendor)
-
-// authenticate vendor login
-vendorRouter.post('/auth', vendorController.authLogin)
 
 // return orders of a specific vendor van
 vendorRouter.get('/:id/orders', vendorController.getOrders)

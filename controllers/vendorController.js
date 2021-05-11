@@ -44,7 +44,9 @@ function loggedIn(req) {
 
 // return default vendor home screen (login page)
 const getVendorHome = (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'html', 'vendor', 'index.html'))
+    res.render('vendorlogin', {
+        layout: 'vendor'
+    })
 }
 
 // set van status using location provided
@@ -85,15 +87,13 @@ const getVendor = async (req, res) => {
 }
 
 const authLogin = async (req, res) => {
-    console.log(req.body)
     const vanID = req.body.vanID
-    const pw = req.body.van_pw
-    if (email && pw) {
+    const pw = req.body.password
+    if (vanID && pw) {
         const vendor = await db.db.collection('vendor').findOne({loginID: vanID})
         if (vendor != null) {
             // if account exists
-            const valid = (pw == vendor.password)
-            // const valid = await bcrypt.compare(pw, vendor.password)
+            const valid = await bcrypt.compare(pw, vendor.password)
             if (vendor && valid) {
                 // if account exists and pw is correct
                 // await db.db.collection('customer').findOneAndUpdate({
@@ -111,24 +111,25 @@ const authLogin = async (req, res) => {
                 // res.session.cookie.maxAge = hour;
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
-                prevPageURL = req.header('Referer');
-                if (prevPageURL.search("auth") != -1) {
-                    res.redirect('/vendor/')
-                } else {
-                    res.send('hi')
-                }
+                res.redirect('/vendor/' + vanID)
+                // prevPageURL = req.header('Referer');
+                // if (prevPageURL.search("auth") != -1) {
+                //     res.redirect('/vendor/')
+                // } else {
+                //     res.redirect(prevPageURL);
+                // }
             }
             else {
                 // if account did not exist or incorrect password
-                res.send('wtf')
+                res.render('loginerror');
             }
         } else {
             // if email and/or pw were empty
-            res.send('wtf2')
+            res.render('loginerror')
         }
     } 
     else {
-        res.send('wtf3')
+        res.render('loginerror')
     }
 }
 
