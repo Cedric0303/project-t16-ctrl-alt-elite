@@ -78,7 +78,7 @@ const getVendor = async (req, res) => {
         })
         .catch(e => console.err(e))
     if (vendor) {
-        res.sendFile(path.join(__dirname, '..', 'html', 'vendor', 'openvan.html'))
+        res.render('vendor/vendoropenvan', {layout: 'vendor/main'})
     } else {
         res.send('<h1> Invalid vendor loginID </h1>')
     }
