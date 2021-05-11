@@ -83,3 +83,57 @@ a {
     background-color: #86d9ff;
 }
 
+.vendorvan-container {
+    display: grid; 
+    height: min-content;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas: 
+    "welcometitle welcometitle"
+    "vanname vanname"
+    "locationdescription gpslocation"
+    "wrongaddress wrongbutton"
+    "openvanbutton openvanbutton";
+    background-color: #ffffff;
+    padding: 1vh 2vw;
+    margin: 2vh 0;
+
+    border-top: 1px solid #414141;
+    border-bottom: 1px solid #414141;;
+}
+
+.weclometitle {
+    grid-area: welcometitle;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 0.3vh;
+}
+
+.vanname {
+    grid-area: vanname;
+    font-size: 0.8em;
+    margin-bottom: 1vh;
+}
+
+.locationdescription {
+    grid-area: locationdescription;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.gpslocation {
+    grid-area: gpslocation;
+    font-size: 1em;
+    font-weight: bold;
+
+    display: flex;
+    align-items: flex-end;
+}
+
+.wrongbutton {
+    grid-area: wrongbutton;
+}
+.ordertrailer {
+    grid-area: ordertrailer;
+    font-size: 1em;
+}
