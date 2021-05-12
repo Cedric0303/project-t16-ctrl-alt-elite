@@ -64,7 +64,9 @@ const getVendor = async (req, res) => {
                 }
             })
             .catch(e => console.err(e))
-        res.render('vendor/vendoropenvan', {layout: 'vendor/main'});
+        res.render('vendor/vendoropenvan', {
+            "vendor": vendor,
+            layout: 'vendor/main'});
     } else {
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
