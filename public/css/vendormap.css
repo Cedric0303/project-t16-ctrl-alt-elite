@@ -1,0 +1,19 @@
+#mapcontainer {
+    position: relative;
+    height: 40vh;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+.selfMarker {
+    background-image: url('/icons/circle-512.png');
+    background-size: cover;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+}

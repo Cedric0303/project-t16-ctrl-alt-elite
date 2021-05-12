@@ -4,7 +4,7 @@
     </div>
 
     <div class="vanname">
-        <h1 id= "vannameid"> van name </h1>
+        <h1 id= "vannameid">{{vendor.vanName}} </h1>
     </div>
 
     <form class= "vanlocation">
@@ -12,9 +12,11 @@
     </form>
 
     <div class="gpslocation">
-        <h1> NEED TO INSERT MAP IMAGE HERE!!!! -Paris</h1>
+        <div id="mapcontainer">
+            <div id="map"></div>
+        </div>
         <h1 id= "mapdescription"> GPS Location: </h1>
-        <input type="submit" id="wrongadressbutton" value="Wrong Address?">
+        <input type="submit" id="wrongadressbutton" value="Wrong Address?" onclick="geolocate.trigger()">
 
     </div>
     
@@ -22,7 +24,7 @@
         <input type="submit" id="vanbutton" value="Open Van">
     </div>
     
-
+    <script src="/js/vendormap.js"></script>
 
 </div>
 

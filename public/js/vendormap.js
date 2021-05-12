@@ -16,7 +16,7 @@ function createMap(curPos) {
       trackUserLocation: true,
       showAccuracyCircle: false
     });
-    map.addControl(new mapboxgl.AttributionControl(), 'top-left');
+    // map.addControl(new mapboxgl.AttributionControl(), 'top-left');
     return {map, geolocate};
 }
 
@@ -31,6 +31,7 @@ function createLocationMarker(curPos) {
 
 var curPos = {"long":144.9541022, "lat": -37.7994056}
 var {map, geolocate} = createMap(curPos)
+document.getElementById("mapdescription").innerHTML = "GPS Location: [" + curPos.long + ", " + curPos.lat + "]";
 map.addControl(geolocate)
 var curMarker = createLocationMarker(curPos)
 
@@ -39,13 +40,8 @@ geolocate.on('geolocate', function() {
     curPos.lat = geolocate._lastKnownPosition.coords.latitude
     curMarker.remove();
     curMarker = createLocationMarker(curPos)
+    document.getElementById("mapdescription").innerHTML = "GPS Location: [" + curPos.long + ", " + curPos.lat + "]";
 })
-curMarker.on('dragend', function () {
-    var marker_pos = curMarker.getLngLat()
-    curPos.long = marker_pos.lng;
-    curPos.lat = marker_pos.lat;
-})
-
 // curPos <- current location
 // curPos = {long: blabla, lat: blablabla}
 // usage: curPos.long / curPos.lat

@@ -63,7 +63,10 @@ const getVendor = async (req, res) => {
         })
         .catch(e => console.err(e))
     if (vendor) {
-        res.render('vendor/vendoropenvan', {layout: 'vendor/main'});
+        res.render('vendor/vendoropenvan', {
+            "vendor": vendor,
+            layout: 'vendor/main'
+        });
     } else {
         res.send('<h1> Invalid vendor loginID </h1>')
     }
