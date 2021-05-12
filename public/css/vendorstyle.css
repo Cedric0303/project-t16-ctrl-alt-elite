@@ -87,41 +87,35 @@ a {
     display: grid; 
     height: min-content;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas: 
-    "welcometitle welcometitle"
+    "weclometitle weclometitle"
     "vanname vanname"
-    "locationdescription gpslocation"
-    "wrongaddress wrongbutton"
+    "vanlocation gpslocation"
     "openvanbutton openvanbutton";
     background-color: #ffffff;
     padding: 1vh 2vw;
     margin: 2vh 0;
+    justify-content: center;
 }
 
-.weclometitle {
-    grid-area: weclometitle;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+.weclometitle { 
+    grid-area: welcometitle;
+    padding-left: 50%;
 }
 
-.vanname {
-    grid-area: vanname;
+#titleid {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
 }
+.vanname { grid-area: vanname; }
 
-.locationdescription {
-    grid-area: locationdescription;
+#vannameid {
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
 }
-
-.gpslocation {
-    grid-area: gpslocation;
-}
-
-.wrongbutton {
-    grid-area: wrongbutton;
-}
-.ordertrailer {
-    grid-area: ordertrailer;
-}
+.vanlocation { grid-area: vanlocation; }
+.gpslocation { grid-area: gpslocation; }
+.openvanbutton { grid-area: openvanbutton; }
