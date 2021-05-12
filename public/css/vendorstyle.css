@@ -91,35 +91,128 @@ a {
     display: grid; 
     height: min-content;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto;
     grid-template-areas: 
-    "weclometitle weclometitle"
+    "signout signout"
+    "welcometitle welcometitle"
     "vanname vanname"
     "vanlocation gpslocation"
     "openvanbutton openvanbutton";
     background-color: #ffffff;
     padding: 1vh 2vw;
     margin: 2vh 0;
-    justify-content: center;
+    justify-items: center;
+    font-weight: 500;
 }
 
-.weclometitle { 
+.signout{
+    grid-area: signout;
+}
+.welcometitle { 
     grid-area: welcometitle;
-    padding-left: 50%;
 }
 
-#titleid {
-    display: block;
-    font-size: 2em;
-    font-weight: bold;
-}
 .vanname { grid-area: vanname; }
 
 #vannameid {
     display: block;
     font-size: 1em;
     font-weight: bold;
+    margin-top: -20%;
+
 }
-.vanlocation { grid-area: vanlocation; }
-.gpslocation { grid-area: gpslocation; }
-.openvanbutton { grid-area: openvanbutton; }
+.vanlocation { 
+    grid-area: vanlocation; 
+    padding-top: 10%;
+}
+
+.gpslocation {
+    grid-area: gpslocation; 
+    padding-top: 10%;
+}
+.openvanbutton { grid-area: openvanbutton;}
+
+.vandescriptionfield {
+    width: 40vw;
+    max-width: 480px;
+    min-width: 180px;
+    height: 200px;
+    min-height: 2em;
+
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    box-sizing: border-box;
+
+    background-color: #e4e4e5;
+    border: none;
+    border-radius: 6px;
+    
+    vertical-align: text-top;
+    font-family: inherit;
+}
+
+#vantextdescription{
+    min-width: auto;
+    max-width: 480px;
+}
+
+#vanbutton {
+    width: 200vw;
+    max-width: 360px;
+    min-width: 80px;
+
+    padding: 8px 10px;
+    margin-top: 3vh;
+    box-sizing: border-box;
+
+    background-color: #5ac8fa;
+    border: none;
+    border-radius: 6px;
+
+    font-family: inherit;
+    color: white;
+    font-size: 0.9em;
+}
+
+#wrongadressbutton {
+    width: 40vw;
+    max-width: 360px;
+    min-width: 80px;
+
+    padding: 8px 10px;
+    margin-top: 3vh;
+    box-sizing: border-box;
+
+    background-color: red;
+    border: none;
+    border-radius: 6px;
+
+    font-family: inherit;
+    color: white;
+    font-size: 0.9em;
+    
+}
+
+#mapdescription {
+    color: grey;
+    font-size: 0.9em;
+}
+
+#signoutbutton{
+    width: 40vw;
+    max-width: 360px;
+    min-width: 80px;
+
+    padding: 5px 10px;
+    margin-top: 3vh;
+    box-sizing: border-box;
+    border: 1mm;
+    background-color: white;
+    border-radius: 6px;
+
+    font-family: inherit;
+    color: red;
+    font-size: 1em;
+    margin-left: 60%;
+    
+}

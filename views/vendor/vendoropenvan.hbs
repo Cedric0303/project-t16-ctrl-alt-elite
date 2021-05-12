@@ -1,23 +1,42 @@
 <div class="vendorvan-container"> 
-    <div class="welcometitle">
-        <h1 id= "titleid"> Welcome! </h1>
+    
+    <div class="signout">
+        <form action="/vendor/{{vendor.loginID}}/logout" id="logoutform" method="get" name="logout">
+            <input type="submit" id="signoutbutton" value="Sign Out">
+        </form>
     </div>
     
-    <div class="vanname">
-        <h1 id= "vannameid"> van name </h1>
+    <div class="welcometitle">
+        <h1> Welcome! </h1>
     </div>
 
-    <div class="vanlocation">
-        <h1> van description </h1>
+    <div class="vanname">
+        <h1 id= "vannameid">{{vendor.vanName}} </h1>
     </div>
+
+    <form class= "vanlocation">
+        <input type="text" class="vandescriptionfield" id="vantextdescription" placeholder="Describe Van Location">
+    </form>
 
     <div class="gpslocation">
-        <h1> gps lcoation </h1>
+        <div id="mapcontainer">
+            <div id="map"></div>
+        </div>
+        <h1 id= "mapdescription"> GPS Location: </h1>
+        <input type="submit" id="wrongadressbutton" value="Wrong Address?" onclick="geolocate.trigger()">
     </div>
-
+    
     <div class="openvanbutton">
-        <h1> button </h1>
+        <form action="/vendor/{{vendor.loginID}}" method="post" name="form">
+            <input type="hidden" name="address" id="address" value="">
+            <input type="hidden" name="longitude" id="longitude" value="">
+            <input type="hidden" name="latitude" id="latitude" value="">
+        </form>
+        <input onclick="submitForm()" type="submit" id="vanbutton" value="Open Van">
     </div>
-   
+    
+    <script src="/js/vendormap.js"></script>
+    <script src="/js/vendorscript.js"></script>
 </div>
+
 

@@ -30,6 +30,6 @@ vendorRouter.post('/:id/orders/complete/:orderID', vendorController.pickedUpOrde
 
 vendorRouter.get('/:id/pastorders', vendorController.getPastOrders)
 
-vendorRouter.get('/logout', vendorController.getLogout)
+vendorRouter.get('/:id/logout', vendorController.getLogout)
 
 module.exports = vendorRouter
