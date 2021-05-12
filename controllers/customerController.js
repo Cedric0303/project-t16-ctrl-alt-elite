@@ -88,21 +88,7 @@ const getMenuVan = async (req, res) => {
 
 const postNewOrder = async (req, res) => {
     if (loggedIn(req)) {
-        var order = {}
         orderInfo = JSON.parse(req.body.payload);
-        // orderInfo structure
-        // orderInfo = {
-        //   payload: '{
-        //      "item":[{
-        //          "name":str,
-        //          "price":float,
-        //          "count":int,
-        //          "total":float
-        //      }], 
-        //      "vendorID":str
-        //   }'
-        // }
-
         orderTotal = 0;
         for (var item in orderInfo.item) {
             // replace price and total from customer app with values from db
