@@ -5,6 +5,13 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const db = mongoose.connection;
 
+const Customer = require('../models/customerSchema.js');
+const Food = require('../models/foodSchema.js')
+const FoodCategories = require('../models/foodcategoriesSchema.js')
+const Order = require('../models/orderSchema.js')
+const Vendor = require('../models/VendorSchema.js')
+
+
 // get all cookies from current page
 // https://stackoverflow.com/a/51812642
 var get_cookies = function(req) {
@@ -117,7 +124,7 @@ const postNewOrder = async (req, res) => {
         const token = get_cookies(req)['jwt']
         const payload = jwt.decode(token)
         const orderID = parseInt(new Date().getTime())
-        order = {
+        const order = new Order({
             item: orderInfo["item"],
             orderTotal: orderTotal,
             timestamp: new Date(),
@@ -126,9 +133,14 @@ const postNewOrder = async (req, res) => {
             customerGivenName: payload.body.nameGiven,
             orderStatus: "Ordering",
             orderID: orderID
-        };
-        await db.db.collection('order').insertOne(order);
-        res.redirect('/customer/orders/' + orderID)
+        });
+        const error = order.validateSync()
+        if (error == undefined) {
+            await db.db.collection('order').insertOne(order);
+            res.redirect('/customer/orders/' + orderID)
+        } else {
+            // print cart error message
+        }
     } else {
         res.render('customer/notloggedin', {layout: 'customer/navbar'});
     }
@@ -244,6 +256,7 @@ const getFoodDetails = async (req, res) => {
     res.send(result)
 }
 
+// DEPRECATED
 // create a new order and add a specified food into the order
 const addFoodToOrder = async (req, res) => {
     const food = await db.db.collection('food').findOne({
@@ -284,20 +297,9 @@ const authLogin = async (req, res) => {
             // if account exists
             const valid = await bcrypt.compare(pw, user.password)
             if (user && valid) {
-                // if account exists and pw is correct
-                // await db.db.collection('customer').findOneAndUpdate({
-                //     loginID: user.loginID
-                // }, { 
-                //     $set:{
-                //         sessionID : req.sessionID,
-                //         // expiryDate : new Date(Date.now() + hour)
-                //     }
-                // })
                 const body = {username: email, nameGiven: user.nameGiven};
                 const token = jwt.sign({body}, process.env.SECRET_OR_PUBLIC_KEY);
                 res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true})
-                // res.session.maxAge = new Date(Date.now() + hour);
-                // res.session.cookie.maxAge = hour;
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
                 prevPageURL = req.header('Referer');
@@ -330,13 +332,19 @@ const addCustomer = async (req, res) => {
     const user = await db.db.collection('customer').findOne({loginID: req.body.email});
     if (user == null) {
         const hash_pw = await bcrypt.hash(req.body.password, parseInt(process.env.SALT))
-        await db.db.collection('customer').insertOne({
+        const newUser = new Customer({
             nameGiven: req.body.firstName,
             nameFamily: req.body.lastName,
             loginID: req.body.email,
             password: hash_pw
         })
-        res.render('customer/loginnewacc', {layout: 'customer/navbar'});
+        const error = newUser.validateSync()
+        if (error == undefined) {
+            await db.db.collection('customer').insertOne(newUser)
+            res.render('customer/loginnewacc', {layout: 'customer/navbar'});
+        } else {
+            // print register account error
+        }
     } else {
         res.render('customer/registeremaildupe', {layout: 'customer/navbar'});
     }
@@ -368,7 +376,9 @@ const getProfile = async (req, res) => {
         const token = get_cookies(req)['jwt']
         const payload = jwt.decode(token)
         const email = payload.body.username
-        const user = await db.db.collection('customer').findOne({loginID: email},{
+        const user = await db.db.collection('customer').findOne({
+            loginID: email
+        }, {
             "projection": {
                 "_id": false,
                 "password": false

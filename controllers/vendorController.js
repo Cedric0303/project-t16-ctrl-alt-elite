@@ -5,6 +5,12 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const db = mongoose.connection;
 
+const Customer = require('../models/customerSchema.js');
+const Food = require('../models/foodSchema.js')
+const FoodCategories = require('../models/foodcategoriesSchema.js')
+const Order = require('../models/orderSchema.js')
+const Vendor = require('../models/VendorSchema.js')
+
 // get all cookies from current page
 // https://stackoverflow.com/a/51812642
 var get_cookies = function(req) {
