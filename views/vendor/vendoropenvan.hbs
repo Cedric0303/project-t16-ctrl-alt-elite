@@ -1,7 +1,9 @@
 <div class="vendorvan-container"> 
     
     <div class="signout">
-        <input type="submit" id="signoutbutton" value="Sign Out">
+        <form action="/vendor/{{vendor.loginID}}/logout" id="logoutform" method="get" name="logout">
+            <input type="submit" id="signoutbutton" value="Sign Out">
+        </form>
     </div>
     
     <div class="welcometitle">
@@ -22,15 +24,19 @@
         </div>
         <h1 id= "mapdescription"> GPS Location: </h1>
         <input type="submit" id="wrongadressbutton" value="Wrong Address?" onclick="geolocate.trigger()">
-
     </div>
     
     <div class="openvanbutton">
-        <input type="submit" id="vanbutton" value="Open Van">
+        <form action="/vendor/{{vendor.loginID}}" method="post" name="form">
+            <input type="hidden" name="address" id="address" value="">
+            <input type="hidden" name="longitude" id="longitude" value="">
+            <input type="hidden" name="latitude" id="latitude" value="">
+        </form>
+        <input onclick="submitForm()" type="submit" id="vanbutton" value="Open Van">
     </div>
     
     <script src="/js/vendormap.js"></script>
-
+    <script src="/js/vendorscript.js"></script>
 </div>
 
 

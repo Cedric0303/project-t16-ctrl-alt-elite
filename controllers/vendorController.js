@@ -41,11 +41,11 @@ const postVendor = async (req, res) => {
             $set: {
                 isOpen: true,
                 address: req.body.address,
-                longitude: req.body.longitude,
-                latitude: req.body.latitude
+                longitude: parseFloat(req.body.longitude),
+                latitude: parseFloat(req.body.latitude)
             }
         })
-        res.send("<h1> Setting van status </h1>")
+        res.redirect('/vendor/:id/orders')
     }
     else {
         res.render('notloggedin')
