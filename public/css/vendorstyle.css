@@ -39,6 +39,10 @@ a {
     font-weight: 400;
 }
 
+.loginerror {
+    color: #d83200;
+}
+
 #login_form {
     font-family: inherit;
 }

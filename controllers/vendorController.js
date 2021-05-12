@@ -48,24 +48,24 @@ const postVendor = async (req, res) => {
         res.send("<h1> Setting van status </h1>")
     }
     else {
-        res.render('notloggedin')
+        res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
 
 // return a specific vendor van
 const getVendor = async (req, res) => {
-    const vendor = await db.db.collection('vendor').findOne({
-            loginID: req.params.id
-        }, {
-            projection: {
-                "_id": false
-            }
-        })
-        .catch(e => console.err(e))
-    if (vendor) {
+    if (loggedIn(req)) {
+        const vendor = await db.db.collection('vendor').findOne({
+                loginID: req.params.id
+            }, {
+                projection: {
+                    "_id": false
+                }
+            })
+            .catch(e => console.err(e))
         res.render('vendor/vendoropenvan', {layout: 'vendor/main'});
     } else {
-        res.send('<h1> Invalid vendor loginID </h1>')
+        res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
 
@@ -87,15 +87,15 @@ const authLogin = async (req, res) => {
             }
             else {
                 // if account did not exist or incorrect password
-                res.render('loginerror');
+                res.render('vendor/loginerror', {layout: 'vendor/main'});
             }
         } else {
             // if email and/or pw were empty
-            res.render('loginerror')
+            res.render('vendor/loginerror', {layout: 'vendor/main'})
         }
     } 
     else {
-        res.render('loginerror')
+        res.render('vendor/loginerror', {layout: 'vendor/main'})
     }
 }
 
@@ -110,7 +110,7 @@ const closeVan = async (req, res) => {
         res.redirect('/vendor/' + vanID)
     }
     else {
-        res.render('notloggedin')
+        res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
 
@@ -126,7 +126,7 @@ const getOrders = async (req, res) => {
         res.send(orders)
     }
     else {
-        res.render('notloggedin')
+        res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
 
@@ -140,35 +140,43 @@ const getPastOrders = async (req, res) => {
             layout: 'vendor/main'})
     }
     else {
-        res.render('notloggedin')
+        res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
 
 // sets a specific order as fulfilled
 const fulfilledOrder = async (req, res) => {
-    await db.db.collection('order').updateOne({
-        orderID: {
-            $eq: Number(req.params.orderID)
-        }
-    }, {
-        $set: {
-            orderStatus: "Fulfilled"
-        }
-    })
-    res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
+    if (loggedIn()) {
+        await db.db.collection('order').updateOne({
+            orderID: {
+                $eq: Number(req.params.orderID)
+            }
+        }, {
+            $set: {
+                orderStatus: "Fulfilled"
+            }
+        })
+        res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
+    } else {
+        res.render('vendor/notloggedin', {layout: 'vendor/main'})
+    }
 }
 
 const pickedUpOrder = async (req, res) => {
-    await db.db.collection('order').updateOne({
-        orderID: {
-            $eq: Number(req.params.orderID)
-        }
-    }, {
-        $set: {
-            orderStatus: "Completed"
-        }
-    })
-    res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
+    if (loggedIn()) {
+        await db.db.collection('order').updateOne({
+            orderID: {
+                $eq: Number(req.params.orderID)
+            }
+        }, {
+            $set: {
+                orderStatus: "Completed"
+            }
+        })
+        res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
+    } else {
+        res.render('vendor/notloggedin', {layout: 'vendor/main'})
+    }
 }
 
 const getLogout = async (req, res) => {
