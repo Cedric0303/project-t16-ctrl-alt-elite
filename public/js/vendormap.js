@@ -29,7 +29,13 @@ function createLocationMarker(curPos) {
     .addTo(map)
 }
 
-var curPos = {"long":144.9541022, "lat": -37.7994056}
+// if (van == null) {
+//     var curPos = {"long":144.9541022, "lat": -37.7994056}
+// }
+// else {
+console.log(van.longitude)
+var curPos = {"long": van.longitude, "lat": van.latitude}
+// }
 var {map, geolocate} = createMap(curPos)
 document.getElementById("mapdescription").innerHTML = "GPS Location: [" + curPos.long + ", " + curPos.lat + "]";
 map.addControl(geolocate)

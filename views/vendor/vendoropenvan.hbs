@@ -15,7 +15,7 @@
     </div>
 
     <form class= "vanlocation">
-        <input type="text" class="vandescriptionfield" id="vantextdescription" placeholder="Describe Van Location">
+        <input type="text" class="vandescriptionfield" id="vantextdescription" placeholder="{{vendor.address}}">
     </form>
 
     <div class="gpslocation">
@@ -34,7 +34,7 @@
         </form>
         <input onclick="submitForm()" type="submit" id="vanbutton" value="Open Van">
     </div>
-    
+    <script>var van = {{{json vendor}}}</script>
     <script src="/js/vendormap.js"></script>
     <script src="/js/vendorscript.js"></script>
 </div>

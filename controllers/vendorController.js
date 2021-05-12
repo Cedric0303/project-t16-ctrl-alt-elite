@@ -59,7 +59,8 @@ const getVendor = async (req, res) => {
                 loginID: req.params.id
             }, {
                 projection: {
-                    "_id": false
+                    "_id": false,
+                    "password": false
                 }
             })
             .catch(e => console.err(e))
