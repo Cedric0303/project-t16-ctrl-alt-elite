@@ -9,7 +9,7 @@ const Customer = require('../models/customerSchema.js');
 const Food = require('../models/foodSchema.js')
 const FoodCategories = require('../models/foodcategoriesSchema.js')
 const Order = require('../models/orderSchema.js')
-const Vendor = require('../models/VendorSchema.js')
+const Vendor = require('../models/vendorSchema.js')
 
 
 // get all cookies from current page
