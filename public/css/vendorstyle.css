@@ -214,5 +214,105 @@ a {
     color: red;
     font-size: 1em;
     margin-left: 60%;
-    
 }
+
+/* --------------orders container-------------- */
+.orders-container {
+    display: grid; 
+    height: min-content;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+    "order1 order2 order3"
+    "order4 order5 order6";
+    background-color: white;
+    border-color: teal;
+    padding: 1vh 2vw;
+    margin: 2vh 0;
+    justify-items: center;
+    font-weight: 500;
+}
+
+.order1{
+    grid-area: order1; 
+    height: 200px;
+}
+
+.order2{
+    grid-area: order2;
+    height: 200px;
+}
+
+.order3{
+    grid-area: order3;
+    height: 200px;
+}
+
+.order4{
+    grid-area: order4;
+    height: 200px;
+}
+
+.order5{
+    grid-area: order5;
+    height: 200px;
+}
+
+.order6{
+    grid-area: order6;
+    height: 200px;
+}
+
+/* --------------menu-------------- */
+
+
+
+.navbar {
+
+    pointer-events: auto;
+    overflow: hidden;
+    width: 100%;
+    background-color: #efefef;
+    text-align: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 5em;
+}
+
+.navbar li {
+    float: left;
+}
+
+.ordersheading{
+    padding-right: 2em;
+}
+.navbar li a {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    color: black;
+    padding: 0.7em 5vw;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 300;
+}
+
+.ordermade-button{
+    color: white;
+    background-color: green;
+    height: 40px;
+    width: 200px;
+    font-size: 1em;
+    border-radius: 15px;
+    font-weight: 600;
+    padding-top: 10px;
+    margin-left: 5em;
+    margin-right: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
