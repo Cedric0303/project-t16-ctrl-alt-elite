@@ -35,7 +35,7 @@ function loggedIn(req) {
 
 // return default vendor home screen (login page)
 const getVendorHome = (req, res) => {
-    res.render('vendor/vendorlogin', {layout: 'vendor/main'})
+    res.render('vendor/login', {layout: 'vendor/main'})
 }
 
 // set van status using location provided
@@ -70,7 +70,7 @@ const getVendor = async (req, res) => {
                 }
             })
             .catch(e => console.err(e))
-        res.render('vendor/vendoropenvan', {
+        res.render('vendor/openvan', {
             "vendor": vendor,
             layout: 'vendor/main'});
     } else {
@@ -144,7 +144,7 @@ const getPastOrders = async (req, res) => {
         const orders = await db.db.collection('order').find({
             vendorID: req.params.id,
         }).toArray()
-        res.render('vendor/vendorpastorders', {
+        res.render('vendor/pastorders', {
             orders: orders,
             layout: 'vendor/main'})
     }
