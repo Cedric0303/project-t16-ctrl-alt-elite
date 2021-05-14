@@ -51,7 +51,7 @@ const postVendor = async (req, res) => {
                 latitude: parseFloat(req.body.latitude)
             }
         })
-        res.redirect('/vendor/'+req.params.id+'/orders')
+        res.render('vendor/orders', {layout: 'vendor/main'})
     }
     else {
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
