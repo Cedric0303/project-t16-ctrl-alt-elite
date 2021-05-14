@@ -1,6 +1,6 @@
 function submitForm() {
     if (document.getElementById("vantextdescription").value == 0) {
-        document.form.address.value =  document.getElementById("vantextdescription").placeholder
+        document.form.address.value =  van.address
     }
     else {
         document.form.address.value = document.getElementById("vantextdescription").value
