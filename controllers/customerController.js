@@ -9,7 +9,7 @@ const Customer = require('../models/customerSchema.js');
 const Food = require('../models/foodSchema.js')
 const FoodCategories = require('../models/foodcategoriesSchema.js')
 const Order = require('../models/orderSchema.js')
-const Vendor = require('../models/VendorSchema.js')
+const Vendor = require('../models/vendorSchema.js')
 
 
 // get all cookies from current page
@@ -137,13 +137,16 @@ const getOrderDetail = async (req, res) => {
     const order = await db.db.collection('order').findOne({
         orderID: parseInt(req.params.orderID)
     })
-    res.send(JSON.stringify(order))
+    res.render('customer/orderstatus', {
+        order: order,
+        layout: 'customer/orderstatus'
+    })
 }
 
 // return order modification page
 const getModifyPage = async (req, res) => {
     if (loggedIn(req)) {
-        res.send('modify order page')
+        res.render('customer/menu', {layout: 'customer/editorder'})
     }
     else {
         res.render('customer/notloggedin', {layout: 'customer/navbar'})
