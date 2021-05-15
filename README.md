@@ -56,6 +56,8 @@ This is a project containing the product developed by our team for a business, f
 * **bcrypt**
 * **Mapbox GL JS** (no package install needed)
 * **jsonwebtoken**
+* **jest**
+* **supertest**
 
 **Now Get ready to complete all the tasks:**
 
