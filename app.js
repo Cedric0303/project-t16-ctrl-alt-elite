@@ -52,3 +52,4 @@ app.listen(port, () => {
 	console.log('Snacks in a Van server is listening for requests ...')
 })
 
+module.exports = app
