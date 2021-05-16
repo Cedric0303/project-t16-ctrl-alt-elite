@@ -1,5 +1,6 @@
 
 const request = require('supertest');
+const assert = require('assert');
 
 const app = require('../app'); // the express server
 
@@ -27,34 +28,42 @@ describe('Integration test', () => {
         })
     );
 
-    // test('Test 0: GET vendor home/login page', async () => {
-	// 	return await agent
-	// 	.post('/vendor/login/auth') 
-    //     // IMPORTANT: without the content type setting your request
-    //     // will be ignored by express
-    //     .set('Content-Type', 'application/x-www-form-urlencoded')
-    //     .send(vendor)
-    //     .then((res) => {
-    //         cookie = res
-    //            .headers['set-cookie'][0]
-    //            .split(',')
-    //            .map(item => item.split(';')[0])
-    //            .join(';')
-	// 		expect(res.statusCode).toBe(200)
-    //      })
-	// });
+    test('Test 0: GET vendor home/login page', async () => {
+		return agent
+			.get('/vendor')
+			// .set('Cookie', cookie)
+			.then((response) => {
+                expect(response.statusCode).toBe(200)
+                expect(response.type).toBe('text/html')
+                assert(response.text.includes('Snacks in a Van'))
+			});
+    });
   
     test('Test 1: GET vendor openvan page', async () => {
 		return agent
 			.get('/vendor/Diner_Driver')
 			.set('Cookie', cookie)
 			.then((response) => {
-			expect(response.statusCode).toBe(200)
-			expect(response.type).toBe('text/html')
+                expect(response.statusCode).toBe(200)
+                expect(response.type).toBe('text/html')
+                assert(response.text.includes('Welcome!'))
+                assert(response.text.includes('Diner Driver'))
+                assert(response.text.includes('GPS Location:'))
 			});
     });
 
-    test('Test 2: POST vendor openvan page', async () => {
+    test('Test 2: GET vendor close van', async () => {
+        return agent
+			.get('/vendor/Diner_Driver/close')
+			.set('Cookie', cookie)
+			.then((response) => {
+				expect(response.statusCode).toBe(302)
+				expect(response.type).toBe('text/plain')
+                expect(response.text).toBe('Found. Redirecting to /vendor/Diner_Driver')
+        });
+    });
+
+    test('Test 3: POST vendor open van', async () => {
       return agent
           .post('/vendor/Diner_Driver/open')
           .send({address: '169 Rathdowne St',
@@ -62,30 +71,42 @@ describe('Integration test', () => {
                   longitude: 144.969487})
           .set('Cookie', cookie)
           .then((response) => {
-              expect(response.statusCode).toBe(302)
-              expect(response.text).toBe('Found. Redirecting to /vendor/Diner_Driver/orders')
-              expect(response.type).toBe('text/plain')
-
+                expect(response.statusCode).toBe(302)
+                expect(response.type).toBe('text/plain')
+                expect(response.text).toBe('Found. Redirecting to /vendor/Diner_Driver/orders')
           });
     });
 
-    test('Test 3: GET vendor orders page', async () => {
+    test('Test 4: GET vendor orders', async () => {
         return agent
 			.get('/vendor/Diner_Driver/orders')
 			.set('Cookie', cookie)
 			.then((response) => {
 				expect(response.statusCode).toBe(200)
 				expect(response.type).toBe('text/html')
+                assert(response.text.includes('Orders'))
+                assert(response.text.includes('Close Van'))
 			});
-      });
+    });
 
-    test('Test 4: GET vendor past orders page', async () => {
+    test('Test 5: GET vendor past orders', async () => {
         return agent
 			.get('/vendor/Diner_Driver/pastorders')
 			.set('Cookie', cookie)
 			.then((response) => {
 				expect(response.statusCode).toBe(200)
 				expect(response.type).toBe('text/html')
-			});
-      });
+        });
+    });
+    
+    test('Test 6: GET vendor logout', async () => {
+        return agent
+			.get('/vendor/Diner_Driver/logout')
+			.set('Cookie', cookie)
+			.then((response) => {
+				expect(response.statusCode).toBe(302)
+				expect(response.type).toBe('text/plain')
+                expect(response.text).toBe('Found. Redirecting to /vendor')
+        });
+    });
 });

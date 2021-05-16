@@ -68,8 +68,9 @@ const postVendor = async (req, res) => {
 // return a specific vendor van
 const getVendor = async (req, res) => {
     if (loggedIn(req)) {
+        const vanID = req.params.vanID
         const vendor = await Vendor.findOne({
-                loginID: req.params.vanID
+                loginID: vanID
             }, {
                 projection: {
                     "_id": false,
@@ -120,9 +121,8 @@ const authLogin = async (req, res) => {
 }
 
 const closeVan = async (req, res) => {
-    const vanID = req.params.vanID
-    
     if (loggedIn(req)) {
+        const vanID = req.params.vanID
         await Vendor.updateOne({
             loginID: vanID
         }, {
@@ -141,8 +141,9 @@ const closeVan = async (req, res) => {
 // return orders of a specific vendor van
 const getOrders = async (req, res) => {
     if (loggedIn(req)) {
+        const vanID =  req.params.vanID
         const orders = await Order.find({
-            vendorID: req.params.vanID,
+            vendorID: vanID,
             orderStatus: { 
                     $not: {$eq: "Fulfilled"}
             }
@@ -160,8 +161,9 @@ const getOrders = async (req, res) => {
 
 const getPastOrders = async (req, res) => {
     if (loggedIn(req)) {
+        const vanID = req.params.vanID
         const orders = await Order.find({
-            vendorID: req.params.vanID,
+            vendorID: vanID,
         }).toArray()
         res.render('vendor/pastorders', {
             orders: orders,
