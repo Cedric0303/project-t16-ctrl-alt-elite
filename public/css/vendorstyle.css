@@ -276,6 +276,10 @@ a {
     grid-template-rows: auto;
     gap: 2px;
     justify-items: center;
+    
+    border-radius: 10px;
+    border: 2px solid #a3a3a3;
+    padding: 0.5em;
 }
 
 .orderitem {

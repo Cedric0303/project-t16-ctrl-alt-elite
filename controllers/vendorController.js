@@ -153,6 +153,7 @@ const getPastOrders = async (req, res) => {
         const vanID = req.params.vanID
         const orders = await Order.find({
             vendorID: vanID,
+            orderStatus: { $eq: "Completed" }
         }).toArray()
         res.render('vendor/pastorders', {
             orders: orders,
