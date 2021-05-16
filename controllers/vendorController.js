@@ -1,15 +1,20 @@
 require('dotenv').config()
-const mongoose = require('../controllers/databaseController.js')
+const mongoose = require('mongoose')
 const path = require('path')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-const db = mongoose.connection;
+const db = require('../controllers/databaseController.js')
 
-const Customer = require('../models/customerSchema.js');
-const Food = require('../models/foodSchema.js')
-const FoodCategories = require('../models/foodcategoriesSchema.js')
-const Order = require('../models/orderSchema.js')
-const Vendor = require('../models/vendorSchema.js')
+// initConnection(function () {})
+
+const customerSchema = require('../models/customerSchema.js');
+const foodSchema = require('../models/foodSchema.js')
+const foodcategoriesSchema = require('../models/foodcategoriesSchema.js')
+const orderSchema = require('../models/orderSchema.js')
+const vendorSchema = require('../models/vendorSchema.js')
+
+const Vendor = db.collection('vendor')
+const Order = db.collection('order')
 
 // get all cookies from current page
 // https://stackoverflow.com/a/51812642
@@ -40,9 +45,10 @@ const getVendorHome = (req, res) => {
 
 // set van status using location provided
 const postVendor = async (req, res) => {
+    const vanID = req.params.id
     if (loggedIn(req)) {
-        db.db.collection('vendor').updateOne({
-            loginID: req.params.id
+        await Vendor.updateOne({
+            loginID: vanID
         }, {
             $set: {
                 isOpen: true,
@@ -51,9 +57,10 @@ const postVendor = async (req, res) => {
                 latitude: parseFloat(req.body.latitude)
             }
         })
-        res.render('vendor/orders', {layout: 'vendor/main'})
+        res.redirect('/vendor/' + vanID + '/orders')
     }
     else {
+        res.status(400)
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
@@ -61,7 +68,7 @@ const postVendor = async (req, res) => {
 // return a specific vendor van
 const getVendor = async (req, res) => {
     if (loggedIn(req)) {
-        const vendor = await db.db.collection('vendor').findOne({
+        const vendor = await Vendor.findOne({
                 loginID: req.params.id
             }, {
                 projection: {
@@ -74,6 +81,7 @@ const getVendor = async (req, res) => {
             "vendor": vendor,
             layout: 'vendor/main'});
     } else {
+        res.status(400)
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
@@ -82,7 +90,7 @@ const authLogin = async (req, res) => {
     const vanID = req.body.vanID
     const pw = req.body.password
     if (vanID && pw) {
-        const vendor = await db.db.collection('vendor').findOne({loginID: vanID})
+        const vendor = await Vendor.findOne({loginID: vanID})
         if (vendor != null) {
             // if account exists
             const valid = await bcrypt.compare(pw, vendor.password)
@@ -96,14 +104,17 @@ const authLogin = async (req, res) => {
             }
             else {
                 // if account did not exist or incorrect password
+                res.status(401)
                 res.render('vendor/loginerror', {layout: 'vendor/main'});
             }
         } else {
             // if email and/or pw were empty
+            res.status(401)
             res.render('vendor/loginerror', {layout: 'vendor/main'})
         }
     } 
     else {
+        res.status(401)
         res.render('vendor/loginerror', {layout: 'vendor/main'})
     }
 }
@@ -111,7 +122,7 @@ const authLogin = async (req, res) => {
 const closeVan = async (req, res) => {
     const vanID = req.body.vanID
     if (loggedIn(req)) {
-        db.db.collection('vendor').findOneAndUpdate({
+        await Vendor.findOneAndUpdate({
             loginID: vanID
         }, {
             isOpen: false
@@ -119,6 +130,7 @@ const closeVan = async (req, res) => {
         res.redirect('/vendor/' + vanID)
     }
     else {
+        res.status(402)
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
@@ -126,22 +138,26 @@ const closeVan = async (req, res) => {
 // return orders of a specific vendor van
 const getOrders = async (req, res) => {
     if (loggedIn(req)) {
-        const orders = await db.db.collection('order').find({
+        const orders = await Order.find({
             vendorID: req.params.id,
             orderStatus: { 
                     $not: {$eq: "Fulfilled"}
             }
         }).toArray()
-        res.send(orders)
+        res.render('vendor/orders', {
+            // orders: orders,
+            layout: 'vendor/main'
+        })
     }
     else {
+        res.status(402)
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
 
 const getPastOrders = async (req, res) => {
     if (loggedIn(req)) {
-        const orders = await db.db.collection('order').find({
+        const orders = await Order.find({
             vendorID: req.params.id,
         }).toArray()
         res.render('vendor/pastorders', {
@@ -149,6 +165,7 @@ const getPastOrders = async (req, res) => {
             layout: 'vendor/main'})
     }
     else {
+        res.status(402)
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
@@ -156,7 +173,7 @@ const getPastOrders = async (req, res) => {
 // sets a specific order as fulfilled
 const fulfilledOrder = async (req, res) => {
     if (loggedIn()) {
-        await db.db.collection('order').updateOne({
+        await Order.updateOne({
             orderID: {
                 $eq: Number(req.params.orderID)
             }
@@ -166,14 +183,16 @@ const fulfilledOrder = async (req, res) => {
             }
         })
         res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
-    } else {
+    } 
+    else {
+        res.status(402)
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
 
 const pickedUpOrder = async (req, res) => {
     if (loggedIn()) {
-        await db.db.collection('order').updateOne({
+        await Order.updateOne({
             orderID: {
                 $eq: Number(req.params.orderID)
             }
@@ -183,7 +202,9 @@ const pickedUpOrder = async (req, res) => {
             }
         })
         res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
-    } else {
+    } 
+    else {
+        res.status(402)
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
@@ -192,7 +213,9 @@ const getLogout = async (req, res) => {
     if (loggedIn(req)) {
         const token = get_cookies(req)['jwt']
         res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
-    } else {
+    } 
+    else {
+        res.status(402)
         res.render('notloggedin');
         return;
     }

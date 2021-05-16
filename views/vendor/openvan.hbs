@@ -11,7 +11,7 @@
     </div>
 
     <div class="vanname">
-        <h1 id= "vannameid">{{vendor.vanName}} </h1>
+        <h1 id= "vannameid">{{vendor.vanName}}</h1>
     </div>
 
     <form class= "vanlocation">
@@ -27,7 +27,7 @@
     </div>
     
     <div class="openvanbutton">
-        <form action="/vendor/{{vendor.loginID}}" method="post" name="form">
+        <form action="/vendor/{{vendor.loginID}}/open" method="post" name="form">
             <input type="hidden" name="address" id="address" value="">
             <input type="hidden" name="longitude" id="longitude" value="">
             <input type="hidden" name="latitude" id="latitude" value="">

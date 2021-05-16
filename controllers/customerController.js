@@ -1,9 +1,11 @@
 require('dotenv').config()
-const mongoose = require('../controllers/databaseController.js')
+const mongoose = require('mongoose')
 const path = require('path')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-const db = mongoose.connection;
+const db = require('../controllers/databaseController.js')
+
+// initConnection(function () {})
 
 const Customer = require('../models/customerSchema.js');
 const Food = require('../models/foodSchema.js')

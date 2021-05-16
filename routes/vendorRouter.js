@@ -13,7 +13,7 @@ vendorRouter.get('/', vendorController.getVendorHome)
 vendorRouter.post('/login/auth', vendorController.authLogin)
 
 // set van status using location provided
-vendorRouter.post('/:id', vendorController.postVendor)
+vendorRouter.post('/:id/open', vendorController.postVendor)
 
 // return a specific vendor van
 vendorRouter.get('/:id', vendorController.getVendor)
