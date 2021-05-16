@@ -4,7 +4,8 @@ const db = require('../controllers/databaseController.js')
 
 const {get_cookies,
         loggedIn,
-        createToken} = require('../controllers/customerToken.js')
+        createToken,
+        getTokenPayload} = require('../controllers/customerToken.js')
 
 
 const customerSchema = require('../models/customerSchema.js');
