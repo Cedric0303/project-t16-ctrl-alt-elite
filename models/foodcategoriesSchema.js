@@ -1,4 +1,4 @@
-const mongoose = require('../controllers/databaseController.js')
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const foodCategoriesSchema = new Schema(
