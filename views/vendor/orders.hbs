@@ -9,9 +9,21 @@
 <div class="orders-container">
     {{#each orders}}
         <div class="order">
-            {{this.orderID}}
+            <div>{{this.orderID}}</div>
+            <div>{{this.orderStatus}}</div>
+            <div>{{this.customerGivenName}}</div>
+            {{#each item}}
+                <div class="orderitem">
+                    <div>{{this.count}}x</div>
+                    <div>{{#removeunderscore this.name}}{{/removeunderscore}}</div>
+                    <div>${{#toFixed2 this.total}}{{/toFixed2}}</div>
+                </div>
+            {{/each}}
         </div>
     {{/each}}
     
 </div>
 
+<div class="fixedbot">
+    <a class="hoverable" id="pastOrdersButton" href="/vendor/{{vendor.loginID}}/pastorders"><i class="fas fa-history"></i> Past Orders</a>
+</div>

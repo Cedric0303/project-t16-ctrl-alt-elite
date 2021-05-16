@@ -124,7 +124,7 @@ const getOrders = async (req, res) => {
         const orders = await Order.find({
             vendorID: vanID,
             orderStatus: { 
-                    $not: {$eq: "Fulfilled"}
+                    $not: {$eq: "Completed"}
             }
         }).toArray()
         const vendor = await Vendor.findOne({

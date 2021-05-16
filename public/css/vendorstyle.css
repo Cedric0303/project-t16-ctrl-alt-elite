@@ -48,6 +48,16 @@ a {
     z-index: 9999;
 }
 
+/* fixed to bottom of screen */
+.fixedbot {
+    position: fixed;
+    bottom: 0;
+    z-index: 9999;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
 /* -----------login page---------- */
 #logo {
     opacity: 0.2;
@@ -246,7 +256,7 @@ a {
     cursor: pointer;
 }
 
-/* --------------orders container-------------- */
+/* --------------orders screen-------------- */
 .orders-container {
     display: grid; 
     height: min-content;
@@ -261,10 +271,18 @@ a {
 }
 
 .order {
-    display: block;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 2px;
+    justify-items: center;
 }
 
-/* --------------menu-------------- */
+.orderitem {
+    display: grid;
+    grid-template-columns: 1fr 6fr 3fr;
+    justify-content: flex-start;
+}
 
 .navbar {
     overflow: hidden;
@@ -302,4 +320,25 @@ a {
     margin: 0 3vw 0 auto;
     font-weight: 500;
     font-family: "Nunito", sans-serif;
+}
+
+#pastOrdersButton {
+    display: flex;
+    padding: 0.5em;
+    margin: 0 2vw 2vh auto;
+    width: max-content;
+
+    color: #ffffff;
+    background-color: #ff3b30;
+    border-radius: 100px;
+    box-shadow: 1px 2px 10px #444444;
+
+    font-size: 1.3em;
+    font-weight: 600;
+    align-items: center;
+    column-gap: 1vw;
+}
+
+#pastOrdersButton i {
+    font-size: 1.5em;
 }

@@ -12,24 +12,26 @@ vendorRouter.get('/', vendorController.getVendorHome)
 // authenticate vendor login
 vendorRouter.post('/login/auth', vendorController.authLogin)
 
-// set van status using location provided
+// open van: set van status using location provided
 vendorRouter.post('/:vanID/open', vendorController.postVendor)
 
 // return a specific vendor van
 vendorRouter.get('/:vanID', vendorController.getVendor)
 
+// close van
 vendorRouter.get('/:vanID/close', vendorController.closeVan)
 
 // return orders of a specific vendor van
 vendorRouter.get('/:vanID/orders', vendorController.getOrders)
 
-// sets a specific order as fulfilled
+// sets order status of a specific order
 vendorRouter.post('/:vanID/orders/fulfill/:orderID', vendorController.fulfilledOrder)
-
 vendorRouter.post('/:vanID/orders/complete/:orderID', vendorController.pickedUpOrder)
 
+// get past orders of a van
 vendorRouter.get('/:vanID/pastorders', vendorController.getPastOrders)
 
+// logout of a van
 vendorRouter.get('/:vanID/logout', vendorController.getLogout)
 
 module.exports = vendorRouter
