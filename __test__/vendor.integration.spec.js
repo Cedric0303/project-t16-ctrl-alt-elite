@@ -28,7 +28,7 @@ describe('Integration test', () => {
         })
     );
 
-    test('Test 0: GET vendor home/login page', async () => {
+    test('Test 1: GET vendor home/login page', async () => {
 		return agent
 			.get('/vendor')
 			// .set('Cookie', cookie)
@@ -39,7 +39,7 @@ describe('Integration test', () => {
 			});
     });
   
-    test('Test 1: GET vendor openvan page', async () => {
+    test('Test 2: GET vendor open van', async () => {
 		return agent
 			.get('/vendor/Diner_Driver')
 			.set('Cookie', cookie)
@@ -52,7 +52,7 @@ describe('Integration test', () => {
 			});
     });
 
-    test('Test 2: GET vendor close van', async () => {
+    test('Test 3: GET vendor close van', async () => {
         return agent
 			.get('/vendor/Diner_Driver/close')
 			.set('Cookie', cookie)
@@ -63,7 +63,7 @@ describe('Integration test', () => {
         });
     });
 
-    test('Test 3: POST vendor open van', async () => {
+    test('Test 4: POST vendor open van', async () => {
       return agent
           .post('/vendor/Diner_Driver/open')
           .send({address: '169 Rathdowne St',
@@ -77,7 +77,7 @@ describe('Integration test', () => {
           });
     });
 
-    test('Test 4: GET vendor orders', async () => {
+    test('Test 5: GET vendor orders', async () => {
         return agent
 			.get('/vendor/Diner_Driver/orders')
 			.set('Cookie', cookie)
@@ -89,7 +89,7 @@ describe('Integration test', () => {
 			});
     });
 
-    test('Test 5: GET vendor past orders', async () => {
+    test('Test 6: GET vendor past orders', async () => {
         return agent
 			.get('/vendor/Diner_Driver/pastorders')
 			.set('Cookie', cookie)
@@ -99,7 +99,7 @@ describe('Integration test', () => {
         });
     });
     
-    test('Test 6: GET vendor logout', async () => {
+    test('Test 7: GET vendor logout', async () => {
         return agent
 			.get('/vendor/Diner_Driver/logout')
 			.set('Cookie', cookie)
