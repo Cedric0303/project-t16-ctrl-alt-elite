@@ -1,11 +1,11 @@
 require('dotenv').config()
-const mongoose = require('mongoose')
-const path = require('path')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
 const db = require('../controllers/databaseController.js')
 
-// initConnection(function () {})
+const {get_cookies,
+        loggedIn,
+        createToken} = require('../controllers/customerToken.js')
+
 
 const customerSchema = require('../models/customerSchema.js');
 const foodSchema = require('../models/foodSchema.js')
@@ -19,27 +19,6 @@ const FoodCategories = db.collection('foodcategories')
 const Order = db.collection('order')
 const Vendor = db.collection('vendor')
 
-// get all cookies from current page
-// https://stackoverflow.com/a/51812642
-var get_cookies = function(req) {
-    var cookies = {};
-    req.headers && req.headers.cookie.split(';').forEach(function(cookie) {
-      var parts = cookie.match(/(.*?)=(.*)$/)
-      cookies[ parts[1].trim() ] = (parts[2] || '').trim();
-    });
-    return cookies;
-};
-
-// return login state
-function loggedIn(req) {
-    // if an username (email) is bound to session, return true for LOGGED IN
-    const token = get_cookies(req)['jwt_customer']
-    if (token && jwt.verify(token, process.env.SECRET_OR_PUBLIC_KEY)) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 // return default customer homescreen
 const getCustomerHome = async (req, res) => {
@@ -115,7 +94,7 @@ const postNewOrder = async (req, res) => {
             orderTotal += orderInfo.item[item].total;
         }
         const token = get_cookies(req)['jwt_customer']
-        const payload = jwt.decode(token)
+        const payload = getTokenPayload(token)
         const orderID = parseInt(new Date().getTime())
         const order = new orderSchema({
             item: orderInfo["item"],
@@ -183,7 +162,7 @@ const modifyOrder = async (req, res) => {
             orderTotal += orderInfo.item[item].total;
         }
         const token = get_cookies(req)['jwt_customer']
-        const payload = jwt.decode(token)
+        const payload = getTokenPayload(token)
         const orderID = req.params.orderID
         await Order.findOneAndUpdate({
             orderID: parseInt(orderID)
@@ -294,7 +273,7 @@ const authLogin = async (req, res) => {
             const valid = await bcrypt.compare(pw, user.password)
             if (user && valid) {
                 const body = {username: email, nameGiven: user.nameGiven};
-                const token = jwt.sign({body}, process.env.SECRET_OR_PUBLIC_KEY);
+                const token = createToken(body)
                 res.cookie("jwt_customer", token, {httpOnly: false, sameSite:false, secure: true})
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
@@ -349,7 +328,7 @@ const addCustomer = async (req, res) => {
 const getOrders = async (req, res) => {
     if (loggedIn(req)) {
         const token = get_cookies(req)['jwt_customer']
-        const payload = jwt.decode(token)
+        const payload = getTokenPayload(token)
         const username = payload.body.username
         const orders = await Order.find({
             "customerID": username
@@ -370,7 +349,7 @@ const getOrders = async (req, res) => {
 const getProfile = async (req, res) => {
     if (loggedIn(req)) {
         const token = get_cookies(req)['jwt_customer']
-        const payload = jwt.decode(token)
+        const payload = getTokenPayload(token)
         const email = payload.body.username
         const user = await Customer.findOne({
             loginID: email
@@ -392,7 +371,7 @@ const getProfile = async (req, res) => {
 // update account details
 const updateAccount = async (req, res) => { 
     const token = get_cookies(req)['jwt_customer']
-    const payload = jwt.decode(token)
+    const payload = getTokenPayload(token)
     const email = payload.body.username
     const user = await Customer.findOne({loginID: email},{
         "projection": {

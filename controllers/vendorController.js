@@ -1,9 +1,10 @@
 require('dotenv').config()
-const mongoose = require('mongoose')
-const path = require('path')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
 const db = require('../controllers/databaseController.js')
+
+const {get_cookies, 
+        loggedIn, 
+        createToken} = require('../controllers/vendorToken')
 
 // initConnection(function () {})
 
@@ -15,28 +16,6 @@ const vendorSchema = require('../models/vendorSchema.js')
 
 const Vendor = db.collection('vendor')
 const Order = db.collection('order')
-
-// get all cookies from current page
-// https://stackoverflow.com/a/51812642
-var get_cookies = function(req) {
-    var cookies = {};
-    req.headers && req.headers.cookie.split(';').forEach(function(cookie) {
-      var parts = cookie.match(/(.*?)=(.*)$/)
-      cookies[ parts[1].trim() ] = (parts[2] || '').trim();
-    });
-    return cookies;
-};
-
-// return login state
-function loggedIn(req) {
-    // if an username (email) is bound to session, return true for LOGGED IN
-    const token = get_cookies(req)['jwt_vendor']
-    if (token && jwt.verify(token, process.env.SECRET_OR_PUBLIC_KEY)) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 // return default vendor home screen (login page)
 const getVendorHome = (req, res) => {
@@ -97,7 +76,7 @@ const authLogin = async (req, res) => {
             const valid = await bcrypt.compare(pw, vendor.password)
             if (vendor && valid) {
                 const body = {username: vanID, vanName: vendor.vanName};
-                const token = jwt.sign({body}, process.env.SECRET_OR_PUBLIC_KEY);
+                const token = createToken(body)
                 res.cookie("jwt_vendor", token, {httpOnly: false, sameSite:false, secure: true})
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
