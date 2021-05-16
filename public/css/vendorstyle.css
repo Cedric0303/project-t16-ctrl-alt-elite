@@ -316,3 +316,10 @@ a {
     padding-right: 2em;
 }
 
+.closevan{
+    color: red;
+    margin-top: 2em;
+    font-size: 0.9em;
+    padding-top: 1em;
+    padding-left: 5em;
+}
