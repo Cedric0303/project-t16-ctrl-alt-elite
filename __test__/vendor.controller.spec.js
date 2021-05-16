@@ -5,7 +5,7 @@ const vendorController = require('../controllers/vendorController')
 
 const Vendor = require('../models/vendorSchema')
 
-describe("Unit testing postVendor from vendorController.js", () => {
+describe("Unit testing getVendorHome from vendorController.js", () => {
     const req = {}
     const res = {
         render: jest.fn(),
@@ -14,7 +14,7 @@ describe("Unit testing postVendor from vendorController.js", () => {
         res.render.mockClear()
         vendorController.getVendorHome(req, res)
     })
-    test("Test case 1: GET vendor home/login page", () => {
+    test("Test getVendorHome()", () => {
             expect(res.render).toHaveBeenCalledTimes(1);
             expect(res.render).toHaveBeenCalledWith('vendor/login', {layout: 'vendor/main'})
         })
