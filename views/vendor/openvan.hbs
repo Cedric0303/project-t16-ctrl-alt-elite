@@ -1,22 +1,13 @@
 <div class="vendorvan-container"> 
     
-    <div class="signout">
-        <form action="/vendor/{{vendor.loginID}}/logout" id="logoutform" method="get" name="logout">
-            <input type="submit" id="signoutbutton" value="Sign Out">
-        </form>
-    </div>
-    
     <div class="welcometitle">
-        <h1> Welcome! </h1>
+        <h1 id="welcometext"> Welcome! </h1>
+        <a id="signoutbutton" href="/vendor/{{vendor.loginID}}/logout">Sign Out</a>
     </div>
 
-    <div class="vanname">
-        <h1 id= "vannameid">{{vendor.vanName}}</h1>
-    </div>
+    <div id="vanname">{{vendor.vanName}}</div>
 
-    <form class= "vanlocation">
-        <input type="text" class="vandescriptionfield" id="vantextdescription" placeholder="...{{vendor.address}}">
-    </form>
+    <textarea form="form" id="vantextdescription" name="address" rows="5" placeholder="Describe van location..." autofocus>{{vendor.address}}</textarea>
 
     <div class="gpslocation">
         <div id="mapcontainer">
@@ -26,18 +17,14 @@
         <input type="submit" id="wrongadressbutton" value="Wrong Address?" onclick="geolocate.trigger()">
     </div>
     
-    <div class="openvanbutton">
-        <form action="/vendor/{{vendor.loginID}}/open" method="post" name="form">
-            <input type="hidden" name="address" id="address" value="">
-            <input type="hidden" name="longitude" id="longitude" value="">
-            <input type="hidden" name="latitude" id="latitude" value="">
-            <input onclick="submitForm()" type="submit" id="vanbutton" value="Open Van" action="/vendor/orders">
-        </form>
-        
-    </div>
+    <form id="form" class="openvanbutton" action="/vendor/{{vendor.loginID}}/open" method="post" name="form">
+        <input type="hidden" name="longitude" id="longitude" value="">
+        <input type="hidden" name="latitude" id="latitude" value="">
+        <input onclick="submitForm(this)" type="submit" id="vanbutton" value="Open Van" action="/vendor/orders">
+    </form>
     <script>var van = {{{json vendor}}}</script>
     <script src="/js/vendormap.js"></script>
-    <script src="/js/vendorscript.js"></script>
+    <script src="/js/openvan.js"></script>
 </div>
 
 

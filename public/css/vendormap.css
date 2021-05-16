@@ -8,6 +8,8 @@
     top: 0;
     bottom: 0;
     width: 100%;
+    border-radius: 15px;
+    border: 1px solid #727272;
 }
 .selfMarker {
     background-image: url('/icons/circle-512.png');
