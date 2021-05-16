@@ -7,12 +7,17 @@ const db = require('../controllers/databaseController.js')
 
 // initConnection(function () {})
 
-const Customer = require('../models/customerSchema.js');
-const Food = require('../models/foodSchema.js')
-const FoodCategories = require('../models/foodcategoriesSchema.js')
-const Order = require('../models/orderSchema.js')
-const Vendor = require('../models/vendorSchema.js')
+const customerSchema = require('../models/customerSchema.js');
+const foodSchema = require('../models/foodSchema.js')
+const foodcategoriesSchema = require('../models/foodcategoriesSchema.js')
+const orderSchema = require('../models/orderSchema.js')
+const vendorSchema = require('../models/vendorSchema.js')
 
+const Customer = db.collection('customer')
+const Food = db.collection('food')
+const FoodCategories = db.collection('foodcategories')
+const Order = db.collection('order')
+const Vendor = db.collection('vendor')
 
 // get all cookies from current page
 // https://stackoverflow.com/a/51812642
@@ -28,7 +33,7 @@ var get_cookies = function(req) {
 // return login state
 function loggedIn(req) {
     // if an username (email) is bound to session, return true for LOGGED IN
-    const token = get_cookies(req)['jwt']
+    const token = get_cookies(req)['jwt_customer']
     if (token && jwt.verify(token, process.env.SECRET_OR_PUBLIC_KEY)) {
         return true;
     } else {
@@ -38,7 +43,7 @@ function loggedIn(req) {
 
 // return default customer homescreen
 const getCustomerHome = async (req, res) => {
-    const vans = await db.db.collection('vendor').find({}).project({
+    const vans = await Vendor.find({}).project({
         "_id": false,
         "password": false
     }).toArray()
@@ -49,7 +54,7 @@ const getCustomerHome = async (req, res) => {
 
 // get food items from the database and return it
 const getMenu = async (req, res) => {
-    const result = await db.db.collection('food').find({}).project({
+    const result = await Food.find({}).project({
         "_id": false
     }).toArray()
     if (result) {
@@ -60,13 +65,13 @@ const getMenu = async (req, res) => {
 }
 
 const getMenuVan = async (req, res) => {
-    const menu = await db.db.collection('food').find({}).project({
+    const menu = await Food.find({}).project({
         "_id": false
     }).toArray()
-    const menucategories = await db.db.collection('foodcategories').find({}).project({
+    const menucategories = await FoodCategories.find({}).project({
         "_id": false
     }).toArray()
-    const vendorinfo = await db.db.collection('vendor').findOne({
+    const vendorinfo = await Vendor.findOne({
         loginID: req.params.vanId
     }, {
         projection: {
@@ -95,7 +100,7 @@ const postNewOrder = async (req, res) => {
         for (var item in orderInfo.item) {
             // replace price and total from customer app with values from db
             // prevents changing the prices from customer app
-            const price = await db.db.collection('food').findOne({
+            const price = await Food.findOne({
                     name: orderInfo.item[item].name
                 }, {
                     projection: {
@@ -109,10 +114,10 @@ const postNewOrder = async (req, res) => {
             orderInfo.item[item].total = priceNum*orderInfo.item[item].count;
             orderTotal += orderInfo.item[item].total;
         }
-        const token = get_cookies(req)['jwt']
+        const token = get_cookies(req)['jwt_customer']
         const payload = jwt.decode(token)
         const orderID = parseInt(new Date().getTime())
-        const order = new Order({
+        const order = new orderSchema({
             item: orderInfo["item"],
             orderTotal: orderTotal,
             timestamp: new Date(),
@@ -124,7 +129,7 @@ const postNewOrder = async (req, res) => {
         });
         const error = order.validateSync()
         if (error == undefined) {
-            await db.db.collection('order').insertOne(order);
+            await Order.insertOne(order);
             res.redirect('/customer/orders/' + orderID)
         } else {
             // print cart error message
@@ -136,7 +141,7 @@ const postNewOrder = async (req, res) => {
 
 // return individual order page
 const getOrderDetail = async (req, res) => {
-    const order = await db.db.collection('order').findOne({
+    const order = await Order.findOne({
         orderID: parseInt(req.params.orderID)
     })
     res.render('customer/orderstatus', {
@@ -163,7 +168,7 @@ const modifyOrder = async (req, res) => {
         for (var item in orderInfo.item) {
             // replace price and total from customer app with values from db
             // prevents changing the prices from customer app
-            const price = await db.db.collection('food').findOne({
+            const price = await Food.findOne({
                     name: orderInfo.item[item].name
                 }, {
                     projection: {
@@ -177,10 +182,10 @@ const modifyOrder = async (req, res) => {
             orderInfo.item[item].total = priceNum*orderInfo.item[item].count;
             orderTotal += orderInfo.item[item].total;
         }
-        const token = get_cookies(req)['jwt']
+        const token = get_cookies(req)['jwt_customer']
         const payload = jwt.decode(token)
         const orderID = req.params.orderID
-        await db.db.collection('order').findOneAndUpdate({
+        await Order.findOneAndUpdate({
             orderID: parseInt(orderID)
         }, {
             $set: {
@@ -204,7 +209,7 @@ const modifyOrder = async (req, res) => {
 const cancelOrder = async (req, res) => {
     if (loggedIn(req)) {
         const orderID = req.params.orderID
-        await db.db.collection('order').deleteOne({
+        await Order.deleteOne({
             orderID: parseInt(orderID)
         })
         res.redirect('/customer/')
@@ -223,7 +228,7 @@ const updateOrderStatus  = async (req, res) => {
 const postReview = async (req, res) => {
     const orderID = parseInt(req.params.orderID)
     // const review = req.body.blablabla
-    await db.db.collection('order').findOneAndUpdate({
+    await Order.findOneAndUpdate({
         orderID: orderID
     }, {
         $set: {
@@ -236,7 +241,7 @@ const postReview = async (req, res) => {
 
 // return information for a given food item
 const getFoodDetails = async (req, res) => {
-    const result = await db.db.collection('food').findOne({
+    const result = await Food.findOne({
             name: req.params.name
         }, {
             projection: {
@@ -250,13 +255,13 @@ const getFoodDetails = async (req, res) => {
 // DEPRECATED
 // create a new order and add a specified food into the order
 const addFoodToOrder = async (req, res) => {
-    const food = await db.db.collection('food').findOne({
+    const food = await Food.findOne({
         name: req.params.name
     })
-    const customer = await db.db.collection('customer').findOne({
+    const customer = await Customer.findOne({
         loginID: req.body.loginID
     })
-    await db.db.collection('order').insertOne({
+    await Order.insertOne({
         item: [{
             foodID: {
                 $toString: food._ID
@@ -283,14 +288,14 @@ const authLogin = async (req, res) => {
     const email = req.body.email
     const pw = req.body.password
     if (email && pw) {
-        const user = await db.db.collection('customer').findOne({loginID: email})
+        const user = await Customer.findOne({loginID: email})
         if (user != null) {
             // if account exists
             const valid = await bcrypt.compare(pw, user.password)
             if (user && valid) {
                 const body = {username: email, nameGiven: user.nameGiven};
                 const token = jwt.sign({body}, process.env.SECRET_OR_PUBLIC_KEY);
-                res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true})
+                res.cookie("jwt_customer", token, {httpOnly: false, sameSite:false, secure: true})
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
                 prevPageURL = req.header('Referer');
@@ -320,10 +325,10 @@ const getRegister = async (req, res) => {
 
 const addCustomer = async (req, res) => {
     // if email does not exist in database, then add an account, if not render dupe account handlebar
-    const user = await db.db.collection('customer').findOne({loginID: req.body.email});
+    const user = await Customer.findOne({loginID: req.body.email});
     if (user == null) {
         const hash_pw = await bcrypt.hash(req.body.password, parseInt(process.env.SALT))
-        const newUser = new Customer({
+        const newUser = new customerSchema({
             nameGiven: req.body.firstName,
             nameFamily: req.body.lastName,
             loginID: req.body.email,
@@ -331,7 +336,7 @@ const addCustomer = async (req, res) => {
         })
         const error = newUser.validateSync()
         if (error == undefined) {
-            await db.db.collection('customer').insertOne(newUser)
+            await Customer.insertOne(newUser)
             res.render('customer/loginnewacc', {layout: 'customer/navbar'});
         } else {
             // print register account error
@@ -343,10 +348,10 @@ const addCustomer = async (req, res) => {
 
 const getOrders = async (req, res) => {
     if (loggedIn(req)) {
-        const token = get_cookies(req)['jwt']
+        const token = get_cookies(req)['jwt_customer']
         const payload = jwt.decode(token)
         const username = payload.body.username
-        const orders = await db.db.collection('order').find({
+        const orders = await Order.find({
             "customerID": username
         }).project({}).sort({"timestamp": -1}).toArray()
         if (orders) {
@@ -364,10 +369,10 @@ const getOrders = async (req, res) => {
 
 const getProfile = async (req, res) => {
     if (loggedIn(req)) {
-        const token = get_cookies(req)['jwt']
+        const token = get_cookies(req)['jwt_customer']
         const payload = jwt.decode(token)
         const email = payload.body.username
-        const user = await db.db.collection('customer').findOne({
+        const user = await Customer.findOne({
             loginID: email
         }, {
             "projection": {
@@ -386,10 +391,10 @@ const getProfile = async (req, res) => {
 
 // update account details
 const updateAccount = async (req, res) => { 
-    const token = get_cookies(req)['jwt']
+    const token = get_cookies(req)['jwt_customer']
     const payload = jwt.decode(token)
     const email = payload.body.username
-    const user = await db.db.collection('customer').findOne({loginID: email},{
+    const user = await Customer.findOne({loginID: email},{
         "projection": {
             "_id": false,
             "password": false
@@ -402,7 +407,7 @@ const updateAccount = async (req, res) => {
             // no changes to name
         } else if (firstname && lastname) {
             // both first and last name changed
-            await db.db.collection('customer').findOneAndUpdate({
+            await Customer.findOneAndUpdate({
                 loginID: user.loginID
             }, { 
                 $set:{
@@ -412,7 +417,7 @@ const updateAccount = async (req, res) => {
             });
         } else if (firstname) {
             // first name changed
-            await db.db.collection('customer').findOneAndUpdate({
+            await Customer.findOneAndUpdate({
                 loginID: user.loginID
             }, { 
                 $set:{
@@ -421,7 +426,7 @@ const updateAccount = async (req, res) => {
             });
         } else if (lastname) {
             // last name changed
-            await db.db.collection('customer').findOneAndUpdate({
+            await Customer.findOneAndUpdate({
                 loginID: user.loginID
             }, { 
                 $set:{
@@ -434,7 +439,7 @@ const updateAccount = async (req, res) => {
             // no change to password
         } else if (req.body.password) {
             const hash_pw = await bcrypt.hash(req.body.password, parseInt(process.env.SALT));
-            await db.db.collection('customer').findOneAndUpdate({
+            await Customer.findOneAndUpdate({
                 loginID: user.loginID
             }, { 
                 $set:{
@@ -449,8 +454,8 @@ const updateAccount = async (req, res) => {
 // logout current user from website and remove user token
 const getLogout = async (req, res) => {
     if (loggedIn(req)) {
-        const token = get_cookies(req)['jwt']
-        res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
+        const token = get_cookies(req)['jwt_customer']
+        res.cookie("jwt_customer", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
     } else {
         res.render('customer/notloggedin', {layout: 'customer/navbar'});
         return;

@@ -30,7 +30,7 @@ var get_cookies = function(req) {
 // return login state
 function loggedIn(req) {
     // if an username (email) is bound to session, return true for LOGGED IN
-    const token = get_cookies(req)['jwt']
+    const token = get_cookies(req)['jwt_vendor']
     if (token && jwt.verify(token, process.env.SECRET_OR_PUBLIC_KEY)) {
         return true;
     } else {
@@ -97,7 +97,7 @@ const authLogin = async (req, res) => {
             if (vendor && valid) {
                 const body = {username: vanID, vanName: vendor.vanName};
                 const token = jwt.sign({body}, process.env.SECRET_OR_PUBLIC_KEY);
-                res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true})
+                res.cookie("jwt_vendor", token, {httpOnly: false, sameSite:false, secure: true})
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
                 res.redirect('/vendor/' + vanID)
@@ -211,8 +211,8 @@ const pickedUpOrder = async (req, res) => {
 
 const getLogout = async (req, res) => {
     if (loggedIn(req)) {
-        const token = get_cookies(req)['jwt']
-        res.cookie("jwt", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
+        const token = get_cookies(req)['jwt_vendor']
+        res.cookie("jwt_vendor", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
     } 
     else {
         res.status(402)
