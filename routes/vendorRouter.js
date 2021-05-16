@@ -13,23 +13,23 @@ vendorRouter.get('/', vendorController.getVendorHome)
 vendorRouter.post('/login/auth', vendorController.authLogin)
 
 // set van status using location provided
-vendorRouter.post('/:id/open', vendorController.postVendor)
+vendorRouter.post('/:vanID/open', vendorController.postVendor)
 
 // return a specific vendor van
-vendorRouter.get('/:id', vendorController.getVendor)
+vendorRouter.get('/:vanID', vendorController.getVendor)
 
-vendorRouter.get('/:id/close', vendorController.closeVan)
+vendorRouter.get('/:vanID/close', vendorController.closeVan)
 
 // return orders of a specific vendor van
-vendorRouter.get('/:id/orders', vendorController.getOrders)
+vendorRouter.get('/:vanID/orders', vendorController.getOrders)
 
 // sets a specific order as fulfilled
-vendorRouter.post('/:id/orders/fulfill/:orderID', vendorController.fulfilledOrder)
+vendorRouter.post('/:vanID/orders/fulfill/:orderID', vendorController.fulfilledOrder)
 
-vendorRouter.post('/:id/orders/complete/:orderID', vendorController.pickedUpOrder)
+vendorRouter.post('/:vanID/orders/complete/:orderID', vendorController.pickedUpOrder)
 
-vendorRouter.get('/:id/pastorders', vendorController.getPastOrders)
+vendorRouter.get('/:vanID/pastorders', vendorController.getPastOrders)
 
-vendorRouter.get('/:id/logout', vendorController.getLogout)
+vendorRouter.get('/:vanID/logout', vendorController.getLogout)
 
 module.exports = vendorRouter

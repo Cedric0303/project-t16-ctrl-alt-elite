@@ -45,7 +45,7 @@ const getVendorHome = (req, res) => {
 
 // set van status using location provided
 const postVendor = async (req, res) => {
-    const vanID = req.params.id
+    const vanID = req.params.vanID
     if (loggedIn(req)) {
         await Vendor.updateOne({
             loginID: vanID
@@ -69,7 +69,7 @@ const postVendor = async (req, res) => {
 const getVendor = async (req, res) => {
     if (loggedIn(req)) {
         const vendor = await Vendor.findOne({
-                loginID: req.params.id
+                loginID: req.params.vanID
             }, {
                 projection: {
                     "_id": false,
@@ -120,12 +120,15 @@ const authLogin = async (req, res) => {
 }
 
 const closeVan = async (req, res) => {
-    const vanID = req.body.vanID
+    const vanID = req.params.vanID
+    
     if (loggedIn(req)) {
-        await Vendor.findOneAndUpdate({
+        await Vendor.updateOne({
             loginID: vanID
         }, {
-            isOpen: false
+            $set: {
+                isOpen: false
+            }
         })
         res.redirect('/vendor/' + vanID)
     }
@@ -139,13 +142,13 @@ const closeVan = async (req, res) => {
 const getOrders = async (req, res) => {
     if (loggedIn(req)) {
         const orders = await Order.find({
-            vendorID: req.params.id,
+            vendorID: req.params.vanID,
             orderStatus: { 
                     $not: {$eq: "Fulfilled"}
             }
         }).toArray()
         res.render('vendor/orders', {
-            // orders: orders,
+            orders: orders,
             layout: 'vendor/main'
         })
     }
@@ -158,7 +161,7 @@ const getOrders = async (req, res) => {
 const getPastOrders = async (req, res) => {
     if (loggedIn(req)) {
         const orders = await Order.find({
-            vendorID: req.params.id,
+            vendorID: req.params.vanID,
         }).toArray()
         res.render('vendor/pastorders', {
             orders: orders,
@@ -219,7 +222,7 @@ const getLogout = async (req, res) => {
         res.render('notloggedin');
         return;
     }
-    res.redirect('/vendor/')
+    res.redirect('/vendor')
 }
 
 module.exports = {
