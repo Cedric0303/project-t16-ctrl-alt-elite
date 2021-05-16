@@ -1,36 +1,17 @@
 
-<div class="navbar" id="myTopnav">
-    <ul>
-        <li><h1 class="ordersheading"> Orders </h1> </li>
-        <li><h1 class="orderbuttons" id="orderbuttons" class="icon" onclick="myFunction()"> Order Made </h1>
-        <li><h1 class="orderbuttons" id="orderbuttons" class="icon" onclick="myFunction()"> Order Collected </h1>
-        <li><h1 class="closevan"> Close Van </h1></li>
-    </ul>
+<div class="navbar stickytop" id="ordersHeader">
+    <h1 id="ordersTitle"> Orders </h1>
+    <button class="orderbuttons hoverable" id="orderbuttons" class="icon" onclick="myFunction()" disabled> Order Made </button>
+    <button class="orderbuttons hoverable" id="orderbuttons" class="icon" onclick="myFunction()" disabled> Order Collected </button>
+    <a class="hoverable" id="closeVan" href="/vendor/{{vendor.loginID}}/close"> Close Van </a>
 </div>
 
 <div class="orders-container">
-    <div class="order1">
-        <h1> order 1 </h1>
-    </div>
-
-    <div class="order2">
-        <h1> order 2 </h1>
-    </div>
-
-    <div class="order3">
-        <h1> order 3 </h1>
-    </div>
-
-    <div class="order4">
-        <h1> order 4 </h1>
-    </div>
-
-    <div class="order5">
-        <h1> order 5 </h1>
-    </div>
+    {{#each orders}}
+        <div class="order">
+            {{this.orderID}}
+        </div>
+    {{/each}}
     
-    <div class="order6">
-        <h1> order 6 </h1>
-    </div>
 </div>
 

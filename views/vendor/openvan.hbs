@@ -2,7 +2,7 @@
     
     <div class="welcometitle">
         <h1 id="welcometext"> Welcome! </h1>
-        <a id="signoutbutton" href="/vendor/{{vendor.loginID}}/logout">Sign Out</a>
+        <a id="signoutbutton" class="hoverable" href="/vendor/{{vendor.loginID}}/logout">Sign Out</a>
     </div>
 
     <div id="vanname">{{vendor.vanName}}</div>
@@ -14,13 +14,13 @@
             <div id="map"></div>
         </div>
         <h1 id= "mapdescription"> GPS Location: </h1>
-        <input type="submit" id="wrongadressbutton" value="Wrong Address?" onclick="geolocate.trigger()">
+        <input type="submit" id="wrongadressbutton" class="hoverable" value="Wrong Address?" onclick="geolocate.trigger()">
     </div>
     
     <form id="form" class="openvanbutton" action="/vendor/{{vendor.loginID}}/open" method="post" name="form">
         <input type="hidden" name="longitude" id="longitude" value="">
         <input type="hidden" name="latitude" id="latitude" value="">
-        <input onclick="submitForm(this)" type="submit" id="vanbutton" value="Open Van" action="/vendor/orders">
+        <input onclick="submitForm(this)" class="hoverable" type="submit" id="vanbutton" value="Open Van" action="/vendor/orders">
     </form>
     <script>var van = {{{json vendor}}}</script>
     <script src="/js/vendormap.js"></script>

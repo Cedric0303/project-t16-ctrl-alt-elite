@@ -101,7 +101,7 @@ const authLogin = async (req, res) => {
 
 const closeVan = async (req, res) => {
     if (loggedIn(req)) {
-        const vanID = req.params.vanID
+        const vanID = req.params.vanID;
         await Vendor.updateOne({
             loginID: vanID
         }, {
@@ -127,8 +127,18 @@ const getOrders = async (req, res) => {
                     $not: {$eq: "Fulfilled"}
             }
         }).toArray()
+        const vendor = await Vendor.findOne({
+            loginID: vanID
+        }, {
+            projection: {
+                "_id": false,
+                "password": false
+            }
+        })
+        .catch(e => console.err(e))
         res.render('vendor/orders', {
             orders: orders,
+            vendor: vendor,
             layout: 'vendor/main'
         })
     }
