@@ -174,7 +174,8 @@ const fulfilledOrder = async (req, res) => {
             }
         }, {
             $set: {
-                orderStatus: "Fulfilled"
+                orderStatus: "Fulfilled",
+                fulfilledTimestamp: new Date()
             }
         })
         res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
@@ -193,7 +194,8 @@ const pickedUpOrder = async (req, res) => {
             }
         }, {
             $set: {
-                orderStatus: "Completed"
+                orderStatus: "Completed",
+                completedTimestamp: new Date()
             }
         })
         res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)

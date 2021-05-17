@@ -15,7 +15,9 @@ const orderSchema = new Schema(
         customerID: {type: String, required: true},
         customerGivenName: {type: String, required: true},
         orderStatus: {type: String, required: true},
-        orderID: {type: Number, required: true}
+        orderID: {type: Number, required: true},
+        fulfilledTimestamp: {type: Date},
+        completedTimestamp: {type: Date}
     }
 )
 
