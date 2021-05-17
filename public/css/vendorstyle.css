@@ -345,4 +345,33 @@ a {
 
 #pastOrdersButton i {
     font-size: 1.5em;
+<<<<<<< Updated upstream
+=======
+}
+>>>>>>> 177c55daec313e8c7d959bf5511260e5d892bc2d
+>>>>>>> Stashed changes
+
+
+/* -------------- PAST ORDERS -------------- */
+.pageContainer{
+    display: grid;
+    grid-template-columns: 1fr, 2fr;
+    grid-template-rows: auto, auto;
+    grid-template-areas: 
+    "list, orderContent";
+}
+.orderList{
+    grid-area: list;
+    display: grid;
+    border: 2px solid darkgray;
+
+    grid-template-columns: 1fr, 2fr;
+    grid-template-rows: auto, auto;
+
+}
+.pastOrderContents {
+    grid-area: orderContent;
+    border: 2px solid darkgray;
+
+>>>>>>> Stashed changes
 }
