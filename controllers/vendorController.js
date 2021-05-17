@@ -1,12 +1,7 @@
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const db = require('../controllers/databaseController.js')
-
-const {get_cookies, 
-        loggedIn, 
-        createToken} = require('../controllers/vendorToken')
-
-// initConnection(function () {})
+const vendorToken = require('../controllers/vendorToken')
 
 const customerSchema = require('../models/customerSchema.js');
 const foodSchema = require('../models/foodSchema.js')
@@ -25,7 +20,7 @@ const getVendorHome = (req, res) => {
 // set van status using location provided
 const postVendor = async (req, res) => {
     const vanID = req.params.vanID
-    if (loggedIn(req)) {
+    if (vendorToken.loggedIn(req)) {
         await Vendor.updateOne({
             loginID: vanID
         }, {
@@ -39,14 +34,14 @@ const postVendor = async (req, res) => {
         res.redirect('/vendor/' + vanID + '/orders')
     }
     else {
-        res.status(400)
+        res.status(402)
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
 
 // return a specific vendor van
 const getVendor = async (req, res) => {
-    if (loggedIn(req)) {
+    if (vendorToken.loggedIn(req)) {
         const vanID = req.params.vanID
         const vendor = await Vendor.findOne({
                 loginID: vanID
@@ -61,7 +56,7 @@ const getVendor = async (req, res) => {
             "vendor": vendor,
             layout: 'vendor/main'});
     } else {
-        res.status(400)
+        res.status(402)
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
     }
 }
@@ -76,7 +71,7 @@ const authLogin = async (req, res) => {
             const valid = await bcrypt.compare(pw, vendor.password)
             if (vendor && valid) {
                 const body = {username: vanID, vanName: vendor.vanName};
-                const token = createToken(body)
+                const token = vendorToken.createToken(body)
                 res.cookie("jwt_vendor", token, {httpOnly: false, sameSite:false, secure: true})
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
@@ -100,7 +95,7 @@ const authLogin = async (req, res) => {
 }
 
 const closeVan = async (req, res) => {
-    if (loggedIn(req)) {
+    if (vendorToken.loggedIn(req)) {
         const vanID = req.params.vanID;
         await Vendor.updateOne({
             loginID: vanID
@@ -119,7 +114,7 @@ const closeVan = async (req, res) => {
 
 // return orders of a specific vendor van
 const getOrders = async (req, res) => {
-    if (loggedIn(req)) {
+    if (vendorToken.loggedIn(req)) {
         const vanID =  req.params.vanID
         const orders = await Order.find({
             vendorID: vanID,
@@ -149,7 +144,7 @@ const getOrders = async (req, res) => {
 }
 
 const getPastOrders = async (req, res) => {
-    if (loggedIn(req)) {
+    if (vendorToken.loggedIn(req)) {
         const vanID = req.params.vanID
         const orders = await Order.find({
             vendorID: vanID,
@@ -167,7 +162,7 @@ const getPastOrders = async (req, res) => {
 
 // sets a specific order as fulfilled (made and ready to be collected)
 const fulfilledOrder = async (req, res) => {
-    if (loggedIn()) {
+    if (vendorToken.loggedIn()) {
         await Order.updateOne({
             orderID: {
                 $eq: Number(req.params.orderID)
@@ -188,7 +183,7 @@ const fulfilledOrder = async (req, res) => {
 
 // completed order
 const pickedUpOrder = async (req, res) => {
-    if (loggedIn()) {
+    if (vendorToken.loggedIn()) {
         await Order.updateOne({
             orderID: {
                 $eq: Number(req.params.orderID)
@@ -208,13 +203,13 @@ const pickedUpOrder = async (req, res) => {
 }
 
 const getLogout = async (req, res) => {
-    if (loggedIn(req)) {
-        const token = get_cookies(req)['jwt_vendor']
+    if (vendorToken.loggedIn(req)) {
+        const token = vendorToken.get_cookies(req)['jwt_vendor']
         res.cookie("jwt_vendor", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
     } 
     else {
         res.status(402)
-        res.render('notloggedin');
+        res.render('vendor/notloggedin', {layout: 'vendor/main'})
         return;
     }
     res.redirect('/vendor')
