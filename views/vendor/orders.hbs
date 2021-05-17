@@ -7,7 +7,6 @@
 </div>
 
 <div class="orders-container">
-<<<<<<< Updated upstream
     {{#each orders}}
         <div class="order">
             <div>{{this.orderID}}</div>
@@ -23,56 +22,6 @@
         </div>
     {{/each}}
     
-=======
-<<<<<<< HEAD
-    <div class="order1" id="orderbox">
-        <h1 id="ordername"> Order for </h1>
-            <div id="ordercontent">
-                <li>
-                    <h1> Item 1 </h1>
-                    <h1> Item 2 </h1>
-                    <h1> Item 3 </h1>
-                </li>
-            </div>
-    </div>
-
-    <div class="order2" id="orderbox">
-        <h1 id="ordername"> Order for </h1>
-    </div>
-
-    <div class="order3" id="orderbox">
-        <h1 id="ordername"> Order for</h1>
-    </div>
-
-    <div class="order4" id="orderbox">
-        <h1 id="ordername"> Order for </h1>
-    </div>
-
-    <div class="order5" id="orderbox">
-        <h1 id="ordername"> Order for </h1>
-    </div>
-    
-    <div class="order6" id="orderbox"> 
-        <h1 id="ordername"> Order for </h1>
-    </div>
-=======
-    {{#each orders}}
-        <div class="order">
-            <div>{{this.orderID}}</div>
-            <div>{{this.orderStatus}}</div>
-            <div>{{this.customerGivenName}}</div>
-            {{#each item}}
-                <div class="orderitem">
-                    <div>{{this.count}}x</div>
-                    <div>{{#removeunderscore this.name}}{{/removeunderscore}}</div>
-                    <div>${{#toFixed2 this.total}}{{/toFixed2}}</div>
-                </div>
-            {{/each}}
-        </div>
-    {{/each}}
-    
->>>>>>> 177c55daec313e8c7d959bf5511260e5d892bc2d
->>>>>>> Stashed changes
 </div>
 
 <div class="fixedbot">
