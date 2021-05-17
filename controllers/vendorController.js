@@ -165,7 +165,7 @@ const getPastOrders = async (req, res) => {
     }
 }
 
-// sets a specific order as fulfilled
+// sets a specific order as fulfilled (made and ready to be collected)
 const fulfilledOrder = async (req, res) => {
     if (loggedIn()) {
         await Order.updateOne({
@@ -186,6 +186,7 @@ const fulfilledOrder = async (req, res) => {
     }
 }
 
+// completed order
 const pickedUpOrder = async (req, res) => {
     if (loggedIn()) {
         await Order.updateOne({

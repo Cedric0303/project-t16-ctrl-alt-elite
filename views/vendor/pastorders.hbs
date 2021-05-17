@@ -1,7 +1,20 @@
 {{#each orders}}
-    <div class="pageContainer">
+    <div id="pageContainer">
+        test
+        <div class="orderList">
+            test
+            
+        </div>
 
-        <div class="orderList">test</div>
-        <div class="pastOrderContents">{{this.orderID}}</div>
+
+        <div class="pastOrderContents">
+
+            <div>{{this.orderID}}</div>
+            <div>{{this.vendorID}}</div>
+            <div>{{this.orderStatus}}</div>
+            <div>{{this.orderTotal}}</div>
+
+            </div>
+
     </div>
 {{/each}}
