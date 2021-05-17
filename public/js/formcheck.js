@@ -28,26 +28,30 @@ function checkform(form) {
 }
 
 function check_pass() {
-    if ((document.getElementById('password').value || document.getElementById('confirm_password').value) != '') {
-        if (document.getElementById('password').value == (document.getElementById('confirm_password').value) ) {
+    pwField = document.getElementById('password');
+    cpwField = document.getElementById('confirm_password');
+    
+    // check if both pw fields are not empty
+    if ((pwField.value || cpwField.value) != '') {
+        if (pwField.value == (cpwField.value) ) {
             // execute if either password fields are not empty and the passwords match
-            document.getElementById('confirm_password').style.border = 'solid';
-            document.getElementById('confirm_password').style.borderColor = 'green';
-            document.getElementById('confirm_password').style.borderWidth = '2px';
-            document.getElementById('confirm_password').style.marginBottom = '10px';
+            cpwField.style.border = 'solid';
+            cpwField.style.borderColor = 'green';
+            cpwField.style.borderWidth = '2px';
+            cpwField.style.marginBottom = '10px';
             document.getElementById('pwmatcherror').style.display = 'none';
         } else {
             // execute if either password fields are not empty and the passwords do not match
-            document.getElementById('confirm_password').style.border = 'solid';
-            document.getElementById('confirm_password').style.borderColor = 'red';
-            document.getElementById('confirm_password').style.borderWidth = '2px';
-            document.getElementById('confirm_password').style.marginBottom = '2px';
+            cpwField.style.border = 'solid';
+            cpwField.style.borderColor = 'red';
+            cpwField.style.borderWidth = '2px';
+            cpwField.style.marginBottom = '2px';
             document.getElementById('pwmatcherror').style.display = 'inline';
         }
     } else {
         // execute if password fields are empty
         document.getElementById('pwmatcherror').style.display = 'none';
-        document.getElementById('confirm_password').style.border = 'none';
-        document.getElementById('confirm_password').style.marginBottom = '10px';
+        cpwField.style.border = 'none';
+        cpwField.style.marginBottom = '10px';
     }
 }

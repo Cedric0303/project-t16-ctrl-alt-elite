@@ -6,7 +6,7 @@
         <label for="email">Enter Your Email<sup>&ast;</sup></label><br>
         <input type="email" class="loginfield" name="email" onkeyup="checkform(form);" required><br>
         <label for="password">Create a Password<sup>&ast;</sup></label><br>
-        <input type="password" class="loginfield" id="password" name="password" onkeyup="check_pass(); checkform(form);" required><br>
+        <input type="password" class="loginfield" id="password" name="password" onkeyup="check_pass(); checkform(form);" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Minimum eight characters, at least one letter and one number" required><br>
         <label for="confirm_password">Confirm Password<sup>&ast;</sup></label><br>
         <input type="password" class="loginfield" id="confirm_password" name="confirm_password" onkeyup="check_pass(); checkform(form);" required><br>
         <div id="pwmatcherror">Passwords must be matching.<br></div>
