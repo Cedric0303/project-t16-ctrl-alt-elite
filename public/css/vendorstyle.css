@@ -352,18 +352,15 @@ a {
 #pageContainer{
     display: grid;
     grid-template-columns: 1fr, 2fr;
-    grid-template-rows: auto, auto;
+
     grid-template-areas: 
-    "list, orderContent";
+    "ordersList, orderContent";
+    border: 2px solid darkgray;
 }
 
 .orderList{
-    grid-area: list;
-    display: grid;
-    border: 2px solid darkgray;
-
-    grid-template-columns: 1fr, 2fr;
-    grid-template-rows: auto, auto;
+    grid-area: ordersList;
+    
 }
 
 .pastOrderContents {
