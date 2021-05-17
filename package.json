@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/INFO30005-2021-SM1/project-t16-ctrl-alt-elite#readme",
   "dependencies": {
-    "@shelf/jest-mongodb": "^1.2.4",
     "bcrypt": "^5.0.1",
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
