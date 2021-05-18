@@ -1,5 +1,6 @@
 <div class="centerflex">
     <h1 class="logintitle"><i>Your order is on the way!</i></h1>
+    <div id="orderStatusText">{{order.orderStatus}}</div>
     <div id="orderDetailInfo">
         <b>Order Information</b>
         <p>Time of order: {{#formatDate order.timestamp}}{{/formatDate}}</p>
@@ -13,6 +14,6 @@
                 </div>
             {{/each}}
         </div>
-        <div>Order ID: {{order.orderID}}</div>
+        <div id="orderDetailID">Order ID: {{order.orderID}}</div>
     </div>
 </div>
