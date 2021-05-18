@@ -202,7 +202,7 @@ const cancelOrder = async (req, res) => {
 // return order review page
 const getOrderStatus  = async (req, res) => {
     const orderID = req.params.orderID
-    res.send('<h1>Update order status</h1>')
+    res.render('customer/orderstatus', {layout: 'customer/navbar'})
 }
 
 // return order review page

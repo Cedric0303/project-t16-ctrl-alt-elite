@@ -1,7 +1,9 @@
 <div class="centerflex">
     <h1 class="logintitle"><i>Your order is on the way!</i></h1>
     <div>
-        {{order.orderID}}
-        {{order}}
+        {{{order.orderID}}}
+        <br>
+        {{!-- {{{json order}}} --}}
+        {{{order.orderStatus}}} ...
     </div>
 </div>
