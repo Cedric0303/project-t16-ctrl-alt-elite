@@ -29,6 +29,7 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
     - [How to use Postman](#how-to-use-postman)
   - [Project Website](#project-website)
   - [Database Access](#database-access)
+  - [.env Variables](#env-variables)
   <!-- - [Code Implementation](#code-implementation)
   - [Adding Images](#adding-images) -->
 
@@ -126,3 +127,9 @@ Connection String (using MongoDB Compass): `mongodb+srv://<username>:<password>@
 <br>Username : `defaultuser` (replace `<username>`)
 <br> Password : `defaultuser` (replace `<password>`)
 
+## .env Variables
+MONGO_USERNAME=`defaultuser`
+<br>MONGO_PASSWORD=`defaultuser`
+<br>SECRET_KEY=`secret`
+<br>SALT=`10`
+<br>SECRET_OR_PUBLIC_KEY=`secret`
