@@ -200,8 +200,18 @@ const cancelOrder = async (req, res) => {
 }
 
 // return order review page
-const updateOrderStatus  = async (req, res) => {
+const getOrderStatus  = async (req, res) => {
+    const orderID = req.params.orderID
     res.send('<h1>Update order status</h1>')
+}
+
+// return order review page
+const updateOrderStatus  = async (req, res) => {
+    const orderID = req.params.orderID
+    const order = await Order.findOne({
+        orderID: orderID
+    })
+    res.send(order)
 }
 
 // add order review into database
@@ -454,6 +464,7 @@ module.exports = {
     modifyOrder,
     cancelOrder,
     getFoodDetails,
+    getOrderStatus,
     updateOrderStatus,
     postReview,
     addFoodToOrder,
