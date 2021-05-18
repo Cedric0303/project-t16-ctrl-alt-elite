@@ -9,6 +9,9 @@ const customerController = require('../controllers/customerController.js')
 // return default customer homescreen
 customerRouter.get('/', customerController.getCustomerHome)
 
+// return customer homescreen with pre-selected van 
+customerRouter.get('/van/:vanId', customerController.getCustomerHomeVan)
+
 // get food items from the database and return it
 customerRouter.get('/menu', customerController.getMenu)
 

@@ -20,7 +20,7 @@ ordered = [0,1,2,3,4];
 // the currently selected van as index of vanListHtml, vanDist
 selectedVanIndex = 0;
 
-function upadteVanStats() {
+function updateVanStats() {
     vanListHtml = []
     for (var i=0; i<5; i++) {
         vanListHtml.push(htmlifyVan(vanDist[i][0].vanName, vanDist[i][0].address, vanDist[i][1], vanDist[i][0].loginID, i));
@@ -147,6 +147,21 @@ function updateMarkers() {
     })
 }
 
+// if url contains selected van, preselect van
+vanID = location.pathname.split('/')[3]
+if (vanID != '') {
+    for (var i=0; i<vanDist.length; i++) {
+        if (vanDist[i][0].loginID == vanID) {
+            selectedVanIndex = i;
+            displayVanList(ordered);
+            updateMarkers()
+            updateBorder(i);
+            updateCollapsed();
+            break;
+        }
+    }
+}
+
 
 // -----------register events---------
 // register van list expand/collapse button on top of van float
@@ -174,6 +189,6 @@ curMarker.on('dragend', function () {
         marker[1].getElement().addEventListener('click', updateMarkers);
     })
     nearestVan = vanDist[0][0]
-    upadteVanStats()
+    updateVanStats()
     displayVanList(ordered)
 })

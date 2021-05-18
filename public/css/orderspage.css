@@ -10,8 +10,29 @@
 
 }
 
+.orderElement {
+    display: flex;
+    flex-direction: row;
+}
+
+.viewonMap {
+    display: flex;
+    background-color: #5490f5;
+    width: 10%;
+    min-width: 15vw;
+    padding: 1vh 2vw;
+    margin: 2vh 0 2vh auto;
+
+    font-size: 0.8em;
+    text-align: center;
+    color: #ffffff;
+    justify-content: center;
+    align-items: center;
+}
+
 .orderbox-container {
     display: grid; 
+    flex-grow: 1;
     height: min-content;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto auto auto;
@@ -58,6 +79,9 @@
 .ordertrailer {
     grid-area: ordertrailer;
     font-size: 1em;
+    display: flex;
+    flex-direction: row;
+    column-gap: 1vw;
 }
 
 .orderitem {

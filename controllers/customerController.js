@@ -32,6 +32,17 @@ const getCustomerHome = async (req, res) => {
         layout: 'customer/homepage'})
 }
 
+// return customer homescreen with pre-selected van 
+const getCustomerHomeVan = async (req, res) => {
+    const vans = await Vendor.find({}).project({
+        "_id": false,
+        "password": false
+    }).toArray()
+    res.render('customer/home', {
+        "vans": vans,
+        layout: 'customer/homepage'})
+}
+
 // get food items from the database and return it
 const getMenu = async (req, res) => {
     const result = await Food.find({}).project({
@@ -465,6 +476,7 @@ const getLogout = async (req, res) => {
 
 module.exports = {
     getCustomerHome,
+    getCustomerHomeVan,
     getMenu,
     getMenuVan,
     postNewOrder,
