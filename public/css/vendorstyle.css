@@ -354,16 +354,28 @@ a {
     grid-template-columns: 1fr, 2fr;
 
     grid-template-areas: 
-    "ordersList, orderContent";
+    "ordersList orderContent";
     border: 2px solid darkgray;
 }
 
 .orderList{
     grid-area: ordersList;
+
     
 }
 
 .pastOrderContents {
     grid-area: orderContent;
     border: 2px solid darkgray;
+}
+
+/* -------------- past orders text formatting -------------- */
+
+.orderListNum {
+    color: black;
+
+}
+
+.orderListTime {
+    color: grey;
 }

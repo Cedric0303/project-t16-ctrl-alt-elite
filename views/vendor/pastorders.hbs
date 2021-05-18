@@ -1,21 +1,26 @@
-{{#each orders}}
-    <div id="pageContainer">
+<div id="pageContainer">
+    
+
+        
        
         <div class="orderList">
-            test
-            test
-            test
+            {{#each orders}}
+            <div class="orderListNum">Order Number: {{this.orderID}}</div>
+            <div class="orderListTime">{{#formatDatePrevOrders this.timestamp}}{{/formatDatePrevOrders}}</div>
+            {{/each}}
+            
         </div>
 
-
+<!--
         <div class="pastOrderContents">
-
+            <!-- Contents are derived by selected order in list --
             <div>{{this.orderID}}</div>
             <div>{{this.vendorID}}</div>
             <div>{{this.orderStatus}}</div>
-            <div>{{this.orderTotal}}</div>
-
+            <div>{{this.orderTotal}}</div> 
+             test
         </div>
+    -->
 
-    </div>
-{{/each}}
+
+</div>
