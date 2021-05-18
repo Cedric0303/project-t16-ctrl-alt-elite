@@ -124,8 +124,17 @@ const getOrderDetail = async (req, res) => {
     const order = await Order.findOne({
         orderID: parseInt(req.params.orderID)
     })
+    const vendorinfo = await Vendor.findOne({
+        loginID: order.vendorID
+    }, {
+        projection: {
+            "vanName": true,
+            "address": true
+        }
+    })
     res.render('customer/orderstatus', {
         order: order,
+        van: vendorinfo,
         layout: 'customer/orderstatus'
     })
 }
