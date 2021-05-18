@@ -1,10 +1,14 @@
+<script>
+    var orderinfo = {{{json order}}}
+    var order2 = JSON.stringify(orderinfo)
+</script>
 <div class="centerflex">
     <h1 class="logintitle"><i>Your order is on the way!</i></h1>
-    <div id="orderStatusText">{{order.orderStatus}}</div>
+    <div id="orderStatusText"></div>
     <div id="orderDetailInfo">
         <b>Order Information</b>
         <p>Time of order: {{#formatDate order.timestamp}}{{/formatDate}}</p>
-        <p>Time elapsed: </p>
+        <div id="timeElapsed"><p></p></div>
         <div id="orderDetailItemList">
             {{#each order.item}}
                 <div id="orderitem">
@@ -17,3 +21,4 @@
         <div id="orderDetailID">Order ID: {{order.orderID}}</div>
     </div>
 </div>
+<script src="/js/liveorder.js"></script>
