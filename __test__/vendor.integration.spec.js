@@ -4,6 +4,8 @@ const assert = require('assert');
 
 const app = require('../app'); // the express server
 
+jest.setTimeout(10000)
+
 describe('#1 Integration test (logged in)', () => {
 
     let agent = request.agent(app);

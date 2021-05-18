@@ -1,11 +1,9 @@
 const mongoose = require('../controllers/databaseController.js')
-const db = mongoose.connection
-// const jest = require('jest')
-
 const vendorController = require('../controllers/vendorController')
 const vendorToken = require('../controllers/vendorToken')
-
 const Vendor = require('../models/vendorSchema')
+
+jest.setTimeout(10000)
 
 describe('#1 Unit testing getVendorHome', () => {
     const req = {}
