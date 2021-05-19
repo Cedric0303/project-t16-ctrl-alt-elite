@@ -1,15 +1,4 @@
-function liveStatus(orderinfo) {
-    req = new XMLHttpRequest()
-    req.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            // update html page
-            document.getElementById('orderStatusText').innerHTML = this.response
-        }
-    }
-    req.open("GET", "/customer/orders/" + orderinfo.orderID + "/status/live")
-    req.send();
-}
-totalTime = 0
+var totalTime = 0
 function timeElapsed(orderinfo,  totalTime) {
     if (!totalTime) {
         orderTime = new Date(orderinfo.timestamp)
@@ -22,10 +11,15 @@ function timeElapsed(orderinfo,  totalTime) {
 }
 
 document.getElementById('timeElapsed').innerHTML = 'Time elapsed: Xm, Xsec'
-document.getElementById('orderStatusText').innerHTML = orderinfo.orderStatus
-setInterval(function () {
-    liveStatus(orderinfo)
-}, 10000)
+// document.getElementById('orderStatusText').innerHTML = orderinfo.orderStatus
 setInterval(()=> {
     timeElapsed(orderinfo, totalTime)
 }, 1000)
+
+
+const socket = io()
+socket.emit('orderID', orderinfo.orderID);
+socket.on('statusChange', function (orderStatus) {
+    document.getElementById('orderStatusText').innerHTML = orderStatus
+    console.log(orderStatus)
+})
