@@ -184,7 +184,7 @@ const modifyOrder = async (req, res) => {
         }
         const token = get_cookies(req)['jwt_customer']
         const payload = getTokenPayload(token)
-        const orderID = req.params.orderID
+        const orderID = parseInt(req.params.orderID)
         await Order.findOneAndUpdate({
             orderID: parseInt(orderID)
         }, {
@@ -208,7 +208,7 @@ const modifyOrder = async (req, res) => {
 // delete an order in the database
 const cancelOrder = async (req, res) => {
     if (loggedIn(req)) {
-        const orderID = req.params.orderID
+        const orderID = parseInt(req.params.orderID)
         await Order.deleteOne({
             orderID: parseInt(orderID)
         })
@@ -221,17 +221,17 @@ const cancelOrder = async (req, res) => {
 
 // return order review page
 const getOrderStatus  = async (req, res) => {
-    const orderID = req.params.orderID
+    const orderID = parseInt(req.params.orderID)
     res.render('customer/orderstatus', {layout: 'customer/navbar'})
 }
 
 // return order review page
 const updateOrderStatus  = async (req, res) => {
-    const orderID = req.params.orderID
+    const orderID = parseInt(req.params.orderID)
     const order = await Order.findOne({
         orderID: orderID
     })
-    res.send(order)
+    res.send(order.orderStatus)
 }
 
 // add order review into database
