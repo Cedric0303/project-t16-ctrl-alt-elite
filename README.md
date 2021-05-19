@@ -48,17 +48,18 @@ This is a project containing the product developed by our team for a business, f
 
 ## Technologies
 ### Packages
-* **mongoose**
-* **express**
-* **express-handlebars**
-* **express-session**
-* **handlebars**
-* **dotenv**
-* **bcrypt**
-* **Mapbox GL JS** (no package install needed)
-* **jsonwebtoken**
-* **jest**
-* **supertest**
+* **`mongoose`**
+* **`express`**
+* **`express-handlebars`**
+* **`express-session`**
+* **`handlebars`**
+* **`dotenv`**
+* **`bcrypt`**
+* **`Mapbox GL JS`** (no package install needed)
+* **`jsonwebtoken`**
+* **`jest`**
+* **`supertest`**
+* **`socket.io`**
 
 **Now Get ready to complete all the tasks:**
 
