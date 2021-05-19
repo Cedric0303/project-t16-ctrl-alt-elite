@@ -226,12 +226,11 @@ const getOrderStatus  = async (req, res) => {
 }
 
 // return order review page
-const updateOrderStatus  = async (req, res) => {
-    const orderID = parseInt(req.params.orderID)
+const updateOrderStatus  = async (orderID) => {
     const order = await Order.findOne({
-        orderID: orderID
+        orderID: parseInt(orderID)
     })
-    res.send(order.orderStatus)
+    return order.orderStatus
 }
 
 // add order review into database
