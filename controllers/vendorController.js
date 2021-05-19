@@ -163,10 +163,9 @@ const getPastOrders = async (req, res) => {
 // sets a specific order as fulfilled (made and ready to be collected)
 const fulfilledOrder = async (req, res) => {
     if (vendorToken.loggedIn()) {
+        const orderID = parseInt(req.params.orderID)
         await Order.updateOne({
-            orderID: {
-                $eq: Number(req.params.orderID)
-            }
+            orderID: orderID
         }, {
             $set: {
                 orderStatus: "Fulfilled",
@@ -174,7 +173,7 @@ const fulfilledOrder = async (req, res) => {
             }
         })
         res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
-    } 
+    }
     else {
         res.status(402)
         res.render('vendor/notloggedin', {layout: 'vendor/main'})
@@ -184,17 +183,16 @@ const fulfilledOrder = async (req, res) => {
 // completed order
 const pickedUpOrder = async (req, res) => {
     if (vendorToken.loggedIn()) {
+        const orderID = parseInt(req.params.orderID)
         await Order.updateOne({
-            orderID: {
-                $eq: Number(req.params.orderID)
-            }
+            orderID: orderID
         }, {
             $set: {
                 orderStatus: "Completed",
                 completedTimestamp: new Date()
             }
         })
-        res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
+        res.send(`<h1> Order ${req.params.orderID} picked up </h1>`)
     } 
     else {
         res.status(402)
