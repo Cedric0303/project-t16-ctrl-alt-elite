@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 
 // get all cookies from current page
 // https://stackoverflow.com/a/51812642
-var get_cookies = function(req) {
+var getCookies = function(req) {
     var cookies = {};
     req.headers && req.headers.cookie.split(';').forEach(function(cookie) {
       var parts = cookie.match(/(.*?)=(.*)$/)
@@ -29,7 +29,7 @@ function createToken(body) {
 }
 
 module.exports = {
-    get_cookies,
+    getCookies,
     loggedIn,
     createToken
 }

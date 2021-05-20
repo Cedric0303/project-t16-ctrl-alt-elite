@@ -2,10 +2,7 @@ require('dotenv').config()
 const bcrypt = require('bcrypt')
 const db = require('../controllers/databaseController.js')
 
-const {get_cookies,
-        loggedIn,
-        createToken,
-        getTokenPayload} = require('../controllers/customerToken.js')
+const customerToken = require('../controllers/customerToken.js')
 
 
 const customerSchema = require('../models/customerSchema.js');
@@ -85,7 +82,7 @@ const getMenuVan = async (req, res) => {
 }
 
 const postNewOrder = async (req, res) => {
-    if (loggedIn(req)) {
+    if (customerToken.loggedIn(req)) {
         orderInfo = JSON.parse(req.body.payload);
         orderTotal = 0;
         for (var item in orderInfo.item) {
@@ -105,8 +102,8 @@ const postNewOrder = async (req, res) => {
             orderInfo.item[item].total = priceNum*orderInfo.item[item].count;
             orderTotal += orderInfo.item[item].total;
         }
-        const token = get_cookies(req)['jwt_customer']
-        const payload = getTokenPayload(token)
+        const token = customerToken.getCookies(req)['jwt_customer']
+        const payload = customerToken.getTokenPayload(token)
         const orderID = parseInt(new Date().getTime())
         const order = new orderSchema({
             item: orderInfo["item"],
@@ -126,7 +123,7 @@ const postNewOrder = async (req, res) => {
             // print cart error message
         }
     } else {
-        res.render('customer/notloggedin', {layout: 'customer/navbar'});
+        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'});
     }
 }
 
@@ -152,17 +149,17 @@ const getOrderDetail = async (req, res) => {
 
 // return order modification page
 const getModifyPage = async (req, res) => {
-    if (loggedIn(req)) {
+    if (customerToken.loggedIn(req)) {
         res.render('customer/menu', {layout: 'customer/editorder'})
     }
     else {
-        res.render('customer/notloggedin', {layout: 'customer/navbar'})
+        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'})
     }
 }
 
 // update order in database with new modified order
 const modifyOrder = async (req, res) => {
-    if (loggedIn(req)) {
+    if (customerToken.loggedIn(req)) {
         orderInfo = JSON.parse(req.body.payload);
         orderTotal = 0;
         for (var item in orderInfo.item) {
@@ -182,8 +179,8 @@ const modifyOrder = async (req, res) => {
             orderInfo.item[item].total = priceNum*orderInfo.item[item].count;
             orderTotal += orderInfo.item[item].total;
         }
-        const token = get_cookies(req)['jwt_customer']
-        const payload = getTokenPayload(token)
+        const token = customerToken.getCookies(req)['jwt_customer']
+        const payload = customerToken.getTokenPayload(token)
         const orderID = parseInt(req.params.orderID)
         await Order.findOneAndUpdate({
             orderID: parseInt(orderID)
@@ -201,13 +198,13 @@ const modifyOrder = async (req, res) => {
         res.redirect('/customer/orders/' + orderID)
     }
     else {
-        res.render('customer/notloggedin', {layout: 'customer/navbar'})
+        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'})
     }
 }
 
 // delete an order in the database
 const cancelOrder = async (req, res) => {
-    if (loggedIn(req)) {
+    if (customerToken.loggedIn(req)) {
         const orderID = parseInt(req.params.orderID)
         await Order.deleteOne({
             orderID: parseInt(orderID)
@@ -215,7 +212,7 @@ const cancelOrder = async (req, res) => {
         res.redirect('/customer/')
     }
     else {
-        res.render('customer/notloggedin', {layout: 'customer/navbar'})
+        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'})
     }
 }
 
@@ -303,7 +300,7 @@ const authLogin = async (req, res) => {
             const valid = await bcrypt.compare(pw, user.password)
             if (user && valid) {
                 const body = {username: email, nameGiven: user.nameGiven};
-                const token = createToken(body)
+                const token = customerToken.createToken(body)
                 res.cookie("jwt_customer", token, {httpOnly: false, sameSite:false, secure: true})
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
@@ -356,9 +353,9 @@ const addCustomer = async (req, res) => {
 }
 
 const getOrders = async (req, res) => {
-    if (loggedIn(req)) {
-        const token = get_cookies(req)['jwt_customer']
-        const payload = getTokenPayload(token)
+    if (customerToken.loggedIn(req)) {
+        const token = customerToken.getCookies(req)['jwt_customer']
+        const payload = customerToken.getTokenPayload(token)
         const username = payload.body.username
         const orders = await Order.find({
             "customerID": username
@@ -372,14 +369,14 @@ const getOrders = async (req, res) => {
             res.send("ERROR")
         }
     } else {
-        res.render('customer/notloggedin', {layout: 'customer/navbar'});
+        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'});
     }
 }
 
 const getProfile = async (req, res) => {
-    if (loggedIn(req)) {
-        const token = get_cookies(req)['jwt_customer']
-        const payload = getTokenPayload(token)
+    if (customerToken.loggedIn(req)) {
+        const token = customerToken.getCookies(req)['jwt_customer']
+        const payload = customerToken.getTokenPayload(token)
         const email = payload.body.username
         const user = await Customer.findOne({
             loginID: email
@@ -394,14 +391,14 @@ const getProfile = async (req, res) => {
             layout: 'customer/navbar'
         })
     } else {
-        res.render('customer/notloggedin', {layout: 'customer/navbar'});
+        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'});
     }
 }
 
 // update account details
 const updateAccount = async (req, res) => { 
-    const token = get_cookies(req)['jwt_customer']
-    const payload = getTokenPayload(token)
+    const token = customerToken.getCookies(req)['jwt_customer']
+    const payload = customerToken.getTokenPayload(token)
     const email = payload.body.username
     const user = await Customer.findOne({loginID: email},{
         "projection": {
@@ -462,11 +459,11 @@ const updateAccount = async (req, res) => {
 
 // logout current user from website and remove user token
 const getLogout = async (req, res) => {
-    if (loggedIn(req)) {
-        const token = get_cookies(req)['jwt_customer']
+    if (customerToken.loggedIn(req)) {
+        const token = customerToken.getCookies(req)['jwt_customer']
         res.cookie("jwt_customer", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
     } else {
-        res.render('customer/notloggedin', {layout: 'customer/navbar'});
+        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'});
         return;
     }
     res.redirect('/customer/')
