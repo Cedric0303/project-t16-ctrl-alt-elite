@@ -27,7 +27,6 @@ app.engine('hbs', exphbs({
 	helpers: require(__dirname + "/public/js/helpers.js").helpers
 }))
 app.set('view engine', 'hbs')
-var socket = require('socket.io')
 
 // customer routes
 app.use('/customer', customerRouter)
@@ -53,26 +52,7 @@ var server = app.listen(port, () => {
 	console.log('Snacks in a Van server is listening for requests ...')
 })
 
-const customerController = require('./controllers/customerController')
-io = socket(server)
-io.on('connection', function(socket) {
-	var status = null
-	var orderID = null
-	console.log(`Socket connected`)
-	
-	socket.on('orderID', function (id) {
-		orderID = id
-		var intervalCheck = setInterval(async () => {
-			newStatus = await customerController.updateOrderStatus(orderID)
-			if (newStatus != status) {
-				status = newStatus
-				socket.emit('statusChange', status)
-				if (status == 'Completed') {
-					clearInterval(intervalCheck)
-				}
-			}
-		}, 10000)
-	})
-})
+const liveOrderController = require('./controllers/liveOrderController.js')
+liveOrderController.listenSocket(server)
 
 module.exports = app
