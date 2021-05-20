@@ -225,13 +225,13 @@ const getOrderStatus  = async (req, res) => {
     res.render('customer/orderstatus', {layout: 'customer/navbar'})
 }
 
-// return order review page
-const updateOrderStatus  = async (orderID) => {
-    const order = await Order.findOne({
-        orderID: parseInt(orderID)
-    })
-    return order.orderStatus
-}
+// // return order review page
+// const updateOrderStatus  = async (orderID) => {
+//     const order = await Order.findOne({
+//         orderID: parseInt(orderID)
+//     })
+//     return order.orderStatus
+// }
 
 // add order review into database
 const postReview = async (req, res) => {
@@ -485,7 +485,7 @@ module.exports = {
     cancelOrder,
     getFoodDetails,
     getOrderStatus,
-    updateOrderStatus,
+    // updateOrderStatus,
     postReview,
     addFoodToOrder,
     getLogin,
