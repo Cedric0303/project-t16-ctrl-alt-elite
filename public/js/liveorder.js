@@ -9,9 +9,6 @@ function timeElapsed(orderinfo,  totalTime) {
     seconds = totalTime % 60
     document.getElementById('timeElapsed').innerHTML = 'Time elapsed: ' + minute + 'm, ' + seconds + 'sec'
 }
-
-document.getElementById('timeElapsed').innerHTML = 'Time elapsed: Xm, Xsec'
-// document.getElementById('orderStatusText').innerHTML = orderinfo.orderStatus
 setInterval(()=> {
     timeElapsed(orderinfo, totalTime)
 }, 1000)
