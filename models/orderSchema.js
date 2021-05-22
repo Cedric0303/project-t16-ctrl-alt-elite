@@ -6,7 +6,6 @@ const orderSchema = new Schema(
         item: [{
             id: {type: String, required: true},
             name: {type: String, required: true},
-            id: {type: String, required: true},
             price: {type: Number, required: true},
             count: {type: Number, required: true},
             total: {type: Number, required: true}
