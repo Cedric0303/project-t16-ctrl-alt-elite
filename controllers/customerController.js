@@ -1,9 +1,7 @@
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const db = require('../controllers/databaseController.js')
-
-const customerToken = require('../controllers/customerToken.js')
-
+const customerToken = require('../controllers/customerToken')
 
 const customerSchema = require('../models/customerSchema.js');
 const foodSchema = require('../models/foodSchema.js')
@@ -123,7 +121,7 @@ const postNewOrder = async (req, res) => {
             // print cart error message
         }
     } else {
-        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'});
+        res.render('customer/notloggedin', {layout: 'customer/navbar'});
     }
 }
 
@@ -153,7 +151,7 @@ const getModifyPage = async (req, res) => {
         res.render('customer/menu', {layout: 'customer/editorder'})
     }
     else {
-        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'})
+        res.render('customer/notloggedin', {layout: 'customer/navbar'})
     }
 }
 
@@ -198,7 +196,7 @@ const modifyOrder = async (req, res) => {
         res.redirect('/customer/orders/' + orderID)
     }
     else {
-        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'})
+        res.render('customer/notloggedin', {layout: 'customer/navbar'})
     }
 }
 
@@ -212,7 +210,7 @@ const cancelOrder = async (req, res) => {
         res.redirect('/customer/')
     }
     else {
-        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'})
+        res.render('customer/notloggedin', {layout: 'customer/navbar'})
     }
 }
 
@@ -369,7 +367,7 @@ const getOrders = async (req, res) => {
             res.send("ERROR")
         }
     } else {
-        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'});
+        res.render('customer/notloggedin', {layout: 'customer/navbar'});
     }
 }
 
@@ -391,7 +389,7 @@ const getProfile = async (req, res) => {
             layout: 'customer/navbar'
         })
     } else {
-        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'});
+        res.render('customer/notloggedin', {layout: 'customer/navbar'});
     }
 }
 
@@ -463,7 +461,7 @@ const getLogout = async (req, res) => {
         const token = customerToken.getCookies(req)['jwt_customer']
         res.cookie("jwt_customer", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
     } else {
-        res.render('customer/notcustomerToken.loggedIn', {layout: 'customer/navbar'});
+        res.render('customer/notloggedin', {layout: 'customer/navbar'});
         return;
     }
     res.redirect('/customer/')

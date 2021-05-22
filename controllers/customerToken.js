@@ -22,6 +22,7 @@ function loggedIn(req) {
         return false;
     }
 }
+
 function createToken(body) {
     return jwt.sign({body}, process.env.SECRET_OR_PUBLIC_KEY);
 }
