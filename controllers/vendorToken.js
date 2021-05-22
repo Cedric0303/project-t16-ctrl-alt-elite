@@ -15,7 +15,7 @@ var getCookies = function(req) {
 // return login state
 function loggedIn(req) {
     // if an username (email) is bound to session, return true for LOGGED IN
-    const token = get_cookies(req)['jwt_vendor']
+    const token = getCookies(req)['jwt_vendor']
     if (token && jwt.verify(token, process.env.SECRET_OR_PUBLIC_KEY)) {
         return true;
     } else {
