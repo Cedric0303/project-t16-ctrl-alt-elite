@@ -86,16 +86,18 @@ const postNewOrder = async (req, res) => {
         for (var item in orderInfo.item) {
             // replace price and total from customer app with values from db
             // prevents changing the prices from customer app
-            const price = await Food.findOne({
-                    name: orderInfo.item[item].name
+            const food = await Food.findOne({
+                    id: orderInfo.item[item].id
                 }, {
                     projection: {
                         "_id": false,
+                        "name": true,
                         "price": true
                     }
                 })
                 .catch(e => console.err(e));
-            priceNum = parseFloat(price.price)
+            priceNum = parseFloat(food.price);
+            orderInfo.item[item].name = food.name;
             orderInfo.item[item].price = priceNum;
             orderInfo.item[item].total = priceNum*orderInfo.item[item].count;
             orderTotal += orderInfo.item[item].total;

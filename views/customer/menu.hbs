@@ -24,8 +24,8 @@
                 <button class="minus-item" onclick="this.parentNode.querySelector('input[type=number]').stepDown();" >
                     <i class="fas fa-minus-circle"></i>
                 </button>
-                <input class="itemcount" name={{this.name}} type="number" value="0" min="0" max="99">
-                <button class="plus-item" data-price={{this.price}} onclick="this.parentNode.querySelector('input[type=number]').stepUp();">
+                <input class="itemcount" name="{{this.name}}"  type="number" value="0" min="0" max="99">
+                <button class="plus-item" data-id={{this.id}} data-price={{this.price}} onclick="this.parentNode.querySelector('input[type=number]').stepUp();">
                     <i class="fas fa-plus-circle"></i>
                 </button>
             </div>

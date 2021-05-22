@@ -71,7 +71,8 @@ var shoppingCart = (function () {
     cart = [];
     
     // item object constructor
-    function Item(name, price, count) {
+    function Item(id, name, price, count) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.count = count;
@@ -97,26 +98,26 @@ var shoppingCart = (function () {
     var obj = {};
 
     // add to cart
-    obj.addItemToCart = function(name, price, count) {
+    obj.addItemToCart = function(id, name, price, count) {
         // if item exists in cart, increment by 1
         for(var item in cart) {
-            if(cart[item].name === name) {
+            if(cart[item].id === id) {
             cart[item].count ++;
             saveCart();
             return;
             }
         }
         // if not, add the item to cart with respective price/count
-        var item = new Item(name, price, count);
+        var item = new Item(id, name, price, count);
         cart.push(item);
         saveCart();
     }
 
     // update count for item
-    obj.setCountForItem = function(name, count, price) {
+    obj.setCountForItem = function(id, name, count, price) {
         for(var item in cart) {
             // if item in cart, update count
-            if (cart[item].name === name) {
+            if (cart[item].id === id) {
                 cart[item].count = count;
                 // if item count is 0, remove item
                 if(cart[item].count == 0) {
@@ -127,16 +128,16 @@ var shoppingCart = (function () {
             }
         }
         // if new item, add with count 
-        var item = new Item(name, price, count);
+        var item = new Item(id, name, price, count);
         cart.push(item);
         saveCart();
     }
 
     // remove item from cart
-    obj.removeItemFromCart = function(name) {
+    obj.removeItemFromCart = function(id) {
         // if item exists in cart, decrement by 1
         for(var item in cart) {
-            if(cart[item].name === name) {
+            if(cart[item].id === id) {
                 cart[item].count --;
                 // if item count is 0, remove item
                 if(cart[item].count === 0) {
@@ -148,9 +149,9 @@ var shoppingCart = (function () {
     }
 
     // remove all of an item from cart
-    obj.removeItemFromCartAll = function(name) {
+    obj.removeItemFromCartAll = function(id) {
         for(var item in cart) {
-            if(cart[item].name == name) {
+            if(cart[item].id == id) {
                 cart.splice(item, 1);
                 break;
             }
@@ -256,7 +257,7 @@ function displayCart() {
         output += "<div class=\"cartitem\">"
                 + "<div class=\"delete-item-cart itemdel\"><i class=\"fas fa-times\"></i></div>"
                 + "<div class=\"itemname\">"+cartArray[item].name.replace("_", " ")+"</div>"
-                + "<div class=\"itemquant number-input\"><button class=\"minus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepDown();\"><i class=\"fas fa-minus-circle\"></i></button><input class=\"itemcount\" name=\""+cartArray[item].name+"\" type=\"number\" value="+cartArray[item].count+" min=\"0\" max=\"99\"><button class=\"plus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepUp();\"><i class=\"fas fa-plus-circle\"></i></button>\</div>"
+                + "<div class=\"itemquant number-input\"><button class=\"minus-item\" onclick=\"this.parentNode.querySelector('input[type=number]').stepDown();\"><i class=\"fas fa-minus-circle\"></i></button><input class=\"itemcount\" name=\""+cartArray[item].name+"\" type=\"number\" value="+cartArray[item].count+" min=\"0\" max=\"99\"><button class=\"plus-item\" data-id="+cartArray[item].id+" onclick=\"this.parentNode.querySelector('input[type=number]').stepUp();\"><i class=\"fas fa-plus-circle\"></i></button>\</div>"
                 + "<div class=\"itemprice\">$"+cartArray[item].total+"</div>"
                 + "</div>";
     }
@@ -312,35 +313,37 @@ function displayCart() {
 
 function registerAddItem(event) {
     event.preventDefault();
+    var id = this.dataset.id;
     var name = this.parentNode.querySelector('input[type=number]').name;
     var price = Number(this.dataset.price);
-    shoppingCart.addItemToCart(name, price, 1);
+    shoppingCart.addItemToCart(id, name, price, 1);
     displayCart();
 }
 
 function registerRemItem(event) {
     event.preventDefault();
-    var name = this.parentNode.querySelector('input[type=number]').name;
-    shoppingCart.removeItemFromCart(name);
+    var id = this.parentNode.querySelector('button.plus-item').dataset.id;
+    shoppingCart.removeItemFromCart(id);
     displayCart();
 }
 
 function registerRemItemAll(event) {
     event.preventDefault();
-    var name = this.parentNode.querySelector('input[type=number]').name;
-    shoppingCart.removeItemFromCartAll(name);
+    var id = this.parentNode.querySelector('button.plus-item').dataset.id;
+    shoppingCart.removeItemFromCartAll(id);
     displayCart();
 }
 
 function registerItemCount(event) {
     event.preventDefault();
+    var id = this.parentNode.querySelector('button.plus-item').dataset.id;
     var name = this.name;
     var count = Number(this.value);
     var price = this.parentNode.querySelector('button.plus-item').dataset.price;
     if (count == 0) {
-        shoppingCart.setCountForItem(name, count);
+        shoppingCart.setCountForItem(id, name, count);
     } else {
-        shoppingCart.setCountForItem(name, count, price);
+        shoppingCart.setCountForItem(id, name, count, price);
     }
     displayCart();
 }
