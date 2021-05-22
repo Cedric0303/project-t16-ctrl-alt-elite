@@ -15,12 +15,6 @@ customerRouter.get('/van/:vanId', customerController.getCustomerHomeVan)
 // get food items from the database and return it
 customerRouter.get('/menu', customerController.getMenu)
 
-// return information for a given food item
-customerRouter.get('/menu/:name', customerController.getFoodDetails)
-
-// create a new order and add a specified food into the order
-customerRouter.post('/menu/:name', customerController.addFoodToOrder)
-
 // get food items from the database and also information of selected van
 customerRouter.get('/:vanId/menu', customerController.getMenuVan)
 
