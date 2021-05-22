@@ -15,7 +15,7 @@
             {{#each item}}
                 <div class="orderitem">
                     <div>{{this.count}}x</div>
-                    <div>{{#removeunderscore this.name}}{{/removeunderscore}}</div>
+                    <div>{{this.name}}</div>
                     <div>${{#toFixed2 this.total}}{{/toFixed2}}</div>
                 </div>
             {{/each}}
