@@ -87,7 +87,7 @@ const postNewOrder = async (req, res) => {
             // replace price and total from customer app with values from db
             // prevents changing the prices from customer app
             const price = await Food.findOne({
-                    name: orderInfo.item[item].name
+                    id: orderInfo.item[item].id
                 }, {
                     projection: {
                         "_id": false,
@@ -164,7 +164,7 @@ const modifyOrder = async (req, res) => {
             // replace price and total from customer app with values from db
             // prevents changing the prices from customer app
             const price = await Food.findOne({
-                    name: orderInfo.item[item].name
+                    id: orderInfo.item[item].id
                 }, {
                     projection: {
                         "_id": false,
@@ -220,14 +220,6 @@ const getOrderStatus  = async (req, res) => {
     res.render('customer/orderstatus', {layout: 'customer/navbar'})
 }
 
-// // return order review page
-// const updateOrderStatus  = async (orderID) => {
-//     const order = await Order.findOne({
-//         orderID: parseInt(orderID)
-//     })
-//     return order.orderStatus
-// }
-
 // add order review into database
 const postReview = async (req, res) => {
     const orderID = parseInt(req.params.orderID)
@@ -241,46 +233,6 @@ const postReview = async (req, res) => {
         }
     })
     res.send("<h1>Thanks.</h1>")
-}
-
-// return information for a given food item
-const getFoodDetails = async (req, res) => {
-    const result = await Food.findOne({
-            name: req.params.name
-        }, {
-            projection: {
-                "_id": false
-            }
-        })
-        .catch(e => console.err(e))
-    res.send(result)
-}
-
-// DEPRECATED
-// create a new order and add a specified food into the order
-const addFoodToOrder = async (req, res) => {
-    const food = await Food.findOne({
-        name: req.params.name
-    })
-    const customer = await Customer.findOne({
-        loginID: req.body.loginID
-    })
-    await Order.insertOne({
-        item: [{
-            foodID: {
-                $toString: food._ID
-            },
-            name: food.name,
-            count: req.body.count
-        }],
-        timestamp: new Date(),
-        vendorID: req.body.vendorID,
-        customerID: customer.loginID,
-        customerGivenName: customer.nameGiven,
-        orderStatus: "Ordering",
-        orderID: Math.floor((Math.random() * 1000000) + 1)
-    })
-    res.send(`<h1> Added ${food.name} to order </h1>`)
 }
 
 // return customer login page
@@ -478,11 +430,8 @@ module.exports = {
     getOrderDetail,
     modifyOrder,
     cancelOrder,
-    getFoodDetails,
     getOrderStatus,
-    // updateOrderStatus,
     postReview,
-    addFoodToOrder,
     getLogin,
     authLogin,
     getRegister,
