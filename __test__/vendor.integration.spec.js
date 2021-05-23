@@ -22,11 +22,8 @@ describe('#1 Integration test (logged in)', () => {
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send(vendor)
         .then((res) => {
-            cookie = res
-            .headers['set-cookie'][0]
-            .split(',')
-            .map(item => item.split(';')[0])
-            .join(';')
+            token = res.headers['set-cookie'][0].split(';')
+            cookie = token[0]
         })
     );
 
