@@ -246,7 +246,8 @@ const authLogin = async (req, res) => {
                     httpOnly: false,
                     sameSite:false,
                     secure: true,
-                    maxAge: tokenTime})
+                    maxAge: tokenTime,
+                })
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
                 prevPageURL = req.header('Referer');
