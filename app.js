@@ -49,7 +49,7 @@ app.all('*', (req, res) => {  // 'default' route to catch user errors
 
 // start server
 var server = app.listen(port, () => {
-	console.log('Snacks in a Van server is listening for requests ...')
+	console.log('Snacks in a Van server is listening for requests')
 })
 
 const liveOrderController = require('./controllers/liveOrderController.js')

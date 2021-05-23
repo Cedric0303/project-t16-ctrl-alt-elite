@@ -12,8 +12,8 @@ customerRouter.get('/', customerController.getCustomerHome)
 // return customer homescreen with pre-selected van 
 customerRouter.get('/van/:vanId', customerController.getCustomerHomeVan)
 
-// get food items from the database and return it
-customerRouter.get('/menu', customerController.getMenu)
+// // get food items from the database and return it
+// customerRouter.get('/menu', customerController.getMenu)
 
 // get food items from the database and also information of selected van
 customerRouter.get('/:vanId/menu', customerController.getMenuVan)

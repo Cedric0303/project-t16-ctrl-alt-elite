@@ -85,9 +85,7 @@ function calcVanDist(curPos, vans) {
     var point_distance = []
     for (var van in vans) {
         var latitude = vans[van].latitude
-        // console.log(latitude)
         var longitude = vans[van].longitude
-        // console.log(longitude)
         var dist = distance([longitude, latitude],[curPos.long, curPos.lat]);
         point_distance.push([vans[van], dist])
     }

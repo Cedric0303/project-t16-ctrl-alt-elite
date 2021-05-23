@@ -13,7 +13,6 @@ function listenSocket(server) {
         
         socket.on('orderID', function (id) {
             orderID = id
-            // console.log(orderID)
             const filter = [{
                 $match: {
                     'fullDocument.orderID': parseInt(orderID)
@@ -22,7 +21,6 @@ function listenSocket(server) {
             const options = { fullDocument: 'updateLookup' }
             const changeStream = Order.watch(filter, options)
             changeStream.on('change', (change) => {
-                // console.log(change.fullDocument.orderStatus)
                 socket.emit('statusChange', change.fullDocument.orderStatus)
             })
         })

@@ -89,7 +89,6 @@ var shoppingCart = (function () {
     // if cart in localstorage is not empty, load the cart automatically
     if (localStorage.getItem("shoppingCart") != null) {
         loadCart();
-        // console.log("Loaded existing cart")
     }
 
     // ---------------------
@@ -375,7 +374,6 @@ document.getElementById('chkoutbutton').addEventListener("click",postOrder);
 // register openModal to all menu items
 var menuitems = document.getElementsByClassName('menuitemclick');
 for (var i=0; i<menuitems.length; i++) {
-    // console.log(menuitems[i])
     menuitems[i].addEventListener("click", openModal);
 }; 
 // register close action for X button and modal space
@@ -389,7 +387,6 @@ document.getElementById('modal').addEventListener("click", function() {
 // image modal code
 function openModal() {
     imgToZoom = this.firstElementChild;
-    // console.log("RUN MODAL")
     var modal = document.getElementById("modal");
     var modalImg = document.getElementById("modal-content");
     var caption = document.getElementById("caption");
