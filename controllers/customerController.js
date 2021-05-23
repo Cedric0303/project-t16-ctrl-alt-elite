@@ -38,18 +38,6 @@ const getCustomerHomeVan = async (req, res) => {
         layout: 'customer/homepage'})
 }
 
-// get food items from the database and return it
-const getMenu = async (req, res) => {
-    const result = await Food.find({}).project({
-        "_id": false
-    }).toArray()
-    if (result) {
-        res.send(result)
-    } else {
-        res.send("ERROR")
-    }
-}
-
 const getMenuVan = async (req, res) => {
     const menu = await Food.find({}).project({
         "_id": false
@@ -245,6 +233,7 @@ const getLogin = (req, res) => {
 const authLogin = async (req, res) => {
     const email = req.body.email
     const pw = req.body.password
+    const tokenTime = 2 * 60 * 60 * 1000 // 2 hours
     if (email && pw) {
         const user = await Customer.findOne({loginID: email})
         if (user != null) {
@@ -253,7 +242,11 @@ const authLogin = async (req, res) => {
             if (user && valid) {
                 const body = {username: email, nameGiven: user.nameGiven};
                 const token = customerToken.createToken(body)
-                res.cookie("jwt_customer", token, {httpOnly: false, sameSite:false, secure: true})
+                res.cookie("jwt_customer", token, {
+                    httpOnly: false,
+                    sameSite:false,
+                    secure: true,
+                    maxAge: tokenTime})
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
                 prevPageURL = req.header('Referer');
@@ -425,7 +418,7 @@ const getLogout = async (req, res) => {
 module.exports = {
     getCustomerHome,
     getCustomerHomeVan,
-    getMenu,
+    // getMenu,
     getMenuVan,
     postNewOrder,
     getModifyPage,

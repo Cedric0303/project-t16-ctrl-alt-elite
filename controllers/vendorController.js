@@ -64,6 +64,7 @@ const getVendor = async (req, res) => {
 const authLogin = async (req, res) => {
     const vanID = req.body.vanID
     const pw = req.body.password
+    const tokenTime = 12 * 60 * 60 * 1000 // 12 hours
     if (vanID && pw) {
         const vendor = await Vendor.findOne({loginID: vanID})
         if (vendor != null) {
@@ -72,7 +73,11 @@ const authLogin = async (req, res) => {
             if (vendor && valid) {
                 const body = {username: vanID, vanName: vendor.vanName};
                 const token = vendorToken.createToken(body)
-                res.cookie("jwt_vendor", token, {httpOnly: false, sameSite:false, secure: true})
+                res.cookie("jwt_vendor", token, {
+                    httpOnly: false, 
+                    sameSite:false, 
+                    secure: true,
+                    maxAge: tokenTime})
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
                 res.redirect('/vendor/' + vanID)
