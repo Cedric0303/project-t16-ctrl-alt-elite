@@ -205,7 +205,7 @@ const cancelOrder = async (req, res) => {
 }
 
 // return order review page
-const getOrderStatus  = async (req, res) => {
+const getReview  = async (req, res) => {
     const orderID = parseInt(req.params.orderID)
     res.render('customer/orderstatus', {layout: 'customer/navbar'})
 }
@@ -213,13 +213,14 @@ const getOrderStatus  = async (req, res) => {
 // add order review into database
 const postReview = async (req, res) => {
     const orderID = parseInt(req.params.orderID)
-    // const review = req.body.blablabla
+    const rating = req.body.rating
+    const review = req.body.review
     await Order.findOneAndUpdate({
         orderID: orderID
     }, {
         $set: {
-            rating: "",
-            comment: ""
+            rating: rating,
+            comment: review
         }
     })
     res.send("<h1>Thanks.</h1>")
@@ -419,14 +420,13 @@ const getLogout = async (req, res) => {
 module.exports = {
     getCustomerHome,
     getCustomerHomeVan,
-    // getMenu,
     getMenuVan,
     postNewOrder,
     getModifyPage,
     getOrderDetail,
     modifyOrder,
     cancelOrder,
-    getOrderStatus,
+    getReview,
     postReview,
     getLogin,
     authLogin,
