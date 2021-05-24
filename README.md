@@ -120,8 +120,12 @@ URL: `https://project-t16-ctrl-alt-elite.herokuapp.com/`
 <br>Customer location marker (blue icon on map) is temporarily draggable for testing purpose.
 
 <br>Vendor Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/vendor`
-<br>Vendor loginID  : `Tasty_Trailer`
-<br>Vendor Password : `12345678`
+<br>Vendor #1 loginID  : `Tasty_Trailer`
+<br>Vendor #1 Password : `12345678`
+<br>Vendor #2 loginID  : `Scrumptious_Servo`
+<br>Vendor #2 Password : `12345678`
+<br>Vendor #3 loginID  : `Diner_Driver`
+<br>Vendor #3 Password : `12345678`
 
 ## Database Access
 Connection String (using MongoDB Compass): `mongodb+srv://<username>:<password>@ctrl-alt-elite.ys2d9.mongodb.net/test`
