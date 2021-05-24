@@ -117,7 +117,6 @@ URL: `https://project-t16-ctrl-alt-elite.herokuapp.com/`
 <br>Customer Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/customer`
 <br>Customer Email    : `default@default.com `
 <br>Customer Password : `default `
-<br>Customer location marker (blue icon on map) is temporarily draggable for testing purpose.
 
 <br>Vendor Homepage : `https://project-t16-ctrl-alt-elite.herokuapp.com/vendor`
 <br>Vendor #1 loginID  : `Tasty_Trailer`
