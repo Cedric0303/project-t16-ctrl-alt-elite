@@ -49,10 +49,10 @@ customerRouter.get('/orders/:orderID/reorder', customerController.modifyOrder)
 customerRouter.get('/orders/:orderID/cancel', customerController.cancelOrder)
 
 // get current status of user's order
-customerRouter.get('/orders/:orderID/status', customerController.getOrderStatus)
+customerRouter.get('/orders/:orderID/review', customerController.getReview)
 
 // user adds review to order
-customerRouter.post('orders/:orderID/review', customerController.postReview)
+customerRouter.post('orders/:orderID/review/post', customerController.postReview)
 
 // profile page
 customerRouter.get('/profile', customerController.getProfile)
