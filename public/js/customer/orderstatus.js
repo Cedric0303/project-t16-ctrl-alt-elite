@@ -45,7 +45,7 @@ function setTimeElapsed(hour, minute, second) {
 }
 
 timeInterval = setInterval(()=> {
-    if (orderinfo["orderStatus"] == "Fulfilled") {
+    if (orderinfo["orderStatus"] == "Fulfilled" || orderinfo["orderStatus"] == "Completed") {
         completeTime(orderinfo, totalSeconds)
         clearInterval(timeInterval)
     }
