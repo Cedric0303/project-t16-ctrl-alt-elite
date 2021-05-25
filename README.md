@@ -52,25 +52,32 @@ URL: `https://project-t16-ctrl-alt-elite.herokuapp.com/`
 <br> *PS: Access the website through HTTPS since Geolocation API requires HTTPS to work properly.
 
 ### Example Customer Account
-```
-Customer email   : default@default.com 
-Customer password: default 
-```
+
+Email: `default@default.com`
+<br>
+Password: `default`
+
 
 
 ### Example Vendor Accounts
-```
-Vendor 1 loginID : Tasty_Trailer
-Vendor 1 password: 12345678
-Vendor 2 loginID : Scrumptious_Servo
-Vendor 2 password: 12345678
-Vendor 3 loginID : Diner_Driver
-Vendor 3 password: 12345678
-```
+
+Van ID   #1: `Tasty_Trailer`
+<br>
+Password #1: `12345678`
+<br><br>
+VanID    #2: `Scrumptious_Servo`
+<br>
+Password #2: `12345678`
+<br><br>
+VanID    #3: `Diner_Driver`
+<br>
+Password #3: `12345678`
+
 
 ## Database Access
 
 Full Connection String (using MongoDB Compass):
+<br>
 `mongodb+srv://defaultuser:defaultuser@ctrl-alt-elite.ys2d9.mongodb.net/test`
 
 ## dotenv Variables
