@@ -4,10 +4,12 @@ const customerRouter = require('./routes/customerRouter')
 const vendorRouter = require('./routes/vendorRouter')
 const session = require('express-session');
 const exphbs = require('express-handlebars')
-var favicon = require('serve-favicon')
-var path = require('path')
+const favicon = require('serve-favicon')
+const path = require('path')
 
-var app = express();
+const liveOrderController = require('./controllers/liveOrderController.js')
+
+const app = express();
 const port = process.env.PORT || 8080
 
 app.use(express.json())
@@ -52,7 +54,6 @@ var server = app.listen(port, () => {
 	console.log('Snacks in a Van server is listening for requests')
 })
 
-const liveOrderController = require('./controllers/liveOrderController.js')
 liveOrderController.listenSocket(server)
 
 module.exports = app

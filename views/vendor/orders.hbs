@@ -1,4 +1,7 @@
-
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var van = {{{json vendor}}}
+</script>
 <div class="navbar stickytop" id="ordersHeader">
     <h1 id="ordersTitle"> Orders </h1>
     <button class="orderbuttons hoverable" id="orderbuttons" class="icon" onclick="myFunction()" disabled> Order Made </button>
@@ -6,7 +9,7 @@
     <a class="hoverable" id="closeVan" href="/vendor/{{vendor.loginID}}/close"> Close Van </a>
 </div>
 
-<div class="orders-container">
+<div class="orders-container" id="currrentOrders">
     {{#each orders}}
         <div class="order">
             <div>{{this.orderID}}</div>
@@ -27,3 +30,5 @@
 <div class="fixedbot">
     <a class="hoverable" id="pastOrdersButton" href="/vendor/{{vendor.loginID}}/pastorders"><i class="fas fa-history"></i> Past Orders</a>
 </div>
+
+<script src="/js/vendorliveorder.js"></script>

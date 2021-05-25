@@ -127,7 +127,12 @@ const getOrders = async (req, res) => {
             orderStatus: { 
                     $not: {$eq: "Completed"}
             }
-        }).toArray()
+        }).project({
+            "_id": false,
+            "password": false
+        })
+        .sort({"timestamp": -1})
+        .toArray()
         const vendor = await Vendor.findOne({
             loginID: vanID
         }, {
@@ -155,7 +160,12 @@ const getPastOrders = async (req, res) => {
         const orders = await Order.find({
             vendorID: vanID,
             orderStatus: { $eq: "Completed" }
-        }).toArray()
+        }).project({
+            "_id": false,
+            "password": false
+        })
+        .sort({"timestamp": -1})
+        .toArray()
         res.render('vendor/pastorders', {
             orders: orders,
             layout: 'vendor/main'})
