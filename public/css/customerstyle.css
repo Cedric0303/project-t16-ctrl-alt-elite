@@ -34,6 +34,12 @@ sup {
     cursor: pointer;
 }
 
+.disabled {
+    pointer-events: none;
+    cursor: default;
+    filter: opacity(0.5);
+ }
+
 /* --------------navigation bar-------------- */
 .navbar {
     pointer-events: auto;
@@ -927,6 +933,20 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /* ---------order detail/order status page----------- */
+#orderTitle {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 700;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    padding-top: 8vh;
+    padding-bottom: 1vh;
+    margin: 0;
+    
+    display: block;
+    min-width: 30vw;
+    max-width: 40vw;
+}
+
 #orderDetailInfo {
     display: flex;
     flex-direction: column;
@@ -935,25 +955,83 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
     padding: 1em;
 
+    font-size: 0.9em;
     border-radius: 30px;
     background-color: #ffffff;
 }
 
-#orderDetailInfo p {
-    font-size: 0.9em;
+#orderStatus {
+    font-size: 0.8em;
+}
+
+#orderStatusText {
+    margin: 1vh 0;
+}
+
+#ordericon {
+    position: relative;
+    font-size: 5em;
+    margin: 1vh 0 3vh;
+}
+
+.bouncyAnim {
+    animation-name: floatupdown;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in;
+}
+
+@keyframes floatupdown {
+    from { top: 5px; }
+    to { top: -5px; }
+}
+
+#orderInfoTitle {
+    font-size: 1.1em;
+    margin-bottom: 1vh;
+}
+
+#orderDetailItemList {
+    font-size: 1em;
+    margin-top: 1vh;
+}
+
+.orderitem {
+    display: grid;
+    margin: 1vh 0;
+    grid-template-columns: 1fr 6fr 3fr;
+    justify-items: flex-start;
+    column-gap: 0.3em;
+}
+
+.orderitemtotal {
+    justify-self: flex-end;
+}
+
+#orderTotal {
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+#cancelModifyOrderButton {
+    display: block;
+    border-radius: 50px;
+    border: none;
+    background-color: #e4e4e4;
+
+    height: 100%;
+    padding: 1vh 1em;
+    margin: 0.5vh 0;
+    width: max-content;
+    font-family: "Nunito", sans-serif;
+    font-size: 1em;
+    text-align: center;
 }
 
 #orderDetailID {
     font-size: 0.8em;
 }
-
-#orderitem {
-    display: grid;
-    margin: 1vh 0;
-    grid-template-columns: 1fr 6fr 3fr;
-    justify-content: flex-start;
-}
-
 /* --------------responsive landscape tablet view ~1000px------------------ */
 @media screen and (min-width: 1000px) {
     .responsive {

@@ -1,4 +1,5 @@
 var totalSeconds = 0
+// calculates time elapsed since order made
 function timeElapsed(orderinfo,  totalSeconds) {
     time = totalSeconds
     if (!totalSeconds) {
@@ -10,6 +11,14 @@ function timeElapsed(orderinfo,  totalSeconds) {
     time = totalSeconds % 3600
     minute = Math.floor(time / 60)
     second = time % 60
+
+    // check if 10 minute window for modifiable order has expired
+    if (totalSeconds > 600) {
+        document.getElementById('cancelModifyOrderButton').classList.add("disabled");
+    } else {
+        document.getElementById('cancelModifyOrderButton').classList.remove("disabled");
+    }
+
     setTimeElapsed(hour, minute, second)
 }
 
@@ -25,6 +34,7 @@ function completeTime(orderinfo, totalSeconds) {
     setTimeElapsed(hour, minute, second)
 }
 
+// updates the text for time elapsed on the screen
 function setTimeElapsed(hour, minute, second) {
     if (!hour) {
         document.getElementById('timeElapsed').innerHTML = 'Time elapsed: ' + minute + 'm, ' + second + 'sec'
@@ -35,16 +45,45 @@ function setTimeElapsed(hour, minute, second) {
 }
 
 timeInterval = setInterval(()=> {
-    if (document.getElementById('orderStatusText').innerHTML == 'Completed') {
+    if (orderinfo["orderStatus"] == "Fulfilled") {
         completeTime(orderinfo, totalSeconds)
         clearInterval(timeInterval)
     }
     timeElapsed(orderinfo, totalSeconds)
 }, 1000)
 
+function setStatus(status) {
+    // changes the visible status on the page (the icon and active text)
+    // status is a string with the order status
+    // e.g. Ordering, Fulfilled
+    switch (status) {
+        case "Ordering":
+            document.getElementById('ordericon').innerHTML = "<i class=\"fas fa-coffee\"></i>";
+            document.getElementById('ordericon').className = 'bouncyAnim';
+            document.getElementById('orderOrdering').style.color = "#fe773c";
+            document.getElementById('orderFulfilled').style.color = "black";
+            break;
+        case "Fulfilled":
+            document.getElementById('ordericon').innerHTML = "<i class=\"far fa-check-circle\"></i>";
+            document.getElementById('ordericon').className = '';
+            document.getElementById('orderOrdering').style.color = "black";
+            document.getElementById('orderFulfilled').style.color = "#0bc90e";
+            break;       
+        default:
+            console.log("Error setting status.");
+            break;
+    }
+}
+
+document.getElementById('cancelModifyOrderButton').href = window.location + "/modify"
+
+setStatus(orderinfo["orderStatus"])
+
 const socket = io()
 socket.emit('orderID', orderinfo.orderID);
 socket.on('statusChange', function (orderStatus) {
-    document.getElementById('orderStatusText').innerHTML = orderStatus
-    console.log(orderStatus)
+    orderinfo["orderStatus"] = orderStatus;
+    setStatus(orderStatus);
+    // document.getElementById('orderStatusText').innerHTML = orderStatus;
+    console.log(orderStatus);
 })

@@ -3,21 +3,29 @@
     var orderinfo = {{{json order}}}
 </script>
 <div class="centerflex">
-    <h1 class="logintitle"><i>Your order is on the way!</i></h1>
-    <div id="orderStatusText">{{order.orderStatus}}</div>
+    <h1 id="orderTitle"><i>Your order is on the way!</i></h1>
+    <div id="orderStatus">
+        <div id="orderStatusText">
+            <p id="orderOrdering">Your order is being prepared!</p>
+            <p id="orderFulfilled">Your order is ready for pickup!</p>
+        </div>
+        <div id="ordericon"></div>
+    </div>
     <div id="orderDetailInfo">
-        <b>Order Information</b>
+        <b id="orderInfoTitle">Order Information</b>
         <p>Time of order: {{#formatDate order.timestamp}}{{/formatDate}}</p>
         <div id="timeElapsed"><p>Time elapsed: Xm, Xsec</p></div>
         <div id="orderDetailItemList">
             {{#each order.item}}
-                <div id="orderitem">
-                    <div>{{this.count}}x</div>
+                <div class="orderitem">
+                    <div>{{this.count}} x</div>
                     <div>{{this.name}}</div>
-                    <div>${{#toFixed2 this.total}}{{/toFixed2}}</div>
+                    <div class="orderitemtotal">${{#toFixed2 this.total}}{{/toFixed2}}</div>
                 </div>
             {{/each}}
         </div>
+        <div id="orderTotal">Order Total: ${{#toFixed2 order.orderTotal}}{{/toFixed2}}</div>
+        <a id="cancelModifyOrderButton" class="hoverable disabled">Cancel or Modify Order</a>
         <div id="orderDetailID">Order ID: {{order.orderID}}</div>
     </div>
 </div>
