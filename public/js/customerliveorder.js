@@ -35,12 +35,13 @@ function setTimeElapsed(hour, minute, second) {
 }
 
 if (document.getElementById('orderStatusText').innerHTML != 'Completed') {
-    setInterval(()=> {
+    timeInterval = setInterval(()=> {
         timeElapsed(orderinfo, totalSeconds)
+        if (document.getElementById('orderStatusText').innerHTML == 'Completed') {
+            completeTime(orderinfo, totalSeconds)
+            clearInterval(timeInterval)
+        }
     }, 1000)
-}
-else {
-    completeTime(orderinfo, totalSeconds)
 }
 
 const socket = io()
