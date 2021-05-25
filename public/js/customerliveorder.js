@@ -34,15 +34,13 @@ function setTimeElapsed(hour, minute, second) {
     }
 }
 
-if (document.getElementById('orderStatusText').innerHTML != 'Completed') {
-    timeInterval = setInterval(()=> {
-        timeElapsed(orderinfo, totalSeconds)
-        if (document.getElementById('orderStatusText').innerHTML == 'Completed') {
-            completeTime(orderinfo, totalSeconds)
-            clearInterval(timeInterval)
-        }
-    }, 1000)
-}
+timeInterval = setInterval(()=> {
+    if (document.getElementById('orderStatusText').innerHTML == 'Completed') {
+        completeTime(orderinfo, totalSeconds)
+        clearInterval(timeInterval)
+    }
+    timeElapsed(orderinfo, totalSeconds)
+}, 1000)
 
 const socket = io()
 socket.emit('orderID', orderinfo.orderID);
