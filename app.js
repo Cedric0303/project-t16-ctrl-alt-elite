@@ -2,10 +2,11 @@
 const express = require('express')
 const customerRouter = require('./routes/customerRouter')
 const vendorRouter = require('./routes/vendorRouter')
-const session = require('express-session');
+const session = require('express-session')
 const exphbs = require('express-handlebars')
 const favicon = require('serve-favicon')
 const path = require('path')
+const  cookieParser = require('cookie-parser')
 
 const liveOrderController = require('./controllers/liveOrderController.js')
 
@@ -21,6 +22,7 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true
 }));
+app.use(cookieParser());
 app.use(favicon(path.join(__dirname,'public','icons','favicon.ico')));
 
 app.engine('hbs', exphbs({

@@ -218,7 +218,7 @@ const pickedUpOrder = async (req, res) => {
 
 const getLogout = async (req, res) => {
     if (vendorToken.loggedIn(req)) {
-        const token = vendorToken.getCookies(req)['jwt_vendor']
+        const token = req.cookies['jwt_vendor']
         res.cookie("jwt_vendor", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
     } 
     else {

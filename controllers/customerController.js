@@ -90,7 +90,7 @@ const postNewOrder = async (req, res) => {
             orderInfo.item[item].total = priceNum*orderInfo.item[item].count;
             orderTotal += orderInfo.item[item].total;
         }
-        const token = customerToken.getCookies(req)['jwt_customer']
+        const token = req.cookies['jwt_customer']
         const payload = customerToken.getTokenPayload(token)
         const orderID = parseInt(new Date().getTime())
         const order = new orderSchema({
@@ -167,7 +167,7 @@ const modifyOrder = async (req, res) => {
             orderInfo.item[item].total = priceNum*orderInfo.item[item].count;
             orderTotal += orderInfo.item[item].total;
         }
-        const token = customerToken.getCookies(req)['jwt_customer']
+        const token = req.cookies['jwt_customer']
         const payload = customerToken.getTokenPayload(token)
         const orderID = parseInt(req.params.orderID)
         await Order.findOneAndUpdate({
@@ -301,7 +301,7 @@ const addCustomer = async (req, res) => {
 
 const getOrders = async (req, res) => {
     if (customerToken.loggedIn(req)) {
-        const token = customerToken.getCookies(req)['jwt_customer']
+        const token = req.cookies['jwt_customer']
         const payload = customerToken.getTokenPayload(token)
         const username = payload.body.username
         const orders = await Order.find({
@@ -322,7 +322,7 @@ const getOrders = async (req, res) => {
 
 const getProfile = async (req, res) => {
     if (customerToken.loggedIn(req)) {
-        const token = customerToken.getCookies(req)['jwt_customer']
+        const token = req.cookies['jwt_customer']
         const payload = customerToken.getTokenPayload(token)
         const email = payload.body.username
         const user = await Customer.findOne({
@@ -344,7 +344,7 @@ const getProfile = async (req, res) => {
 
 // update account details
 const updateAccount = async (req, res) => { 
-    const token = customerToken.getCookies(req)['jwt_customer']
+    const token = req.cookies['jwt_customer']
     const payload = customerToken.getTokenPayload(token)
     const email = payload.body.username
     const user = await Customer.findOne({loginID: email},{
@@ -407,7 +407,7 @@ const updateAccount = async (req, res) => {
 // logout current user from website and remove user token
 const getLogout = async (req, res) => {
     if (customerToken.loggedIn(req)) {
-        const token = customerToken.getCookies(req)['jwt_customer']
+        const token = req.cookies['jwt_customer']
         res.cookie("jwt_customer", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
     } else {
         res.render('customer/notloggedin', {layout: 'customer/navbar'});
