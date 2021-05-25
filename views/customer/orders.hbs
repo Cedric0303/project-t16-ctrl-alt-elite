@@ -1,23 +1,30 @@
-{{#each orders}} {{!-- This code will pull each order from the database and perform this code on each subsequently --}}
-    <div class="orderElement">
-        <a class="hoverable orderbox-container" href="orders/{{this.orderID}}">
-            <div class="orderdate">{{#formatDate this.timestamp}}{{/formatDate}}</div>
-            <div class="ordercontent">
-                {{#each item}}
-                    <div class="orderitem">
-                        <div>{{this.count}}x</div>
-                        <div>{{this.name}}</div>
-                        <div>${{#toFixed2 this.total}}{{/toFixed2}}</div>
-                    </div>
-                {{/each}}
-            </div>
-            <div class="ordertotal">Order Total: ${{#toFixed2 this.orderTotal}}{{/toFixed2}}</div>
-            <div class="orderstatus">{{this.orderStatus}}</div>
-            <div class="ordertrailer">
-                <div>{{#removeunderscore this.vendorID}}{{/removeunderscore}}</div>
-            </div>
-        </a>
-        <a class="viewonMap hoverable" href="/customer/van/{{this.vendorID}}">View On Map</a>
-    </div>
-{{/each}} 
-<script src="/js/orders.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var allOrders = {{{json orders}}}
+    var customerID = allOrders.length > 0 ? allOrders[0].customerID : null
+</script>
+<div id="customerOrders">
+    {{#each orders}} {{!-- This code will pull each order from the database and perform this code on each subsequently --}}
+        <div class="orderElement">
+            <a class="hoverable orderbox-container" href="orders/{{this.orderID}}">
+                <div class="orderdate">{{#formatDate this.timestamp}}{{/formatDate}}</div>
+                <div class="ordercontent">
+                    {{#each item}}
+                        <div class="orderitem">
+                            <div>{{this.count}}x</div>
+                            <div>{{this.name}}</div>
+                            <div>${{#toFixed2 this.total}}{{/toFixed2}}</div>
+                        </div>
+                    {{/each}}
+                </div>
+                <div class="ordertotal">Order Total: ${{#toFixed2 this.orderTotal}}{{/toFixed2}}</div>
+                <div class="orderstatus">{{this.orderStatus}}</div>
+                <div class="ordertrailer">
+                    <div>{{#removeunderscore this.vendorID}}{{/removeunderscore}}</div>
+                </div>
+            </a>
+            <a class="viewonMap hoverable" href="/customer/van/{{this.vendorID}}">View On Map</a>
+        </div>
+    {{/each}} 
+</div>
+<script src="/js/customer/orders.js"></script>
