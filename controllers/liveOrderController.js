@@ -9,8 +9,8 @@ async function listenSocket(server) {
     io = socket(server)
 
     io.on('connection', function(socket) {
-        console.log(`Socket ${socket.id} connected`)
-
+        
+        // customer individual live order
         socket.on('orderID', function (id) {
             orderID = id
             const filter = [{
@@ -25,8 +25,31 @@ async function listenSocket(server) {
             })
         })
 
+        // customer all live orders
+        socket.on('customerID', function (id) {
+            customerID = id
+            const filter = [{
+                $match: {
+                    'fullDocument.customerID': customerID,
+                }
+            }]
+            const options = { fullDocument: 'updateLookup' }
+            const changeStream = Order.watch(filter, options)
+            changeStream.on('change', async () => {
+                orders = await Order.find({
+                    customerID: customerID,
+                }).project({
+                    "_id": false,
+                    "password": false
+                })
+                .sort({"timestamp": -1})
+                .toArray()
+                socket.emit('ordersChange', orders)
+            })
+        })
+
+        // vendor all live orders
         socket.on('vanID', function (id) {
-            console.log(id)
             vanID = id
             const filter = [{
                 $match: {
