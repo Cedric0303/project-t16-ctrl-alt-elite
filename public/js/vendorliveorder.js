@@ -13,12 +13,12 @@ socket.on('orderChange', function (orders) {
             item = orders[i].item[j]
             // console.log(item)
             output += "<div class=\"orderitem\">"
-                    + "<div>" + orders[i].item[j].count + "</div>"
+                    + "<div>" + orders[i].item[j].count + "x</div>"
                     + "<div>" + orders[i].item[j].name + "</div>"
                     + "<div>$" + Number(orders[i].item[j].total).toFixed(2) + "</div>"
                     + "</div>"
         }
         output += "</div>"
     }
-    document.getElementById("currrentOrders").innerHTML = output
+    document.getElementById("currentOrders").innerHTML = output
 })
