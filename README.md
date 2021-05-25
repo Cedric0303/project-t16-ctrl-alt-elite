@@ -44,6 +44,7 @@ This is a project containing the product developed by our team for a business, f
 * **`jest`**
 * **`supertest`**
 * **`socket.io`**
+* **`cookie-parser`**
 
 ## Project Website
 URL: `https://project-t16-ctrl-alt-elite.herokuapp.com/`
