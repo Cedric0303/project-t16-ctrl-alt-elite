@@ -223,8 +223,12 @@ const modifyOrder = async (req, res) => {
 const cancelOrder = async (req, res) => {
     if (customerToken.loggedIn(req)) {
         const orderID = parseInt(req.params.orderID)
-        await Order.deleteOne({
+        await Order.updateOne({
             orderID: orderID
+        }, {
+            $set: {
+                orderStatus: "Cancelled"
+            }
         })
         res.redirect('/customer/orders')
     }
@@ -333,7 +337,12 @@ const getOrders = async (req, res) => {
         const payload = customerToken.getTokenPayload(token)
         const username = payload.body.username
         const orders = await Order.find({
-            "customerID": username
+            "customerID": username,
+            "orderStatus": {
+                $not: {
+                    $eq: "Cancelled"
+                }
+            }
         }).project({}).sort({"timestamp": -1}).toArray()
         if (orders) {
             res.render('customer/orders', {

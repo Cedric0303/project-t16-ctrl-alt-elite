@@ -126,7 +126,7 @@ const getOrders = async (req, res) => {
         const orders = await Order.find({
             vendorID: vanID,
             orderStatus: { 
-                    $not: {$eq: "Completed"}
+                    $in: ["Ordering", "Fulfilled"]
             }
         }).project({
             "_id": false,
@@ -160,7 +160,9 @@ const getPastOrders = async (req, res) => {
         const vanID = req.params.vanID
         const orders = await Order.find({
             vendorID: vanID,
-            orderStatus: { $eq: "Completed" }
+            orderStatus: { 
+                $eq: "Completed" 
+            }
         }).project({
             "_id": false,
             "password": false
