@@ -1032,6 +1032,83 @@ input[type=number]::-webkit-outer-spin-button {
 #orderDetailID {
     font-size: 0.8em;
 }
+
+/* ---------modify order page----------- */
+#editcartcontainer {
+    overflow: hidden;
+    pointer-events: auto;
+    box-sizing: border-box;
+    margin: 0;
+    max-height: 30vh;
+    padding: 0.5vh 7vw 2vh;
+    background-color: #e4e4e4;
+    border-radius: 0;
+
+    display: grid;
+    grid-template-rows: auto min-content;
+    grid-template-areas: 
+        "cart"
+        "buttons";
+}
+
+.cartbuttonsEditOrder {
+    grid-area: buttons;
+    align-self: flex-end;
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    column-gap: 3vw;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1vh;
+    font-size: 0.9em;
+}
+
+#cartexpand {
+    margin: 0;
+    pointer-events: auto;
+
+    color: #919191;
+    background-color: #e4e4e4;
+    border-radius: 30px 30px 0 0;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+#cartexpand i {
+    transform-origin: center;
+    -webkit-transform:scale(2,1); /* Safari and Chrome */
+    -moz-transform:scale(2,1); /* Firefox */
+    -ms-transform:scale(2,1); /* IE 9 */
+    -o-transform:scale(2,1); /* Opera */
+    transform:scale(2,1);
+}
+
+#editOrderBackbutton {
+    justify-self: left;
+    background-color: #ef5658;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1em;
+}
+
+#cancelorderButton {
+    font-size: 0.9em;
+    color:#114b8e;
+}
+
+#cancelorderButton:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#updatebutton {
+    justify-self: right;
+    background-color: #5fd300;
+    color: #ffffff;
+    font-weight: 600;
+}
+
 /* --------------responsive landscape tablet view ~1000px------------------ */
 @media screen and (min-width: 1000px) {
     .responsive {
@@ -1092,7 +1169,15 @@ input[type=number]::-webkit-outer-spin-button {
         margin-right: 3vw;
     }
 
+    #editOrderBackbutton {
+        margin-right: 3vw;
+    }
+
     #chkoutbutton {
+        margin-left: 3vw;
+    }
+
+    #updatebutton {
         margin-left: 3vw;
     }
 }

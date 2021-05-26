@@ -43,7 +43,7 @@ customerRouter.get('/orders/:orderID', customerController.getOrderDetail)
 customerRouter.get('/orders/:orderID/modify', customerController.getModifyPage)
 
 // submit modified order into database
-customerRouter.get('/orders/:orderID/reorder', customerController.modifyOrder)
+customerRouter.post('/orders/:orderID/modify', customerController.modifyOrder)
 
 // remove order from database
 customerRouter.get('/orders/:orderID/cancel', customerController.cancelOrder)

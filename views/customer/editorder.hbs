@@ -1,0 +1,44 @@
+<ul id="categories">
+    {{#each menucat}}
+        <li>
+            <input type="checkbox" name="catcheck" id="{{this.category}}">
+            <label class="catbutton" for="{{this.category}}">
+                <span id="caticon"><i class="{{this.icon}}"></i></span>
+                {{this.category}}
+            </label>
+        </li>
+    {{/each}}
+</ul>
+<ul id="menu">
+    {{#each menu}}
+    <li class="{{this.category}} menuitemcontainer" id="{{this.name}}">
+        <div class="menuitem">
+            <div class="menuitemclick">
+                <img src="https://source.unsplash.com/{{this.image}}" 
+                alt="Photo of {{this.name}}">
+                <span>{{this.name}}</span>
+            </div>
+            <p>${{this.price}}</p>
+            {{!-- https://stackoverflow.com/questions/45396280/customizing-increment-arrows-on-input-of-type-number-using-css/45396364 --}}
+            <div class="number-input">
+                <button class="minus-item" onclick="this.parentNode.querySelector('input[type=number]').stepDown();" >
+                    <i class="fas fa-minus-circle"></i>
+                </button>
+                <input class="itemcount" name="{{this.name}}"  type="number" value="0" min="0" max="99">
+                <button class="plus-item" data-id={{this.id}} data-price={{this.price}} onclick="this.parentNode.querySelector('input[type=number]').stepUp();">
+                    <i class="fas fa-plus-circle"></i>
+                </button>
+            </div>
+        </div>
+    </li>
+    {{/each}}
+</ul>
+{{!-- modal for image click --}}
+<div id="modal">
+    <span id="modalclose">&times;</span>
+    <img id="modal-content">
+    <div id="caption"></div>
+</div>
+<script>var vaninfo = {{{json van}}}</script>
+<script>var order = {{{json order}}}</script>
+<script src="/js/customer/editOrder.js"></script>

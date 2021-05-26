@@ -61,6 +61,10 @@ function filterMenu() {
     
 }
 
+// reference original order items in origOrder
+origOrder = order["item"];
+
+
 // shopping cart api--------------------------
 // based off of "Shopping cart JS" by Burlaka Dmytro (https://codepen.io/Dimasion/pen/oBoqBM)
 var shoppingCart = (function () {
@@ -68,7 +72,7 @@ var shoppingCart = (function () {
     // private methods
     // ---------------------
     // init empty cart
-    cart = [];
+    var cart = [];
     
     // item object constructor
     function Item(id, name, price, count) {
@@ -76,20 +80,11 @@ var shoppingCart = (function () {
         this.name = name;
         this.price = price;
         this.count = count;
-    }
+    };
 
-    // save cart in local storage
-    function saveCart() {
-        localStorage.setItem("shoppingCart", JSON.stringify(cart));
-    }
-    // load cart into 'cart' array
-    function loadCart() {
-        cart = JSON.parse(localStorage.getItem("shoppingCart"));
-    }
-    // if cart in localstorage is not empty, load the cart automatically
-    if (localStorage.getItem("shoppingCart") != null) {
-        loadCart();
-    }
+    // load cart with order items
+    // the following make a true clone, not a reference to origOrder
+    cart = JSON.parse(JSON.stringify(origOrder))
 
     // ---------------------
     // public methods
@@ -101,15 +96,13 @@ var shoppingCart = (function () {
         // if item exists in cart, increment by 1
         for(var item in cart) {
             if(cart[item].id === id) {
-            cart[item].count ++;
-            saveCart();
-            return;
+                cart[item].count++;
+                return;
             }
         }
         // if not, add the item to cart with respective price/count
         var item = new Item(id, name, price, count);
         cart.push(item);
-        saveCart();
     }
 
     // update count for item
@@ -122,14 +115,12 @@ var shoppingCart = (function () {
                 if(cart[item].count == 0) {
                     cart.splice(item, 1);
                 }
-                saveCart();
                 return;
             }
         }
         // if new item, add with count 
         var item = new Item(id, name, price, count);
         cart.push(item);
-        saveCart();
     }
 
     // remove item from cart
@@ -144,7 +135,6 @@ var shoppingCart = (function () {
                 }
             }
         }
-        saveCart();
     }
 
     // remove all of an item from cart
@@ -155,7 +145,6 @@ var shoppingCart = (function () {
                 break;
             }
         }
-        saveCart();
     }
 
     // return total quantity of items in cart
@@ -194,24 +183,20 @@ var shoppingCart = (function () {
     // empties cart, can be accessed in console via shoppingCart.clearCart()
     obj.clearCart = function() {
         cart = [];
-        saveCart();
-      }
+    }
 
     return obj;
 })();
 
 // expand/collapse cart
 function toggleCart() {
-    cartcontainer = document.getElementById('cartcontainer');
+    cartcontainer = document.getElementById('editcartcontainer');
     // if cart is expanded
     if (cartcontainer.style.height == '30vh') {
         // collapse cart
         cartcontainer.style.height = 'initial';
         // hide cart contents
         document.getElementById('cart').style.display = 'none';
-        // change view cart button to 'cart(x)' 
-        document.getElementById('vcartbutton').innerHTML = 'Cart&nbsp;(<span id="cart-count"></span>)';
-        document.getElementById('cart-count').innerHTML = shoppingCart.totalCount();
         displayCart();
     } else {
         // expand cart
@@ -220,16 +205,6 @@ function toggleCart() {
         document.getElementById('cart').style.display = 'grid';
         // change view cart button to 'close cart'
         displayCart();
-        document.getElementById('vcartbutton').innerHTML = 'Hide Cart';
-    }
-}
-
-function cartToggled() {
-    // returns true if showing cart, false if cart is hidden
-    if (document.getElementById('vcartbutton').innerHTML == 'Hide Cart') {
-        return true;
-    } else {
-        return false;
     }
 }
 
@@ -241,7 +216,7 @@ for (var i=0; i < categoryCheckboxes.length; i++) {
 }
 
 // view cart button
-document.getElementById('vcartbutton').addEventListener("click", toggleCart, false)
+document.getElementById('cartexpand').addEventListener("click", toggleCart, false)
 
 // write in search bar
 document.getElementById('searchbar').addEventListener("input", filterMenu, false)
@@ -253,7 +228,7 @@ function displayCart() {
     var cartArray = shoppingCart.getCart();
     var output = "";
     for (var item in cartArray) {
-        output += "<div class=\"cartitem\">"
+        output += "<div class=\"cartitem\" id=\"cart"+cartArray[item].id+"\">"
                 + "<div class=\"delete-item-cart itemdel\"><i class=\"fas fa-times\"></i></div>"
                 + "<div class=\"itemname\">"+cartArray[item].name.replace("_", " ")+"</div>"
                 + "<div class=\"itemquant number-input\">"
@@ -264,6 +239,7 @@ function displayCart() {
                 + "<div class=\"itemprice\">$"+cartArray[item].total+"</div>"
                 + "</div>";
     }
+    
     // update menu counts as well
     var itemcounts = document.getElementsByClassName('itemcount');
     for (var field in itemcounts) {
@@ -284,10 +260,42 @@ function displayCart() {
      
     // update text on screen
     document.getElementById('cartlist').innerHTML = output;
-    if (!cartToggled()) {
-        document.getElementById('cart-count').innerHTML = shoppingCart.totalCount();
-    }
     document.getElementById('carttotaltext').innerHTML = shoppingCart.totalCart();
+
+    // check if there have been changes to the order
+    // and update cart colors accordingly
+    for (var itemCurr in cartArray) {
+        for (var itemOrig in origOrder) {
+            cartitemid = 'cart'+cartArray[itemCurr].id
+            cartitemelement = document.getElementById(cartitemid)
+            // if an item exists in the original order
+            if (origOrder[itemOrig].id == cartArray[itemCurr].id) {
+                // check if the count changed
+                if (origOrder[itemOrig].count < cartArray[itemCurr].count) {
+                    // item increased in count
+                    cartitemelement.querySelector('.itemname').style.color = "#5fd300";
+                    cartitemelement.querySelector('input[type=number]').style.color = "#5fd300";
+                    break;
+                } else if (origOrder[itemOrig].count > cartArray[itemCurr].count) {
+                    // item reduced in count
+                    cartitemelement.querySelector('.itemname').style.color = "#ef5658";
+                    cartitemelement.querySelector('input[type=number]').style.color = "#ef5658";
+                    break;
+                }
+                else {
+                    // item count remained the same
+                    cartitemelement.querySelector('.itemname').style.color = "#000000";
+                    cartitemelement.querySelector('input[type=number]').style.color = "#000000";
+                    break;
+                }
+            } else {
+                // if new item then
+                cartitemelement.querySelector('.itemname').style.color = "#5fd300";
+                cartitemelement.querySelector('input[type=number]').style.color = "#5fd300";
+            }
+        }
+    }
+
 
     // register functions
     // add to cart (+) on menu, increment/add
@@ -353,7 +361,7 @@ function registerItemCount(event) {
 
 // run on load
 filterMenu();
-displayCart();
+toggleCart();
 
 function postOrder() {
     cart = shoppingCart.getCart();
@@ -366,12 +374,13 @@ function postOrder() {
         vendorID: vaninfo.loginID
     };
     payload = JSON.stringify(payload);
+    console.log(payload);
     document.getElementById('payloadInput').value = payload;
     document.getElementById('orderForm').submit(); 
 }
 
 // register checkout button
-document.getElementById('chkoutbutton').addEventListener("click",postOrder);
+document.getElementById('updatebutton').addEventListener("click",postOrder);
 // shoppingCart.getCart() - returns array of cart
 // vaninfo - returns a json object with selected van info
 

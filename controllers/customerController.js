@@ -137,8 +137,31 @@ const getOrderDetail = async (req, res) => {
 
 // return order modification page
 const getModifyPage = async (req, res) => {
+    const menu = await Food.find({}).project({
+        "_id": false
+    }).toArray()
+    const menucategories = await FoodCategories.find({}).project({
+        "_id": false
+    }).toArray()
+    const order = await Order.findOne({
+        orderID: parseInt(req.params.orderID)
+    })
+    const vendorinfo = await Vendor.findOne({
+        loginID: order.vendorID
+    }, {
+        projection: {
+            "loginID": true,
+            "vanName": true,
+            "address": true
+        }
+    })
     if (customerToken.loggedIn(req)) {
-        res.render('customer/menu', {layout: 'customer/editorder'})
+        res.render('customer/editorder', {
+            "menu":menu, // passing menu array as "menu"
+            "menucat":menucategories, // passing menu categories array as "menucat""
+            "van":vendorinfo, // passing selected vendor info json object as "van"
+            "order":order,
+            layout: 'customer/editorder'})
     }
     else {
         res.render('customer/notloggedin', {layout: 'customer/navbar'})
