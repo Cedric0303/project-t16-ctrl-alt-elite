@@ -1,3 +1,7 @@
+// Time limit window for order modifiability in seconds
+var orderModifiableTime = 600
+
+
 var totalSeconds = 0
 // calculates time elapsed since order made
 function timeElapsed(orderinfo,  totalSeconds) {
@@ -13,7 +17,7 @@ function timeElapsed(orderinfo,  totalSeconds) {
     second = time % 60
 
     // check if 10 minute window for modifiable order has expired
-    if (totalSeconds > 600) {
+    if (totalSeconds > orderModifiableTime) {
         document.getElementById('cancelModifyOrderButton').classList.add("disabled");
     } else {
         document.getElementById('cancelModifyOrderButton').classList.remove("disabled");
