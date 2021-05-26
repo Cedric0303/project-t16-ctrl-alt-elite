@@ -1,6 +1,4 @@
-// Time limit window for order modifiability in seconds
-var orderModifiableTime = 600
-
+const MODIFYTIME = 10 * 60 // 10 minutes
 
 var totalSeconds = 0
 // calculates time elapsed since order made
@@ -17,7 +15,7 @@ function timeElapsed(orderinfo,  totalSeconds) {
     second = time % 60
 
     // check if 10 minute window for modifiable order has expired
-    if (totalSeconds > orderModifiableTime) {
+    if (totalSeconds > MODIFYTIME) {
         document.getElementById('cancelModifyOrderButton').classList.add("disabled");
     } else {
         document.getElementById('cancelModifyOrderButton').classList.remove("disabled");
@@ -56,11 +54,11 @@ timeInterval = setInterval(()=> {
     timeElapsed(orderinfo, totalSeconds)
 }, 1000)
 
-function setStatus(status) {
+function setStatus(order) {
     // changes the visible status on the page (the icon and active text)
     // status is a string with the order status
     // e.g. Ordering, Fulfilled
-    switch (status) {
+    switch (order.orderStatus) {
         case "Ordering":
             document.getElementById('ordericon').innerHTML = "<i class=\"fas fa-coffee\"></i>";
             document.getElementById('ordericon').className = 'bouncyAnim';
@@ -72,6 +70,7 @@ function setStatus(status) {
             document.getElementById('ordericon').className = '';
             document.getElementById('orderOrdering').style.color = "black";
             document.getElementById('orderFulfilled').style.color = "#0bc90e";
+            document.getElementById('orderTotal').innerHTML = "$" + Number(order.orderTotal).toFixed(2)
             break;       
         default:
             console.log("Error setting status.");
@@ -81,13 +80,12 @@ function setStatus(status) {
 
 document.getElementById('cancelModifyOrderButton').href = window.location + "/modify"
 
-setStatus(orderinfo["orderStatus"])
+setStatus(orderinfo)
 
 const socket = io()
 socket.emit('orderID', orderinfo.orderID);
-socket.on('statusChange', function (orderStatus) {
-    orderinfo["orderStatus"] = orderStatus;
-    setStatus(orderStatus);
-    // document.getElementById('orderStatusText').innerHTML = orderStatus;
-    console.log(orderStatus);
+socket.on('statusChange', function (order) {
+    orderinfo = JSON.parse(order)
+    console.log(orderinfo);
+    setStatus(orderinfo);
 })
