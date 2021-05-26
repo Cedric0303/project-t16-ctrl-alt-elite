@@ -92,20 +92,24 @@ function setStatus(order) {
             break;       
         case "Completed":
             // if the order has a review then show the detailed order info
-            if (order.comment != "" | order.rating != "") {
+            if ((order.comment != "" || order.rating != "") && (order.comment != undefined || order.rating != undefined)) {
                 if (order.rating == "") {
                     rating = "n/a"
                 } else {
                     rating = order.rating + " out of 5" 
                 }
-                console.log("COMPLETE AND REVIEW");
+                if (order.comment == "") {
+                    comment = "n/a"
+                } else {
+                    comment = order.comment
+                }
                 document.getElementById('cancelModifyOrderButton').classList.add("disabled");
                 document.getElementById('vanfloatleft').querySelector("p").innerHTML = "ORDERED FROM";
                 document.getElementById('orderTitle').firstChild.innerHTML = "Your review";
                 document.getElementById('orderStatus').style.fontSize = "1em";
                 document.getElementById('orderStatus').innerHTML = 
                     "<div><b>Rating:</b> "+rating+"</div>"+
-                    "<div><b>Comment:</b> "+order.comment+"</div>";
+                    "<div><b>Comment:</b> "+comment+"</div>";
             } else {
                 // redirect user to add review for specified order
                 window.location.href = window.location + '/review'
@@ -124,6 +128,5 @@ const socket = io()
 socket.emit('orderID', orderinfo.orderID);
 socket.on('statusChange', function (order) {
     orderinfo = JSON.parse(order)
-    console.log(orderinfo);
     setStatus(orderinfo);
 })
