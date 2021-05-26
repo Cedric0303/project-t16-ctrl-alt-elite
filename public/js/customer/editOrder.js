@@ -397,6 +397,8 @@ document.getElementById('modal').addEventListener("click", function() {
     modal.style.display = "none";
 });
 
+document.getElementById('cancelorderButton').href = window.location + "/cancel"
+
 // image modal code
 function openModal() {
     imgToZoom = this.firstElementChild;

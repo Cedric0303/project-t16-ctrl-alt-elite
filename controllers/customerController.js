@@ -226,7 +226,7 @@ const cancelOrder = async (req, res) => {
         await Order.deleteOne({
             orderID: orderID
         })
-        res.redirect('/customer/')
+        res.redirect('/customer/orders')
     }
     else {
         res.render('customer/notloggedin', {layout: 'customer/navbar'})

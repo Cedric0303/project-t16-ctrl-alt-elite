@@ -46,7 +46,7 @@ customerRouter.get('/orders/:orderID/modify', customerController.getModifyPage)
 customerRouter.post('/orders/:orderID/modify', customerController.modifyOrder)
 
 // remove order from database
-customerRouter.get('/orders/:orderID/cancel', customerController.cancelOrder)
+customerRouter.get('/orders/:orderID/modify/cancel', customerController.cancelOrder)
 
 // get current status of user's order
 customerRouter.get('/orders/:orderID/review', customerController.getReview)
