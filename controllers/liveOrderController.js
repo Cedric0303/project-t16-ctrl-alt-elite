@@ -21,7 +21,7 @@ async function listenSocket(server) {
             const options = { fullDocument: 'updateLookup' }
             const changeStream = Order.watch(filter, options)
             changeStream.on('change', (change) => {
-                socket.emit('statusChange', change.fullDocument.orderStatus)
+                socket.emit('statusChange', JSON.stringify(change.fullDocument))
             })
         })
 
@@ -51,16 +51,7 @@ async function listenSocket(server) {
         // vendor all live orders
         socket.on('vanID', function (id) {
             vanID = id
-            const filter = [{
-                $match: {
-                    'fullDocument.vendorID': vanID,
-                    'fullDocument.orderStatus': {
-                        $in: ['Ordering', 'Fulfilled', 'Completed']
-                    }
-                }
-            }]
-            const options = { fullDocument: 'updateLookup' }
-            const changeStream = Order.watch(filter, options)
+            const changeStream = Order.watch()
             changeStream.on('change', async () => {
                 orders = await Order.find({
                     vendorID: vanID,

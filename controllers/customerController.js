@@ -9,6 +9,8 @@ const foodcategoriesSchema = require('../models/foodcategoriesSchema.js')
 const orderSchema = require('../models/orderSchema.js')
 const vendorSchema = require('../models/vendorSchema.js')
 
+const constants = require("../controllers/constants.js")
+
 const Customer = db.collection('customer')
 const Food = db.collection('food')
 const FoodCategories = db.collection('foodcategories')
@@ -94,6 +96,7 @@ const postNewOrder = async (req, res) => {
         const payload = customerToken.getTokenPayload(token)
         const orderID = parseInt(new Date().getTime())
         const order = new orderSchema({
+            orderID: orderID,
             item: orderInfo["item"],
             orderTotal: orderTotal,
             timestamp: new Date(),
@@ -101,7 +104,8 @@ const postNewOrder = async (req, res) => {
             customerID: payload.body.username,
             customerGivenName: payload.body.nameGiven,
             orderStatus: "Ordering",
-            orderID: orderID
+            fulfilledTimestamp: null,
+            completedTimestamp: null,
         });
         const error = order.validateSync()
         if (error == undefined) {
@@ -204,6 +208,8 @@ const modifyOrder = async (req, res) => {
                 customerID: payload.body.username,
                 customerGivenName: payload.body.nameGiven,
                 orderStatus: "Ordering",
+                fulfilledTimestamp: null,
+                completedTimestamp: null,
             }
         })
         res.redirect('/customer/orders/' + orderID)
@@ -218,7 +224,7 @@ const cancelOrder = async (req, res) => {
     if (customerToken.loggedIn(req)) {
         const orderID = parseInt(req.params.orderID)
         await Order.deleteOne({
-            orderID: parseInt(orderID)
+            orderID: orderID
         })
         res.redirect('/customer/')
     }
@@ -257,7 +263,6 @@ const getLogin = (req, res) => {
 const authLogin = async (req, res) => {
     const email = req.body.email
     const pw = req.body.password
-    const tokenTime = 2 * 60 * 60 * 1000 // 2 hours
     if (email && pw) {
         const user = await Customer.findOne({loginID: email})
         if (user != null) {
@@ -268,9 +273,9 @@ const authLogin = async (req, res) => {
                 const token = customerToken.createToken(body)
                 res.cookie("jwt_customer", token, {
                     httpOnly: false,
-                    sameSite:false,
+                    sameSite: false,
                     secure: true,
-                    maxAge: tokenTime,
+                    maxAge: constants.CUSTOMERTOKENTIME,
                 })
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
@@ -431,7 +436,7 @@ const updateAccount = async (req, res) => {
 const getLogout = async (req, res) => {
     if (customerToken.loggedIn(req)) {
         const token = req.cookies['jwt_customer']
-        res.cookie("jwt_customer", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
+        res.cookie("jwt_customer", token, {httpOnly: false, sameSite: false, secure: true, maxAge:1})
     } else {
         res.render('customer/notloggedin', {layout: 'customer/navbar'});
         return;

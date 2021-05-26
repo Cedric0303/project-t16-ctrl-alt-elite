@@ -9,6 +9,8 @@ const foodcategoriesSchema = require('../models/foodcategoriesSchema.js')
 const orderSchema = require('../models/orderSchema.js')
 const vendorSchema = require('../models/vendorSchema.js')
 
+const constants = require("../controllers/constants.js")
+
 const Vendor = db.collection('vendor')
 const Order = db.collection('order')
 
@@ -64,7 +66,6 @@ const getVendor = async (req, res) => {
 const authLogin = async (req, res) => {
     const vanID = req.body.vanID
     const pw = req.body.password
-    const tokenTime = 12 * 60 * 60 * 1000 // 12 hours
     if (vanID && pw) {
         const vendor = await Vendor.findOne({loginID: vanID})
         if (vendor != null) {
@@ -75,9 +76,9 @@ const authLogin = async (req, res) => {
                 const token = vendorToken.createToken(body)
                 res.cookie("jwt_vendor", token, {
                     httpOnly: false, 
-                    sameSite:false, 
+                    sameSite: false, 
                     secure: true,
-                    maxAge: tokenTime,
+                    maxAge: constants.VENDORTOKENTIME,
                 })
                 // return the user to their previous page
                 // https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
@@ -180,15 +181,24 @@ const getPastOrders = async (req, res) => {
 const fulfilledOrder = async (req, res) => {
     if (vendorToken.loggedIn(req)) {
         const orderID = parseInt(req.params.orderID)
+        const order = await Order.findOne({
+            orderID: orderID
+        })
+        const curTime = new Date()
+        var orderTotal = order.orderTotal
+        if (curTime.getTime() - new Date(order.timestamp).getTime() > constants.DISCOUNTTIME) {
+            orderTotal = Number(order.orderTotal - (order.orderTotal * constants.DISCOUNTVALUE)).toFixed(2)
+        }
         await Order.updateOne({
             orderID: orderID
         }, {
             $set: {
                 orderStatus: "Fulfilled",
-                fulfilledTimestamp: new Date()
+                fulfilledTimestamp: curTime,
+                orderTotal: Number(orderTotal)
             }
         })
-        res.send(`<h1> Order ${req.params.orderID} fulfilled </h1>`)
+        res.send("")
     }
     else {
         res.status(402)
@@ -196,19 +206,20 @@ const fulfilledOrder = async (req, res) => {
     }
 }
 
-// completed order
+// set a specific order as completed (made and collected)
 const pickedUpOrder = async (req, res) => {
     if (vendorToken.loggedIn(req)) {
         const orderID = parseInt(req.params.orderID)
+        const curTime = new Date()
         await Order.updateOne({
             orderID: orderID
         }, {
             $set: {
                 orderStatus: "Completed",
-                completedTimestamp: new Date()
+                completedTimestamp: curTime
             }
         })
-        res.send(`<h1> Order ${req.params.orderID} picked up </h1>`)
+        res.send("")
     } 
     else {
         res.status(402)
@@ -219,7 +230,7 @@ const pickedUpOrder = async (req, res) => {
 const getLogout = async (req, res) => {
     if (vendorToken.loggedIn(req)) {
         const token = req.cookies['jwt_vendor']
-        res.cookie("jwt_vendor", token, {httpOnly: false, sameSite:false, secure: true, maxAge:1})
+        res.cookie("jwt_vendor", token, {httpOnly: false, sameSite: false, secure: true, maxAge:1})
     } 
     else {
         res.status(402)
