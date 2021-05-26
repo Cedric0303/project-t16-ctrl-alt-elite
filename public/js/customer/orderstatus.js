@@ -21,7 +21,20 @@ function timeElapsed(orderinfo,  totalSeconds) {
         document.getElementById('cancelModifyOrderButton').classList.remove("disabled");
     }
 
-    setTimeElapsed(hour, minute, second)
+    setTimeElapsed(hour, minute, second, "elapsed")
+}
+
+function fulfillTime(orderinfo, totalSeconds) {
+    time = totalSeconds
+    orderTime = new Date(orderinfo.timestamp)
+    fulfilledTime = new Date(orderinfo.fulfilledTimestamp)
+    totalSeconds = Math.round((fulfilledTime.getTime() -  orderTime.getTime()) / 1000)
+    hour = Math.floor(totalSeconds / 3600)
+    time = totalSeconds % 3600
+    minute = Math.floor(time / 60)
+    second = time % 60
+    setTimeElapsed(hour, minute, second, "fulfilled")
+    document.getElementById('cancelModifyOrderButton').classList.add("disabled");
 }
 
 function completeTime(orderinfo, totalSeconds) {
@@ -33,25 +46,30 @@ function completeTime(orderinfo, totalSeconds) {
     time = totalSeconds % 3600
     minute = Math.floor(time / 60)
     second = time % 60
-    setTimeElapsed(hour, minute, second)
+    setTimeElapsed(hour, minute, second, "completed")
 }
 
 // updates the text for time elapsed on the screen
-function setTimeElapsed(hour, minute, second) {
+function setTimeElapsed(hour, minute, second, type) {
     if (!hour) {
-        document.getElementById('timeElapsed').innerHTML = 'Time elapsed: ' + minute + 'm, ' + second + 'sec'
+        document.getElementById('timeElapsed').innerHTML = 'Time '+type+': ' + minute + 'm, ' + second + 'sec'
     }
     else {
-        document.getElementById('timeElapsed').innerHTML = 'Time elapsed: '+ hour + 'h, ' + minute + 'm, ' + second + 'sec'
+        document.getElementById('timeElapsed').innerHTML = 'Time '+type+': '+ hour + 'h, ' + minute + 'm, ' + second + 'sec'
     }
 }
 
+
 timeInterval = setInterval(()=> {
-    if (orderinfo["orderStatus"] == "Fulfilled" || orderinfo["orderStatus"] == "Completed") {
+    if (orderinfo["orderStatus"] == "Fulfilled") {
+        fulfillTime(orderinfo, totalSeconds)
+        clearInterval(timeInterval)
+    } else if (orderinfo["orderStatus"] == "Completed") {
         completeTime(orderinfo, totalSeconds)
         clearInterval(timeInterval)
+    } else {
+        timeElapsed(orderinfo, totalSeconds)
     }
-    timeElapsed(orderinfo, totalSeconds)
 }, 1000)
 
 function setStatus(order) {
@@ -70,8 +88,28 @@ function setStatus(order) {
             document.getElementById('ordericon').className = '';
             document.getElementById('orderOrdering').style.color = "black";
             document.getElementById('orderFulfilled').style.color = "#0bc90e";
-            document.getElementById('orderTotal').innerHTML = "$" + Number(order.orderTotal).toFixed(2)
+            document.getElementById('orderTotal').innerHTML = "Order Total: $" + Number(order.orderTotal).toFixed(2)
             break;       
+        case "Completed":
+            // if the order has a review then show the detailed order info
+            if (order.comment != "" | order.rating != "") {
+                if (order.rating == "") {
+                    rating = "n/a"
+                } else {
+                    rating = order.rating + " out of 5" 
+                }
+                console.log("COMPLETE AND REVIEW");
+                document.getElementById('cancelModifyOrderButton').classList.add("disabled");
+                document.getElementById('vanfloatleft').querySelector("p").innerHTML = "ORDERED FROM";
+                document.getElementById('orderTitle').firstChild.innerHTML = "Your review";
+                document.getElementById('orderStatus').style.fontSize = "1em";
+                document.getElementById('orderStatus').innerHTML = 
+                    "<div><b>Rating:</b> "+rating+"</div>"+
+                    "<div><b>Comment:</b> "+order.comment+"</div>";
+            } else {
+                // redirect user to add review for specified order
+                window.location.href = window.location + '/review'
+            }
         default:
             console.log("Error setting status.");
             break;

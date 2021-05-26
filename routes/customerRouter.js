@@ -36,7 +36,7 @@ customerRouter.post('/register', customerController.addCustomer)
 // get orders page
 customerRouter.get('/orders', customerController.getOrders)
 
-// get specific order page (live status or for completed orders, a detailed view of the order)
+// get specific order page (live status for completed orders)
 customerRouter.get('/orders/:orderID', customerController.getOrderDetail)
 
 // get order modification page
@@ -52,7 +52,7 @@ customerRouter.get('/orders/:orderID/modify/cancel', customerController.cancelOr
 customerRouter.get('/orders/:orderID/review', customerController.getReview)
 
 // user adds review to order
-customerRouter.post('orders/:orderID/review/post', customerController.postReview)
+customerRouter.post('/orders/:orderID/review', customerController.postReview)
 
 // profile page
 customerRouter.get('/profile', customerController.getProfile)

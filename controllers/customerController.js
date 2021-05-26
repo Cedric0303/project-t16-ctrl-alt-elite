@@ -240,7 +240,10 @@ const cancelOrder = async (req, res) => {
 // return order review page
 const getReview  = async (req, res) => {
     const orderID = parseInt(req.params.orderID)
-    res.render('customer/orderstatus', {layout: 'customer/navbar'})
+    await Order.findOne({
+        orderID: orderID
+    })
+    res.render('customer/review', {layout: 'customer/navbar'})
 }
 
 // add order review into database
@@ -256,7 +259,7 @@ const postReview = async (req, res) => {
             comment: review
         }
     })
-    res.send("<h1>Thanks.</h1>")
+    res.redirect('/customer/orders')
 }
 
 // return customer login page

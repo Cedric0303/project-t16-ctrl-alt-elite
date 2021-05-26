@@ -1,0 +1,23 @@
+<style type="text/css">
+    main {
+        padding-bottom: 3vh;
+    }
+</style>
+<div id="reviewContainer" class="centerflex">
+    <h1 class="logintitle"><i>Thanks for ordering with us!</i></h1>
+    <form id="reviewText" class="centerflex" method="post">
+        <label for="ratingBar">Leave a review:</label>
+        <fieldset class="rating" name="ratingBar" onchange="checkContent()">
+            <input type="radio" id="star1" name="rating" value="1" /><label for="star1"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star5" name="rating" value="5" /><label for="star5"><i class="fas fa-star"></i></label>
+        </fieldset>
+        <label for="reviewBox">Leave some feedback:</label>
+        <textarea name="review" id="reviewBox" cols="30" rows="5" maxlength="200" oninput="checkContent()"></textarea>
+        <input type="submit" id="submitReview" value="Submit Review" disabled>
+    </form>
+    <a href="/customer/orders" class="cartbutton hoverable">Skip</a>
+</div>
+<script src="/js/customer/review.js"></script>

@@ -347,6 +347,7 @@ sup {
     width: 30vw;
     min-width: 110px;
     max-width: 150px;
+    background-color: #ffffff;
     white-space: nowrap;
     text-decoration: none;
     font-family: "Nunito", sans-serif;
@@ -962,6 +963,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 #orderStatus {
     font-size: 0.8em;
+    margin: 1vh 0;
 }
 
 #orderStatusText {
@@ -1107,6 +1109,88 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: #5fd300;
     color: #ffffff;
     font-weight: 600;
+}
+
+/* ---------------review screen------------- */
+#reviewText {
+    font-size: 0.9em;
+}
+
+#reviewBox {
+    width: 60vw;
+    resize: none;
+
+    padding: 1em 1em;
+    margin: 1vh 0;
+    box-sizing: border-box;
+
+    background-color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    
+    vertical-align: text-top;
+    font-family: inherit;
+}
+
+/* Modified from Pure CSS Star Rating Widget by James Barnett (https://codepen.io/jamesbarnett/pen/vlpkh) */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    border: none;
+    width: 220px;
+}
+/* hide all radio buttons for rating */
+.rating > input { display: none; } 
+/* all rating labels for radio buttons */
+.rating > label { 
+    font-size: 2em;
+    margin: 5px;
+    color: #bdbdbd; 
+    display: inline-block;
+}
+
+.rating > label:hover {
+    cursor: pointer;
+}
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+
+#submitReview {
+    width: 35vw;
+    max-width: 180px;
+    min-width: 80px;
+
+    padding: 8px 10px;
+    margin: 1vh 0 4vh;
+    box-sizing: border-box;
+
+    background-color: #5490f5;
+    border: none;
+    border-radius: 20px;
+
+    font-family: inherit;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: white;
+    font-size: 0.9em;
+}
+
+#submitReview:hover {
+    cursor: pointer;
+    background-color: #7ca7f1;
+}
+
+#submitReview:disabled {
+    cursor: default;
+    background-color: #bdbdbd;
 }
 
 /* --------------responsive landscape tablet view ~1000px------------------ */
