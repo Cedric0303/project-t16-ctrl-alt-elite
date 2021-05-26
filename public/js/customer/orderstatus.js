@@ -114,6 +114,7 @@ function setStatus(order) {
                 // redirect user to add review for specified order
                 window.location.href = window.location + '/review'
             }
+            break;
         default:
             console.log("Error setting status.");
             break;

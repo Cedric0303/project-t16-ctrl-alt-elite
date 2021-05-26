@@ -63,7 +63,10 @@ function filterMenu() {
 
 // reference original order items in origOrder
 origOrder = order["item"];
-
+origTotal = 0;
+for (var item in origOrder) {
+    origTotal += origOrder[item].total;
+}
 
 // shopping cart api--------------------------
 // based off of "Shopping cart JS" by Burlaka Dmytro (https://codepen.io/Dimasion/pen/oBoqBM)
@@ -260,10 +263,12 @@ function displayCart() {
      
     // update text on screen
     document.getElementById('cartlist').innerHTML = output;
-    document.getElementById('carttotaltext').innerHTML = shoppingCart.totalCart();
+    totalText = document.getElementById('carttotaltext');
+    totalText.innerHTML = "$"+shoppingCart.totalCart();
 
     // check if there have been changes to the order
     // and update cart colors accordingly
+    // Update cart items
     for (var itemCurr in cartArray) {
         for (var itemOrig in origOrder) {
             cartitemid = 'cart'+cartArray[itemCurr].id
@@ -295,7 +300,22 @@ function displayCart() {
             }
         }
     }
-
+    // Update total
+    if (shoppingCart.totalCart() != origTotal) {
+        difference = shoppingCart.totalCart() - origTotal;
+        // if the total increased
+        if (difference > 0) {
+            totalText.style.color = "#5fd300";
+            totalText.innerHTML = "$"+shoppingCart.totalCart()+" (+$"+Math.abs(difference).toFixed(2)+")";
+        } 
+        // if the total decreased
+        else if (difference < 0) {
+            totalText.style.color = "#ef5658";
+            totalText.innerHTML = "$"+shoppingCart.totalCart()+" (-$"+Math.abs(difference).toFixed(2)+")";
+        }
+    } else {
+        totalText.style.color = "#000000";
+    }
 
     // register functions
     // add to cart (+) on menu, increment/add
