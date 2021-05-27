@@ -34,21 +34,23 @@
         </div>
     </div>
     <div class="fixedbot">
-        <div id="cartexpand" class="hoverable"><i class="fas fa-minus"></i></div>
-        <div id="editcartcontainer">
-            <div id="cart">
-                <div id="cartlist">
-                    {{!-- filled via menu.js --}}
+        <div id="cartFloat">
+            <div id="cartexpand" class="hoverable"><i class="fas fa-minus"></i></div>
+            <div id="editcartcontainer">
+                <div id="cart">
+                    <div id="cartlist">
+                        {{!-- filled via menu.js --}}
+                    </div>
+                    <div class="carttotal">Order Total:&nbsp;<span id="carttotaltext"></span></div>
                 </div>
-                <div class="carttotal">Order Total:&nbsp;<span id="carttotaltext"></span></div>
-            </div>
-            <div class="cartbuttonsEditOrder">
-                <button id="editOrderBackbutton" class="cartbutton hoverable" onclick="goBack()">Back</button>
-                <a id="cancelorderButton">Cancel Order</a>
-                <button id="updatebutton" class="cartbutton hoverable">Update Order</button>
-                <form id="orderForm" method="POST">
-                     <input id="payloadInput" type="hidden" name="payload">
-                </form>
+                <div class="cartbuttonsEditOrder">
+                    <button id="editOrderBackbutton" class="cartbutton hoverable" onclick="goBack()">Back</button>
+                    <a id="cancelorderButton">Cancel Order</a>
+                    <button id="updatebutton" class="cartbutton hoverable">Update Order</button>
+                    <form id="orderForm" method="POST">
+                        <input id="payloadInput" type="hidden" name="payload">
+                    </form>
+                </div>
             </div>
         </div>
         <div class="navbar">
