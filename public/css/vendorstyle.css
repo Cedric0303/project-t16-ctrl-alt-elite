@@ -421,6 +421,12 @@ a {
     font-weight: 600;
     align-items: center;
     column-gap: 1vw;
+
+    z-index: 9000;
+}
+
+#expandOrder:disabled {
+    background-color: #9c9c9c;
 }
 
 #expandOrder i {

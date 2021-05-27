@@ -1,3 +1,8 @@
+vanlisttopcontentElement = document.getElementById('vanlisttopcontent');
+vanlistbottomcontentElement = document.getElementById('vanlistbottomcontent');
+vanlisttopElement = document.getElementById('vanlisttop');
+vanlistbottom = document.getElementById('vanlistbottom');
+
 function htmlifyVan(name, address, dist, loginId, index) {
     html = "<div id=\"vanlist"+index+"\" class=\"vanlistitem\"><div class=\"vaninfo\"><h3><span class=\"vanname\">"+name+"</span></h3><h4><span class=\"vanaddress\">"+address+"</span></h4><h5><i class=\"fas fa-map-marker-alt\"></i>&nbsp;&nbsp;<span class=\"vandist\">"+Math.round(dist)+"</span> m&nbsp;away</h5></div><div class=\"vancontinue\"><a href=\"/customer/"+loginId+"/menu/?dist="+Math.round(dist)+"\">Continue</a></div></div>";
     return html;
@@ -35,13 +40,13 @@ function displayVanList(order) {
     vanlistbottomcontent = ""
     for (index in order) {
         if (internalcounter == 0) {
-            document.getElementById('vanlisttopcontent').innerHTML = vanListHtml[index];
+            vanlisttopcontentElement.innerHTML = vanListHtml[index];
         } else {
             vanlistbottomcontent += vanListHtml[index];
         }
         internalcounter += 1;
     }
-    document.getElementById('vanlistbottomcontent').innerHTML = vanlistbottomcontent;
+    vanlistbottomcontentElement.innerHTML = vanlistbottomcontent;
 
     // register each van list item with selectVan
     vans_html = document.getElementsByClassName('vanlistitem');
@@ -54,16 +59,15 @@ function displayVanList(order) {
 function updateCollapsed() {
     // change "closest van" text to "selected van" if selected van isn't the closest
     if (selectedVanIndex == 0) {
-        document.getElementById('vanlisttop').querySelector('h1').innerHTML = "Closest Van";
+        vanlisttopElement.querySelector('h1').innerHTML = "Closest Van";
     } else {
-        document.getElementById('vanlisttop').querySelector('h1').innerHTML = "Selected Van";
+        vanlisttopElement.querySelector('h1').innerHTML = "Selected Van";
     }
-    document.getElementById('vanlisttopcontent').innerHTML = vanListHtml[selectedVanIndex];
+    vanlisttopcontentElement.innerHTML = vanListHtml[selectedVanIndex];
 }
 
 // expand/collapse van list
 function toggleVanList() {
-    vanlistbottom = document.getElementById('vanlistbottom');
     // if list is expanded
     if (vanlistbottom.style.display == 'flex') {
         // collapse list
@@ -73,7 +77,7 @@ function toggleVanList() {
     } else {
         // expand cart
         vanlistbottom.style.display = 'flex';
-        document.getElementById('vanlisttop').querySelector('h1').innerHTML = "Closest Van";
+        vanlisttopElement.querySelector('h1').innerHTML = "Closest Van";
         // display vans from nearest to furthest
         displayVanList(ordered);
         updateBorder(selectedVanIndex);
@@ -95,7 +99,7 @@ function updateBorder(index) {
             vans_html[i].style.border = "none";
         } else {
             // draw border around clicked van only if vanlist is expanded
-            if (document.getElementById('vanlistbottom').style.display == 'flex') {
+            if (vanlistbottom.style.display == 'flex') {
                 vans_html[i].style.border = "1px solid #5490f5";
             }
         }
@@ -125,7 +129,7 @@ function updateSelection() {
             // for the selected marker
             selectedVanIndex = index;
             updateBorder(index);
-            if (document.getElementById('vanlistbottom').style.display != 'flex') {
+            if (vanlistbottom.style.display != 'flex') {
                 updateCollapsed();
             }
         }

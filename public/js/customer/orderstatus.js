@@ -3,6 +3,13 @@ const DISCOUNTVALUE = 20 / 100 // 20%
 const DISCOUNTTIME = 15 * 60 // 15 minutes
 
 cancelModifyOrderButton = document.getElementById('cancelModifyOrderButton')
+timeElapsedText = document.getElementById('timeElapsed')
+orderTotalText = document.getElementById('orderTotal')
+ordericon = document.getElementById('ordericon')
+orderOrdering = document.getElementById('orderOrdering')
+orderFulfilled = document.getElementById('orderFulfilled')
+orderStatusText = document.getElementById('orderStatus')
+orderTitle = document.getElementById('orderTitle')
 
 var totalSeconds = 0
 // calculates time elapsed since order made
@@ -66,10 +73,10 @@ function completeTime(orderinfo, totalSeconds) {
 // updates the text for time elapsed on the screen
 function setTimeElapsed(hour, minute, second, type) {
     if (!hour) {
-        document.getElementById('timeElapsed').innerHTML = 'Time '+type+': ' + minute + 'm, ' + second + 'sec'
+        timeElapsedText.innerHTML = 'Time '+type+': ' + minute + 'm, ' + second + 'sec'
     }
     else {
-        document.getElementById('timeElapsed').innerHTML = 'Time '+type+': '+ hour + 'h, ' + minute + 'm, ' + second + 'sec'
+        timeElapsedText.innerHTML = 'Time '+type+': '+ hour + 'h, ' + minute + 'm, ' + second + 'sec'
     }
 }
 
@@ -84,7 +91,6 @@ function getDiscountedTotal(price) {
 
 // updates order total text on the screen
 // time is total time elapsed in seconds
-orderTotalText = document.getElementById('orderTotal')
 function updateTotal(time, fulfilled) {
     // if discount applied, display discounted total
     if ((time >= DISCOUNTTIME) && fulfilled) {
@@ -116,17 +122,17 @@ function setStatus(order) {
     // e.g. Ordering, Fulfilled
     switch (order.orderStatus) {
         case "Ordering":
-            document.getElementById('ordericon').innerHTML = "<i class=\"fas fa-coffee\"></i>";
-            document.getElementById('ordericon').className = 'bouncyAnim';
-            document.getElementById('orderOrdering').style.color = "#fe773c";
-            document.getElementById('orderFulfilled').style.color = "black";
+            ordericon.innerHTML = "<i class=\"fas fa-coffee\"></i>";
+            ordericon.className = 'bouncyAnim';
+            orderOrdering.style.color = "#fe773c";
+            orderFulfilled.style.color = "black";
             break;
         case "Fulfilled":
-            document.getElementById('ordericon').innerHTML = "<i class=\"far fa-check-circle\"></i>";
-            document.getElementById('ordericon').className = '';
-            document.getElementById('orderOrdering').style.color = "black";
-            document.getElementById('orderFulfilled').style.color = "#0bc90e";
-            document.getElementById('orderTotal').innerHTML = "Order Total: $" + Number(order.orderTotal).toFixed(2)
+            ordericon.innerHTML = "<i class=\"far fa-check-circle\"></i>";
+            ordericon.className = '';
+            orderOrdering.style.color = "black";
+            orderFulfilled.style.color = "#0bc90e";
+            orderTotalText.innerHTML = "Order Total: $" + Number(order.orderTotal).toFixed(2)
             break;       
         case "Completed":
             // if the order has a review then show the detailed order info
@@ -141,18 +147,18 @@ function setStatus(order) {
                 } else {
                     review = order.review
                 }
-                document.getElementById('cancelModifyOrderButton').classList.add("disabled");
+                cancelModifyOrderButton.classList.add("disabled");
                 document.getElementById('vanfloatleft').querySelector("p").innerHTML = "ORDERED FROM";
-                document.getElementById('orderTitle').firstChild.innerHTML = "Your review";
-                document.getElementById('orderStatus').style.fontSize = "1em";
-                document.getElementById('orderStatus').innerHTML = 
+                orderTitle.firstChild.innerHTML = "Your review";
+                orderStatusText.style.fontSize = "1em";
+                orderStatusText.innerHTML = 
                     "<div><b>Rating:</b> "+rating+"</div>"+
                     "<div><b>Comment:</b> "+review+"</div>";
             } else {
                 // redirect user to add review for specified order
-                document.getElementById('orderTitle').firstChild.innerHTML = "Your order is completed"
-                document.getElementById('orderStatus').style.fontSize = "1em";
-                document.getElementById('orderStatus').innerHTML = "Redirecting to review page"
+                orderTitle.firstChild.innerHTML = "Your order is completed"
+                orderStatusText.style.fontSize = "1em";
+                orderStatusText.innerHTML = "Redirecting to review page"
                 setTimeout(() => {
                     window.location.href = window.location + '/review'
                 }, 6000)
@@ -164,7 +170,7 @@ function setStatus(order) {
     }
 }
 
-document.getElementById('cancelModifyOrderButton').href = window.location + "/modify"
+cancelModifyOrderButton.href = window.location + "/modify"
 
 setStatus(orderinfo)
 

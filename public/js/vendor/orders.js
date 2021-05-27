@@ -3,6 +3,7 @@ orderBoxes = document.getElementsByClassName('order')
 orderMadeButton = document.getElementById('orderMadeButton')
 orderCollectedButton = document.getElementById('orderCollectedButton')
 expandOrderButton = document.getElementById('expandOrder')
+currentOrdersElement = document.getElementById("currentOrders")
 
 selectedOrderIndex = null;
 function selectOrder() {
@@ -32,6 +33,7 @@ function updateStatusButtons() {
         orderStatus = ordersArray[selectedOrderIndex].orderStatus
 
         // enable appropriate order status buttons
+        expandOrderButton.disabled = false;
         switch (orderStatus) {
             case "Ordering":
                 orderMadeButton.disabled = false;
@@ -46,6 +48,7 @@ function updateStatusButtons() {
                 break;
         }
     } else {
+        expandOrderButton.disabled = true;
         orderMadeButton.disabled = true;
         orderCollectedButton.disabled = true;
     }
@@ -76,6 +79,25 @@ function setStatusCollected() {
     }
 }
 
+function updateOrderStatuses() {
+    for (var i=0; i<orderBoxes.length; i++) {
+        orderStatus = ordersArray[i].orderStatus;
+        switch (orderStatus) {
+            case "Ordering":
+                orderBoxes[i].querySelector('.orderStatus').innerHTML
+                break;
+            case "Fulfilled":
+                orderBoxes[i].querySelector('.orderStatus').innerHTML
+                break;
+            default:
+                console.log("Error getting status of order "+ordersArray[i].orderID);
+                break;
+        }
+    }
+}
+// run on load
+updateOrderStatuses()
+
 // ----------------register functions---------------------
 orderMadeButton.addEventListener("click", setStatusMade)
 orderCollectedButton.addEventListener("click", setStatusCollected)
@@ -97,18 +119,19 @@ socket.on('orderChange', function (orders) {
     output = "";
     for (i in orders) {
         output += "<div class=\"order hoverable\">"
-                + "<div class=\"orderHeader\">Order for&nbsp;<span class=\"customerName\">"+orders[i].customerGivenName+"</span></div>"
-                + "<div class=\"orderitems\">"
-        for (j in orders[i].item) {
-            item = orders[i].item[j]
-            output += "<div class=\"orderitem\">"
-                        + "<div class=\"orderitemname\">"+ orders[i].item[j].name +"</div>"
-                        + "<div class=\"orderitemcount\">x"+orders[i].item[j].count+"</div>"
-                    + "</div>"
-        }
+                    + "<div class=\"orderHeader\">Order for&nbsp;<span class=\"customerName\">"+orders[i].customerGivenName+"</span></div>"
+                    + "<div class=\"orderitems\">"
+            for (j in orders[i].item) {
+                item = orders[i].item[j]
+                output += "<div class=\"orderitem\">"
+                            + "<div class=\"orderitemname\">"+ orders[i].item[j].name +"</div>"
+                            + "<div class=\"orderitemcount\">x"+orders[i].item[j].count+"</div>"
+                        + "</div>"}
+            output += "</div>"
+            output += "<div class=\"orderStatus\"></div>"
         output += "</div>"
-                +"</div>"
     }
-    document.getElementById("currentOrders").innerHTML = output
+    currentOrdersElement.innerHTML = output
     registerOrderFunctions();
+    updateOrderStatuses()
 })

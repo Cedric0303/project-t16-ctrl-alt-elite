@@ -1,6 +1,14 @@
+searchbar = document.getElementById("searchbar");
+cartcontainer = document.getElementById('cartcontainer');
+innercart = document.getElementById('cart');
+vcartbutton = document.getElementById('vcartbutton');
+cartcount = document.getElementById('cart-count');
+cartlist = document.getElementById('cartlist');
+carttotaltext = document.getElementById('carttotaltext')
+
 // filter menu by categories
 function filterMenu() {
-    var searchTerm = document.getElementById("searchbar").value;
+    var searchTerm = searchbar.value;
     var regex = new RegExp(`^${searchTerm}`, 'i');
 
     // check which categories are selected
@@ -202,31 +210,30 @@ var shoppingCart = (function () {
 
 // expand/collapse cart
 function toggleCart() {
-    cartcontainer = document.getElementById('cartcontainer');
     // if cart is expanded
     if (cartcontainer.style.height == '30vh') {
         // collapse cart
         cartcontainer.style.height = 'initial';
         // hide cart contents
-        document.getElementById('cart').style.display = 'none';
+        innercart.style.display = 'none';
         // change view cart button to 'cart(x)' 
-        document.getElementById('vcartbutton').innerHTML = 'Cart&nbsp;(<span id="cart-count"></span>)';
-        document.getElementById('cart-count').innerHTML = shoppingCart.totalCount();
+        vcartbutton.innerHTML = 'Cart&nbsp;(<span id="cart-count"></span>)';
+        cartcount.innerHTML = shoppingCart.totalCount();
         displayCart();
     } else {
         // expand cart
         cartcontainer.style.height = '30vh';
         // show cart contents
-        document.getElementById('cart').style.display = 'grid';
+        innercart.style.display = 'grid';
         // change view cart button to 'close cart'
         displayCart();
-        document.getElementById('vcartbutton').innerHTML = 'Hide Cart';
+        vcartbutton.innerHTML = 'Hide Cart';
     }
 }
 
 function cartToggled() {
     // returns true if showing cart, false if cart is hidden
-    if (document.getElementById('vcartbutton').innerHTML == 'Hide Cart') {
+    if (vcartbutton.innerHTML == 'Hide Cart') {
         return true;
     } else {
         return false;
@@ -241,10 +248,10 @@ for (var i=0; i < categoryCheckboxes.length; i++) {
 }
 
 // view cart button
-document.getElementById('vcartbutton').addEventListener("click", toggleCart, false)
+vcartbutton.addEventListener("click", toggleCart, false)
 
 // write in search bar
-document.getElementById('searchbar').addEventListener("input", filterMenu, false)
+searchbar.addEventListener("input", filterMenu, false)
 
 
 // cart api events
@@ -283,11 +290,11 @@ function displayCart() {
     }
      
     // update text on screen
-    document.getElementById('cartlist').innerHTML = output;
+    cartlist.innerHTML = output;
     if (!cartToggled()) {
-        document.getElementById('cart-count').innerHTML = shoppingCart.totalCount();
+        cartcount.innerHTML = shoppingCart.totalCount();
     }
-    document.getElementById('carttotaltext').innerHTML = shoppingCart.totalCart();
+    carttotaltext.innerHTML = shoppingCart.totalCart();
 
     // register functions
     // add to cart (+) on menu, increment/add

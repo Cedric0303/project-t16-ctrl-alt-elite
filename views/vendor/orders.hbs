@@ -12,7 +12,7 @@
 
 <div class="orders-container" id="currentOrders">
     {{#each orders}}
-        <div class="order hoverable">
+        <div id="order{{this.orderID}}" class="order hoverable">
             <div class="orderHeader">Order for&nbsp;<span class="customerName">{{this.customerGivenName}}</span></div>
             <div class="orderitems">
                 {{#each item}}
@@ -29,7 +29,7 @@
 </div>
 
 <div class="fixedbot ordersPageFloat">
-    <button id="expandOrder" class="hoverable"><i class="fas fa-expand"></i> Expand Order</button>
+    <button id="expandOrder" class="hoverable" disabled><i class="fas fa-expand"></i> Expand Order</button>
     <a id="pastOrdersButton" class="hoverable" href="/vendor/{{vendor.loginID}}/pastorders"><i class="fas fa-history"></i> Past Orders</a>
 </div>
 

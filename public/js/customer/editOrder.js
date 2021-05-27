@@ -1,6 +1,12 @@
+searchbar = document.getElementById("searchbar");
+cartcontainer = document.getElementById('editcartcontainer');
+innercart = document.getElementById('cart');
+cartlist = document.getElementById('cartlist');
+totalText = document.getElementById('carttotaltext');
+
 // filter menu by categories
 function filterMenu() {
-    var searchTerm = document.getElementById("searchbar").value;
+    var searchTerm = searchbar.value;
     var regex = new RegExp(`^${searchTerm}`, 'i');
 
     // check which categories are selected
@@ -193,19 +199,18 @@ var shoppingCart = (function () {
 
 // expand/collapse cart
 function toggleCart() {
-    cartcontainer = document.getElementById('editcartcontainer');
     // if cart is expanded
     if (cartcontainer.style.height == '30vh') {
         // collapse cart
         cartcontainer.style.height = 'initial';
         // hide cart contents
-        document.getElementById('cart').style.display = 'none';
+        innercart.style.display = 'none';
         displayCart();
     } else {
         // expand cart
         cartcontainer.style.height = '30vh';
         // show cart contents
-        document.getElementById('cart').style.display = 'grid';
+        innercart.style.display = 'grid';
         // change view cart button to 'close cart'
         displayCart();
     }
@@ -222,7 +227,7 @@ for (var i=0; i < categoryCheckboxes.length; i++) {
 document.getElementById('cartexpand').addEventListener("click", toggleCart, false)
 
 // write in search bar
-document.getElementById('searchbar').addEventListener("input", filterMenu, false)
+searchbar.addEventListener("input", filterMenu, false)
 
 
 // cart api events
@@ -262,8 +267,7 @@ function displayCart() {
     }
      
     // update text on screen
-    document.getElementById('cartlist').innerHTML = output;
-    totalText = document.getElementById('carttotaltext');
+    cartlist.innerHTML = output;
     totalText.innerHTML = "$"+shoppingCart.totalCart();
 
     // check if there have been changes to the order

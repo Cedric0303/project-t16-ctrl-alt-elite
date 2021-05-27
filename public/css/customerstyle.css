@@ -967,7 +967,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 #orderStatus {
     font-size: 0.8em;
-    margin: 1vh 0;
+    margin: 1vh 5vw;
 }
 
 #orderStatusText {
@@ -1009,7 +1009,7 @@ input[type=number]::-webkit-outer-spin-button {
 .orderitem {
     display: grid;
     margin: 1vh 0;
-    grid-template-columns: 1fr 6fr 3fr;
+    grid-template-columns: 1.5fr 6fr 3fr;
     justify-items: flex-start;
     column-gap: 0.3em;
 }

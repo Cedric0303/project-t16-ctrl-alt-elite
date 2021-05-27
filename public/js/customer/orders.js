@@ -45,6 +45,8 @@ toFixed2 = function (input) {
 
 changeColor()
 
+ordersElement = document.getElementById("customerOrders")
+
 const socket = io()
 if (customerID != null) {
     socket.emit('customerID', customerID);
@@ -73,7 +75,7 @@ if (customerID != null) {
                     + "<a class=\"viewonMap hoverable\" href=\"/customer/van/" + orders[i].vendorID + "\">View On Map</a>"
                     + "</div>"
         }
-        document.getElementById("customerOrders").innerHTML = output
+        ordersElement.innerHTML = output
         changeColor()
     })
 }
