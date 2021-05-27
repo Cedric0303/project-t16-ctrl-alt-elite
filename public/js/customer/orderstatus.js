@@ -1,4 +1,8 @@
 const MODIFYTIME = 10 * 60 // 10 minutes
+const DISCOUNTVALUE = 20 / 100 // 20%
+const DISCOUNTTIME = 15 * 60 // 15 minutes
+
+cancelModifyOrderButton = document.getElementById('cancelModifyOrderButton')
 
 var totalSeconds = 0
 // calculates time elapsed since order made
@@ -15,13 +19,14 @@ function timeElapsed(orderinfo,  totalSeconds) {
     second = time % 60
 
     // check if 10 minute window for modifiable order has expired
-    if (totalSeconds > MODIFYTIME) {
-        document.getElementById('cancelModifyOrderButton').classList.add("disabled");
+    if (totalSeconds >= MODIFYTIME) {
+        cancelModifyOrderButton.classList.add("disabled");
     } else {
-        document.getElementById('cancelModifyOrderButton').classList.remove("disabled");
+        cancelModifyOrderButton.classList.remove("disabled");
     }
 
     setTimeElapsed(hour, minute, second, "elapsed")
+    updateTotal(totalSeconds)
 }
 
 // calculate time elapsed till order fulfilled
@@ -35,7 +40,8 @@ function fulfillTime(orderinfo, totalSeconds) {
     minute = Math.floor(time / 60)
     second = time % 60
     setTimeElapsed(hour, minute, second, "fulfilled")
-    document.getElementById('cancelModifyOrderButton').classList.add("disabled");
+    cancelModifyOrderButton.classList.add("disabled");
+    updateTotal(totalSeconds)
 }
 
 // calculate time elapsed till order completed
@@ -49,6 +55,12 @@ function completeTime(orderinfo, totalSeconds) {
     minute = Math.floor(time / 60)
     second = time % 60
     setTimeElapsed(hour, minute, second, "completed")
+    cancelModifyOrderButton.classList.add("disabled");
+
+    console.log(totalSeconds);
+    fulfilledTime = new Date(orderinfo.fulfilledTimestamp)
+    fulfilledTimeSeconds = Math.round((fulfilledTime.getTime() -  orderTime.getTime()) / 1000)
+    updateTotal(fulfilledTimeSeconds)
 }
 
 // updates the text for time elapsed on the screen
@@ -61,6 +73,24 @@ function setTimeElapsed(hour, minute, second, type) {
     }
 }
 
+// returns original, undiscounted total
+function getOgTotal(price) {
+    return Number(price/(1-DISCOUNTVALUE)).toFixed(2)
+}
+
+// updates order total text on the screen
+// time is total time elapsed in seconds
+orderTotalText = document.getElementById('orderTotal')
+function updateTotal(time) {
+    // if discount applied, display discounted total
+    if (time >= DISCOUNTTIME) {
+        orderTotalText.innerHTML = "Order Total: $" + Number(orderinfo.orderTotal).toFixed(2) + " <span style=\"color:#ef5658\"><s>" + Number(getOgTotal(orderinfo.orderTotal)).toFixed(2) + "</s> (20% off)</span>"
+    } else {
+        orderTotalText.innerHTML = "Order Total: $" + Number(orderinfo.orderTotal).toFixed(2)
+        orderTotalText.style.color = "#000000"
+    }
+    
+}
 
 timeInterval = setInterval(()=> {
     if (orderinfo["orderStatus"] == "Fulfilled") {
