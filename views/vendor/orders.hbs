@@ -1,34 +1,36 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var van = {{{json vendor}}}
+    var ordersArray = {{{json orders}}}
 </script>
 <div class="navbar stickytop" id="ordersHeader">
     <h1 id="ordersTitle"> Orders </h1>
-    <button class="orderbuttons hoverable" id="orderbuttons" class="icon" onclick="myFunction()" disabled> Order Made </button>
-    <button class="orderbuttons hoverable" id="orderbuttons" class="icon" onclick="myFunction()" disabled> Order Collected </button>
-    <a class="hoverable" id="closeVan" href="/vendor/{{vendor.loginID}}/close"> Close Van </a>
+    <button id="orderMadeButton" class="orderbuttons hoverable" disabled>Order Made</button>
+    <button id="orderCollectedButton" class="orderbuttons hoverable" disabled>Order Collected</button>
+    <a class="hoverable" id="closeVan" href="/vendor/{{vendor.loginID}}/close">Close Van</a>
 </div>
 
 <div class="orders-container" id="currentOrders">
     {{#each orders}}
         <div class="order hoverable">
-            <div>{{this.orderID}}</div>
-            <div>{{this.orderStatus}}</div>
-            <div>{{this.customerGivenName}}</div>
-            {{#each item}}
-                <div class="orderitem">
-                    <div>{{this.count}}x</div>
-                    <div>{{this.name}}</div>
-                    <div>${{#toFixed2 this.total}}{{/toFixed2}}</div>
-                </div>
-            {{/each}}
+            <div class="orderHeader">Order for&nbsp;<span class="customerName">{{this.customerGivenName}}</span></div>
+            <div class="orderitems">
+                {{#each item}}
+                    <div class="orderitem">
+                        <div class="orderitemname">{{this.name}}</div>
+                        <div class="orderitemcount">x{{this.count}}</div>
+                    </div>
+                {{/each}}
+            </div>
+            <div class="orderStatus"></div>
         </div>
     {{/each}}
     
 </div>
 
-<div class="fixedbot">
-    <a class="hoverable" id="pastOrdersButton" href="/vendor/{{vendor.loginID}}/pastorders"><i class="fas fa-history"></i> Past Orders</a>
+<div class="fixedbot ordersPageFloat">
+    <button id="expandOrder" class="hoverable"><i class="fas fa-expand"></i> Expand Order</button>
+    <a id="pastOrdersButton" class="hoverable" href="/vendor/{{vendor.loginID}}/pastorders"><i class="fas fa-history"></i> Past Orders</a>
 </div>
 
 <script src="/js/vendor/orders.js"></script>

@@ -1001,6 +1001,9 @@ input[type=number]::-webkit-outer-spin-button {
 #orderDetailItemList {
     font-size: 1em;
     margin-top: 1vh;
+    overflow-y: auto;
+    height: 10vh;
+    width: 80%;
 }
 
 .orderitem {
@@ -1018,6 +1021,7 @@ input[type=number]::-webkit-outer-spin-button {
 #orderTotal {
     font-size: 1.2em;
     font-weight: 700;
+    margin-top: 1vh;
 }
 
 #cancelModifyOrderButton {
@@ -1290,5 +1294,12 @@ input[type=number]::-webkit-outer-spin-button {
 @media screen and (min-width: 1500px) {
     #menu {
         grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ----------adjust main margin for height--------- */
+@media screen and (max-height: 700px) {
+    main {
+        padding-bottom: 4em;
     }
 }

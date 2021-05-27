@@ -204,7 +204,7 @@ const fulfilledOrder = async (req, res) => {
                 orderTotal: Number(orderTotal)
             }
         })
-        res.send("")
+        res.status(202)
     }
     else {
         res.status(402)
@@ -225,7 +225,7 @@ const pickedUpOrder = async (req, res) => {
                 completedTimestamp: curTime
             }
         })
-        res.send("")
+        res.status(202)
     } 
     else {
         res.status(402)
