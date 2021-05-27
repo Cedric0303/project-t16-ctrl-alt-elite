@@ -63,6 +63,7 @@ const getVendor = async (req, res) => {
     }
 }
 
+// authenticate vendor login details
 const authLogin = async (req, res) => {
     const vanID = req.body.vanID
     const pw = req.body.password
@@ -101,6 +102,7 @@ const authLogin = async (req, res) => {
     }
 }
 
+// close a specified vendor van
 const closeVan = async (req, res) => {
     if (vendorToken.loggedIn(req)) {
         const vanID = req.params.vanID;
@@ -155,6 +157,7 @@ const getOrders = async (req, res) => {
     }
 }
 
+// return past orders of a specific vendor van
 const getPastOrders = async (req, res) => {
     if (vendorToken.loggedIn(req)) {
         const vanID = req.params.vanID
@@ -179,7 +182,7 @@ const getPastOrders = async (req, res) => {
     }
 }
 
-// sets a specific order as fulfilled (made and ready to be collected)
+// set a specific order as fulfilled (made and ready to be collected)
 const fulfilledOrder = async (req, res) => {
     if (vendorToken.loggedIn(req)) {
         const orderID = parseInt(req.params.orderID)
@@ -229,6 +232,7 @@ const pickedUpOrder = async (req, res) => {
     }
 }
 
+// set vendor as logged out
 const getLogout = async (req, res) => {
     if (vendorToken.loggedIn(req)) {
         const token = req.cookies['jwt_vendor']

@@ -10,6 +10,7 @@ mongoose.connect(CONNECTION_STRING, {
     useUnifiedTopology: true,
     useCreateIndex: true,
     })
+    
 const db = mongoose.connection
 db.on('error', function (err) {
     console.log('Failed to connect to database');

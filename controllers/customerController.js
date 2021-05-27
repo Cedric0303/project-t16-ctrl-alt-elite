@@ -40,6 +40,7 @@ const getCustomerHomeVan = async (req, res) => {
         layout: 'customer/homepage'})
 }
 
+// return van menu page
 const getMenuVan = async (req, res) => {
     const menu = await Food.find({}).project({
         "_id": false
@@ -69,6 +70,7 @@ const getMenuVan = async (req, res) => {
     }
 }
 
+// add new order to database
 const postNewOrder = async (req, res) => {
     if (customerToken.loggedIn(req)) {
         orderInfo = JSON.parse(req.body.payload);
@@ -219,7 +221,7 @@ const modifyOrder = async (req, res) => {
     }
 }
 
-// delete an order in the database
+// cancel an order in the database
 const cancelOrder = async (req, res) => {
     if (customerToken.loggedIn(req)) {
         const orderID = parseInt(req.params.orderID)
@@ -263,6 +265,7 @@ const getLogin = (req, res) => {
     res.render('customer/login', {layout: 'customer/navbar'})
 }
 
+// authenticate customer login details
 const authLogin = async (req, res) => {
     const email = req.body.email
     const pw = req.body.password
@@ -307,6 +310,7 @@ const getRegister = async (req, res) => {
     res.render('customer/register', {layout: 'customer/navbar'})
 }
 
+// add new customer into database
 const addCustomer = async (req, res) => {
     // if email does not exist in database, then add an account, if not render dupe account handlebar
     const user = await Customer.findOne({loginID: req.body.email});
@@ -330,6 +334,7 @@ const addCustomer = async (req, res) => {
     }
 }
 
+// return customer orders page
 const getOrders = async (req, res) => {
     if (customerToken.loggedIn(req)) {
         const token = req.cookies['jwt_customer']
@@ -356,6 +361,7 @@ const getOrders = async (req, res) => {
     }
 }
 
+// return customer profile page
 const getProfile = async (req, res) => {
     if (customerToken.loggedIn(req)) {
         const token = req.cookies['jwt_customer']
@@ -378,7 +384,7 @@ const getProfile = async (req, res) => {
     }
 }
 
-// update account details
+// update customer account details
 const updateAccount = async (req, res) => { 
     const token = req.cookies['jwt_customer']
     const payload = customerToken.getTokenPayload(token)

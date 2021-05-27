@@ -24,6 +24,7 @@ function timeElapsed(orderinfo,  totalSeconds) {
     setTimeElapsed(hour, minute, second, "elapsed")
 }
 
+// calculate time elapsed till order fulfilled
 function fulfillTime(orderinfo, totalSeconds) {
     time = totalSeconds
     orderTime = new Date(orderinfo.timestamp)
@@ -37,6 +38,7 @@ function fulfillTime(orderinfo, totalSeconds) {
     document.getElementById('cancelModifyOrderButton').classList.add("disabled");
 }
 
+// calculate time elapsed till order completed
 function completeTime(orderinfo, totalSeconds) {
     time = totalSeconds
     orderTime = new Date(orderinfo.timestamp)
