@@ -282,6 +282,14 @@ a {
     padding: 0.5em;
 }
 
+.orderSelected {
+    border: 5px solid #5ac8fa;
+}
+
+.orderFulfilled {
+    border: 3px solid #4cd964;
+}
+
 .orderitem {
     display: grid;
     grid-template-columns: 1fr 6fr 3fr;

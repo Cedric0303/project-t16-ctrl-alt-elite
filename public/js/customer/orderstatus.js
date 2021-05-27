@@ -77,14 +77,20 @@ function setTimeElapsed(hour, minute, second, type) {
 function getOgTotal(price) {
     return Number(price/(1-DISCOUNTVALUE)).toFixed(2)
 }
+// returns discounted total
+function getDiscountedTotal(price) {
+    return Number(price-(price*DISCOUNTVALUE)).toFixed(2)
+}
 
 // updates order total text on the screen
 // time is total time elapsed in seconds
 orderTotalText = document.getElementById('orderTotal')
-function updateTotal(time) {
+function updateTotal(time, fulfilled) {
     // if discount applied, display discounted total
-    if (time >= DISCOUNTTIME) {
+    if ((time >= DISCOUNTTIME) && fulfilled) {
         orderTotalText.innerHTML = "Order Total: $" + Number(orderinfo.orderTotal).toFixed(2) + " <span style=\"color:#ef5658\"><s>" + Number(getOgTotal(orderinfo.orderTotal)).toFixed(2) + "</s> (20% off)</span>"
+    } else if ((time >= DISCOUNTTIME) && !fulfilled) {
+        orderTotalText.innerHTML = "Order Total: $" + Number(getDiscountedTotal(orderinfo.orderTotal)).toFixed(2) + " <span style=\"color:#ef5658\"><s>" + Number(orderinfo.orderTotal).toFixed(2) + "</s> (20% off)</span>"
     } else {
         orderTotalText.innerHTML = "Order Total: $" + Number(orderinfo.orderTotal).toFixed(2)
         orderTotalText.style.color = "#000000"
