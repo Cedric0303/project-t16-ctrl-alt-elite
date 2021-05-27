@@ -2,7 +2,6 @@ searchbar = document.getElementById("searchbar");
 cartcontainer = document.getElementById('cartcontainer');
 innercart = document.getElementById('cart');
 vcartbutton = document.getElementById('vcartbutton');
-cartcount = document.getElementById('cart-count');
 cartlist = document.getElementById('cartlist');
 carttotaltext = document.getElementById('carttotaltext')
 
@@ -218,7 +217,7 @@ function toggleCart() {
         innercart.style.display = 'none';
         // change view cart button to 'cart(x)' 
         vcartbutton.innerHTML = 'Cart&nbsp;(<span id="cart-count"></span>)';
-        cartcount.innerHTML = shoppingCart.totalCount();
+        document.getElementById('cart-count').innerHTML = shoppingCart.totalCount();
         displayCart();
     } else {
         // expand cart
@@ -292,7 +291,7 @@ function displayCart() {
     // update text on screen
     cartlist.innerHTML = output;
     if (!cartToggled()) {
-        cartcount.innerHTML = shoppingCart.totalCount();
+        document.getElementById('cart-count').innerHTML = shoppingCart.totalCount();
     }
     carttotaltext.innerHTML = shoppingCart.totalCart();
 

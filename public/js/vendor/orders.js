@@ -1,3 +1,6 @@
+const DISCOUNTVALUE = 20 / 100 // 20%
+const DISCOUNTTIME = 15 * 60 // 15 minutes
+
 var xhttp = new XMLHttpRequest(); 
 orderBoxes = document.getElementsByClassName('order')
 orderMadeButton = document.getElementById('orderMadeButton')
@@ -79,18 +82,92 @@ function setStatusCollected() {
     }
 }
 
+// accepts time in seconds and returns a string in the form
+// minutes:seconds
+function secondsToMinutes(time) {
+    minutes = Math.floor(time/60)
+    seconds = time%60
+    return minutes+":"+String(seconds).padStart(2, '0')
+}
+
+// returns total seconds since order was placed
+function timeElapsed(order) {
+    orderTime = new Date(order.timestamp)
+    totalSeconds = Math.round((new Date().getTime() -  orderTime.getTime()) / 1000)
+    return totalSeconds
+}
+
+// returns total seconds since order was made
+function timeElapsedMade(order) {
+    orderTime = new Date(order.fulfilledTimestamp)
+    totalSeconds = Math.round((new Date().getTime() -  orderTime.getTime()) / 1000)
+    return totalSeconds
+}
+
+// sets interval that updates "element" for "time" seconds
+function countdown(element, time) {
+    var interval = setInterval(() => {
+        if (time == 0 || (document.getElementById(element.id) != null)) {
+            clearInterval(interval);
+            updateOrderStatuses();
+            return;
+        } else {
+            time--;
+        }
+        element.innerHTML = secondsToMinutes(time)
+        console.log("COUNTING DOWN: "+element.id);
+    }, 1000);
+}
+function countup(element, time) {
+    var interval = setInterval(() => {
+        if (document.getElementById(element.id) != null) {
+            time++;
+        } else {
+            clearInterval(interval);
+            updateOrderStatuses();
+            return;
+        }
+        element.innerHTML = secondsToMinutes(time);
+        console.log("COUNTING UP: "+element.id);
+    }, 1000);
+}
+
 function updateOrderStatuses() {
     for (var i=0; i<orderBoxes.length; i++) {
-        orderStatus = ordersArray[i].orderStatus;
+        currorder = ordersArray[i]
+        orderStatus = currorder.orderStatus;
+        orderStatusElement = orderBoxes[i].querySelector('.orderStatus')
         switch (orderStatus) {
             case "Ordering":
-                orderBoxes[i].querySelector('.orderStatus').innerHTML
+                if (timeElapsed(currorder) >= DISCOUNTTIME) {
+                    orderStatusElement.innerHTML = "Discount Applied"
+                    orderStatusElement.style.color = "#ff3b30"
+                    orderStatusElement.style.fontFamily = "Roboto"
+                    orderStatusElement.style.fontSize = "1.7em"
+                    orderStatusElement.style.fontWeight = "700"
+                    orderStatusElement.style.textAlign = "center" 
+                } else {
+                    orderStatusElement.innerHTML = 
+                        "Time until Discount:"+
+                        "<div id=\"dscntTimer"+currorder.orderID+"\" class=\"discountTimer\"></div>"
+                    currDiscTimer = document.getElementById('dscntTimer'+currorder.orderID)
+                    countdown(currDiscTimer, DISCOUNTTIME-timeElapsed(currorder));
+                }
                 break;
             case "Fulfilled":
-                orderBoxes[i].querySelector('.orderStatus').innerHTML
+                orderStatusElement.innerHTML = 
+                    "Waiting for Pickup"+
+                    "<div style=\"margin-top:3px;color:black; font-size:1rem;font-weight:500;\">Time Elapsed: <span id=\"madeTimer"+currorder.orderID+"\" class=\"madeTimer\"></span></div>"
+                currMadeTimer = document.getElementById('madeTimer'+currorder.orderID)
+                countup(currMadeTimer, timeElapsedMade(currorder));
+                orderStatusElement.style.color = "#4cd964"
+                orderStatusElement.style.fontFamily = "Roboto"
+                orderStatusElement.style.fontSize = "1.5em"
+                orderStatusElement.style.fontWeight = "700"
+                orderStatusElement.style.textAlign = "center" 
                 break;
             default:
-                console.log("Error getting status of order "+ordersArray[i].orderID);
+                console.log("Error getting status of order "+currorder.orderID);
                 break;
         }
     }

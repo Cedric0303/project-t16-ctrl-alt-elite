@@ -125,17 +125,31 @@ const closeVan = async (req, res) => {
 const getOrders = async (req, res) => {
     if (vendorToken.loggedIn(req)) {
         const vanID =  req.params.vanID
-        const orders = await Order.find({
+        var orders = [];
+        const ordersOrdering = await Order.find({
             vendorID: vanID,
             orderStatus: { 
-                    $in: ["Ordering", "Fulfilled"]
+                    $eq: "Ordering"
             }
         }).project({
             "_id": false,
             "password": false
         })
-        .sort({"timestamp": -1})
+        .sort({"timestamp": 1}) // sort by oldest first
         .toArray()
+        const ordersFulfilled = await Order.find({
+            vendorID: vanID,
+            orderStatus: { 
+                    $eq: "Fulfilled"
+            }
+        }).project({
+            "_id": false,
+            "password": false
+        })
+        .sort({"timestamp": 1}) // sort by oldest first
+        .toArray()
+        orders.push(...ordersOrdering)
+        orders.push(...ordersFulfilled)
         const vendor = await Vendor.findOne({
             loginID: vanID
         }, {
@@ -192,7 +206,7 @@ const fulfilledOrder = async (req, res) => {
         const curTime = new Date()
         // apply discount if necessary
         var orderTotal = order.orderTotal
-        if ((curTime.getTime() - new Date(order.timestamp).getTime() / 1000) >= constants.DISCOUNTTIME) {
+        if (((curTime.getTime() - new Date(order.timestamp).getTime()) / 1000) >= constants.DISCOUNTTIME) {
             orderTotal = Number(order.orderTotal - (order.orderTotal * constants.DISCOUNTVALUE)).toFixed(2)
         }
         await Order.updateOne({

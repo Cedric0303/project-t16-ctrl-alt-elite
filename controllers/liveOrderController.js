@@ -56,15 +56,31 @@ async function listenSocket(server) {
             vanID = id
             const changeStream = Order.watch()
             changeStream.on('change', async () => {
-                orders = await Order.find({
+                var orders = [];
+                const ordersOrdering = await Order.find({
                     vendorID: vanID,
-                    orderStatus: {
-                        $in: ['Ordering', 'Fulfilled']
+                    orderStatus: { 
+                            $eq: "Ordering"
                     }
                 }).project({
                     "_id": false,
                     "password": false
-                }).toArray()
+                })
+                .sort({"timestamp": 1}) // sort by oldest first
+                .toArray()
+                const ordersFulfilled = await Order.find({
+                    vendorID: vanID,
+                    orderStatus: { 
+                            $eq: "Fulfilled"
+                    }
+                }).project({
+                    "_id": false,
+                    "password": false
+                })
+                .sort({"timestamp": 1}) // sort by oldest first
+                .toArray()
+                orders.push(...ordersOrdering)
+                orders.push(...ordersFulfilled)
                 socket.emit('orderChange', orders)
             })
         })
