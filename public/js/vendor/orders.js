@@ -106,29 +106,26 @@ function timeElapsedMade(order) {
 
 // sets interval that updates "element" for "time" seconds
 function countdown(element, time) {
-    var interval = setInterval(() => {
-        if (time == 0 || (document.getElementById(element.id) != null)) {
-            clearInterval(interval);
-            updateOrderStatuses();
+    var downinterval = setInterval(() => {
+        if ((time == 0) || (document.getElementById(element.id) == null)) {
+            clearInterval(downinterval);
             return;
         } else {
             time--;
         }
         element.innerHTML = secondsToMinutes(time)
-        console.log("COUNTING DOWN: "+element.id);
     }, 1000);
 }
+
 function countup(element, time) {
-    var interval = setInterval(() => {
+    var upinterval = setInterval(() => {
         if (document.getElementById(element.id) != null) {
             time++;
         } else {
-            clearInterval(interval);
-            updateOrderStatuses();
+            clearInterval(upinterval);
             return;
         }
         element.innerHTML = secondsToMinutes(time);
-        console.log("COUNTING UP: "+element.id);
     }, 1000);
 }
 
