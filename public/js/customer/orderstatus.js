@@ -92,16 +92,16 @@ function setStatus(order) {
             break;       
         case "Completed":
             // if the order has a review then show the detailed order info
-            if ((order.comment != "" || order.rating != "") && (order.comment != undefined || order.rating != undefined)) {
+            if ((order.review != "" || order.rating != "") && (order.review != undefined || order.rating != undefined)) {
                 if (order.rating == "") {
                     rating = "n/a"
                 } else {
                     rating = order.rating + " out of 5" 
                 }
-                if (order.comment == "") {
-                    comment = "n/a"
+                if (order.review == "") {
+                    review = "n/a"
                 } else {
-                    comment = order.comment
+                    review = order.review
                 }
                 document.getElementById('cancelModifyOrderButton').classList.add("disabled");
                 document.getElementById('vanfloatleft').querySelector("p").innerHTML = "ORDERED FROM";
@@ -109,10 +109,15 @@ function setStatus(order) {
                 document.getElementById('orderStatus').style.fontSize = "1em";
                 document.getElementById('orderStatus').innerHTML = 
                     "<div><b>Rating:</b> "+rating+"</div>"+
-                    "<div><b>Comment:</b> "+comment+"</div>";
+                    "<div><b>Comment:</b> "+review+"</div>";
             } else {
                 // redirect user to add review for specified order
-                window.location.href = window.location + '/review'
+                document.getElementById('orderTitle').firstChild.innerHTML = "Your order is completed"
+                document.getElementById('orderStatus').style.fontSize = "1em";
+                document.getElementById('orderStatus').innerHTML = "Redirecting to review page"
+                setTimeout(() => {
+                    window.location.href = window.location + '/review'
+                }, 6000)
             }
             break;
         default:
