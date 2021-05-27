@@ -191,7 +191,7 @@ const fulfilledOrder = async (req, res) => {
         })
         const curTime = new Date()
         var orderTotal = order.orderTotal
-        if (curTime.getTime() - new Date(order.timestamp).getTime() > constants.DISCOUNTTIME) {
+        if ((curTime.getTime() - new Date(order.timestamp).getTime() / 1000) >= constants.DISCOUNTTIME) {
             orderTotal = Number(order.orderTotal - (order.orderTotal * constants.DISCOUNTVALUE)).toFixed(2)
         }
         await Order.updateOne({
