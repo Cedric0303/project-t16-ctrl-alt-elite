@@ -12,9 +12,9 @@ function loggedIn(req) {
     }
 }
 
+// create a new jsonwebtoken token
 function createToken(body) {
-    const token = jwt.sign({body},process.env.SECRET_OR_PUBLIC_KEY)
-    return token
+    return jwt.sign({body},process.env.SECRET_OR_PUBLIC_KEY)
 }
 
 module.exports = {

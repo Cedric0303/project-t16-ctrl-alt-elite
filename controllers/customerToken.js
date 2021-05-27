@@ -12,10 +12,12 @@ function loggedIn(req) {
     }
 }
 
+// create a new jsonwebtoken token
 function createToken(body) {
     return jwt.sign({body}, process.env.SECRET_OR_PUBLIC_KEY);
 }
 
+// read contents in jsonwebtoken token
 function getTokenPayload(token) {
     return jwt.decode(token)
 }
