@@ -19,7 +19,7 @@ const orderSchema = new Schema(
         orderID: {type: Number, required: true},
         fulfilledTimestamp: {type: Date},
         completedTimestamp: {type: Date},
-        rating: {type: Number},
+        rating: {type: String},
         review: {type: String}
     }
 )
