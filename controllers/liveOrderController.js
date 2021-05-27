@@ -15,7 +15,10 @@ async function listenSocket(server) {
             orderID = id
             const filter = [{
                 $match: {
-                    'fullDocument.orderID': parseInt(orderID)
+                    'fullDocument.orderID': parseInt(orderID),
+                    'fullDocument.orderStatus': {
+                        $in: ['Ordering', 'Fulfilled', 'Completed']
+                    }
                 }
             }]
             const options = { fullDocument: 'updateLookup' }

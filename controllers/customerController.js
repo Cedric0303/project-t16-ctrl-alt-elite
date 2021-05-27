@@ -239,10 +239,6 @@ const cancelOrder = async (req, res) => {
 
 // return order review page
 const getReview  = async (req, res) => {
-    const orderID = parseInt(req.params.orderID)
-    await Order.findOne({
-        orderID: orderID
-    })
     res.render('customer/review', {layout: 'customer/navbar'})
 }
 
@@ -256,7 +252,7 @@ const postReview = async (req, res) => {
     }, {
         $set: {
             rating: rating,
-            comment: review
+            review: review
         }
     })
     res.redirect('/customer/orders')
