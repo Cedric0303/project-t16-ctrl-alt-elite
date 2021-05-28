@@ -74,6 +74,10 @@ s {
     cursor: default;
 }
 
+.justifyLeft {
+    justify-self: flex-start;
+}
+
 /* -----------login page---------- */
 #logo {
     opacity: 0.2;
@@ -617,33 +621,156 @@ s {
 }
 
 /* -------------- PAST ORDERS -------------- */
-#pageContainer{
+#orderListContainer {
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+    left: 0;
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 30%;
+    height: 100%;
+
+    background-color: #f3f3f3;
+    border-right: 1px solid #c0c0c0;
+}
+
+#backButton {
+    display: block;
+    margin: 3vh 1.2vw 1vh;
+    color: #238cfe;
+    font-size: 1.1em;
+}
+
+#backButton i {
+    margin-right: 0.3em;
+}
+
+#backButton:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#pastOrdersTitle {
+    font-family: "Roboto", sans-serif;
+    margin: 2vh 1.2vw;
+}
+
+#searchbar {
+    background-color: #dededf;
+    border: none;
+    border-radius: 6px;
+    width: 90%;
+    padding: 0.8vh 8px;
+    margin: 0 1.2vw 2vh;
+    box-sizing: border-box;
+    font-size: 1em;
+    font-family: inherit;
+}
+
+#orderList{
+    border-top: 1px solid #c0c0c0;
+    overflow-y: auto;
+}
+
+.pastOrder {
+    background-color: #ffffff;
+    box-sizing: border-box;
+    padding: 0.3em 1.2vw;
+    border-bottom: 1px solid #c0c0c0;
+
     display: grid;
-    grid-template-columns: 1fr, 2fr;
-
-    grid-template-areas: 
-    "ordersList orderContent";
-    border: 2px solid darkgray;
 }
 
-.orderList{
-    grid-area: ordersList;
-
-    
+.pastOrderDateside {
+    color: #6b6b6b;
+    font-size: 0.95em;
 }
 
-.pastOrderContents {
-    grid-area: orderContent;
-    border: 2px solid darkgray;
+#pastOrderDetails {
+    position: fixed;
+    right: 0;
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 70%;
+    height: 100%;
 }
 
-/* -------------- past orders text formatting -------------- */
+#pastOrderHeader {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 5vh;
+    font-size: 1em;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.7em 0;
 
-.orderListNum {
-    color: black;
-
+    background-color: #f3f3f3;
+    border-bottom: 1px solid #c0c0c0;
 }
 
-.orderListTime {
-    color: grey;
+#pastOrderContent {
+    padding: 2vh 1em;
+    overflow-y: auto;
+}
+
+#pastOrderNameDiv {
+    font-size: 1.7em;
+}
+
+#pastOrderTimeDiv {
+    font-size: 1.3em;
+}
+
+#pastOrderCollected {
+    font-size: 1.3em;
+}
+
+#pastOrderItemsLabel {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+    justify-items: center;
+    border-top: 1px solid #c0c0c0;
+    background-color: #efeff4;
+    padding: 0.7vh 0.5em;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+#pastOrderItems {
+    border-top: 1px solid #c0c0c0;
+    background-color: #ffffff;
+    padding: 0.7vh 0.5em;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+#pastOrderTotalDiv {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #c0c0c0;
+    background-color: #efeff4;
+    padding: 0.7vh 0.5em;
+    border-bottom: 1px solid #c0c0c0;
+
+    font-size: 1.2em;
+}
+
+#pastOrderFulfillDiv {
+    padding-top: 1vh;
+    font-size: 1.1em;
+}
+
+#pastOrderCompleteDiv {
+    padding-top: 1vh;
+    font-size: 1.1em;
+}
+
+#pastOrderIDbottomDiv {
+    padding-top: 10em;
+    font-size: 0.8em;
 }

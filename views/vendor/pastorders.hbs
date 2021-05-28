@@ -1,26 +1,34 @@
-<div id="pageContainer">
-    
-
-        
-       
-        <div class="orderList">
-            {{#each orders}}
-            <div class="orderListNum">Order Number: {{this.orderID}}</div>
-            <div class="orderListTime">{{#formatDatePrevOrders this.timestamp}}{{/formatDatePrevOrders}}</div>
-            {{/each}}
-            
-        </div>
-
-<!--
-        <div class="pastOrderContents">
-            <!-- Contents are derived by selected order in list --
-            <div>{{this.orderID}}</div>
-            <div>{{this.vendorID}}</div>
-            <div>{{this.orderStatus}}</div>
-            <div>{{this.orderTotal}}</div> 
-             test
-        </div>
-    -->
-
-
+<script>var orders = {{{json orders}}}</script>
+<div id="orderListContainer">
+    <a id="backButton" href="orders"><i class="fas fa-chevron-left"></i>Back</a>
+    <h1 id="pastOrdersTitle">Past Orders</h1>
+    <input type="text" id="searchbar" placeholder="Search">
+    <div id="orderList">
+        {{#each orders}}
+            <div class="pastOrder hoverable">
+                <div class="pastOrderIDside">Order {{this.orderID}}</div>
+                <div class="pastOrderDateside">{{#formatDatePrevOrders this.timestamp}}{{/formatDatePrevOrders}}</div>
+            </div>
+        {{/each}}
+    </div>
 </div>
+<div id="pastOrderDetails">
+    <div id="pastOrderHeader">Order&nbsp;<span id="pastOrderID"></span></div>
+    <div id="pastOrderContent">
+        <div id="pastOrderNameDiv">Ordered by:&nbsp;<span id="pastOrderName"></span> (<span id="pastOrderUsername"></span>)</div>
+        <div id="pastOrderTimeDiv">Time:&nbsp;<span id="pastOrderTimestamp"></span></div>
+        <div id="pastOrderCollected">Collected at:&nbsp;<span id="pastOrderVanName"></span></div>
+        <div id="pastOrderItemsLabel">
+            <div class="justifyLeft">Item Name</div>
+            <div>Item Cost</div>
+            <div>Quantity</div>
+            <div>Cost</div>
+        </div>
+        <div id="pastOrderItems"></div>
+        <div id="pastOrderTotalDiv">Total:&nbsp;<span id="pastOrderTotal"></span></div>
+        <div id="pastOrderFulfillDiv">Order made at:&nbsp;<span id="pastOrderFulfillTime"></span></div>
+        <div id="pastOrderCompleteDiv">Order collected at:&nbsp;<span id="pastOrderCompleteTime"></span></div>
+        <div id="pastOrderIDbottomDiv">Order ID: <span id="pastOrderIDbottom"></span></div>
+    </div>
+</div>
+<script src="/js/vendor/pastOrders.js"></script>
