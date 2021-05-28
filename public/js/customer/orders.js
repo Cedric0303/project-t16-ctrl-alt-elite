@@ -51,7 +51,7 @@ function ordertotalHtml(order) {
     console.log(order);
     output = ""
     if (order.discounted) {
-        output += "Order Total: <br class=\"responsive\">$" + (order.orderTotal).toFixed(2) + "&nbsp;<span style=\"color:#ef5658\"><s>" + Number(getOgTotal(order.orderTotal)).toFixed(2) + "</s> (20% off)</span>"
+        output += "Order Total: <br class=\"responsive\">$" + (order.orderTotal).toFixed(2) + "&nbsp;<span style=\"color:#ef5658\"><s>$" + Number(getOgTotal(order.orderTotal)).toFixed(2) + "</s> (20% off)</span>"
     } else {
         output += "Order Total: $" + (order.orderTotal).toFixed(2)
     }
