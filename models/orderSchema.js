@@ -11,6 +11,7 @@ const orderSchema = new Schema(
             total: {type: Number, required: true}
         }],
         orderTotal: {type: Number, required: true},
+        discounted: {type: Boolean, required: true},
         timestamp: {type: Date, required: true},
         vendorID: {type: String, required: true},
         customerID: {type: String, required: true},
