@@ -32,19 +32,19 @@
 This is a project containing the product developed by our team for a business, for which we received a set of business requirements. This project demonstrates the culmination of skills acquired from lectures and workshops, while also practising the dynamics of working within a team for web development. 
 
 ## Packages
-* **`mongoose`**
-* **`express`**
-* **`express-handlebars`**
-* **`express-session`**
-* **`handlebars`**
-* **`dotenv`**
-* **`bcrypt`**
-* **`Mapbox GL JS`** (no package install needed)
-* **`jsonwebtoken`**
-* **`jest`**
-* **`supertest`**
-* **`socket.io`**
-* **`cookie-parser`**
+* `mongoose`
+* `express`
+* `express-handlebars`
+* `express-session`
+* `handlebars`
+* `dotenv`
+* `bcrypt`
+* `Mapbox GL JS`
+* `jsonwebtoken`
+* `jest`
+* `supertest`
+* `socket.io`
+* `cookie-parser`
 
 ## Project Website
 URL: `https://project-t16-ctrl-alt-elite.herokuapp.com/`
@@ -56,7 +56,7 @@ URL: `https://project-t16-ctrl-alt-elite.herokuapp.com/`
 
 Email: `default@default.com`
 <br>
-Password: `default`
+Password: `n0td3fault`
 
 
 
@@ -64,15 +64,15 @@ Password: `default`
 
 Van ID   #1: `Tasty_Trailer`
 <br>
-Password #1: `12345678`
+Password #1: `Tasty12345`
 <br><br>
 VanID    #2: `Scrumptious_Servo`
 <br>
-Password #2: `12345678`
+Password #2: `s3rv0s3rv0`
 <br><br>
 VanID    #3: `Diner_Driver`
 <br>
-Password #3: `12345678`
+Password #3: `d1n3rd1n3r`
 
 
 ## Database Access
