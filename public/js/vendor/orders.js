@@ -95,7 +95,6 @@ function getDiscountedTotal(price) {
 }
 
 function updateModal(orderindex) {
-    order = ordersArray[orderindex]
     orderstatus = ordersArray[orderindex].orderStatus
     if (orderstatus == "Ordering") {
         orderStatusText.innerHTML = "Order Not Made"
@@ -107,6 +106,7 @@ function updateModal(orderindex) {
     }
     
     modalOrderID.innerHTML = ordersArray[orderindex].orderID
+    modalOrderName.innerHTML = ordersArray[orderindex].customerGivenName
     orderTimestamp.innerHTML = formatDate(ordersArray[orderindex].timestamp)
     orderitems = ""
     for (i in ordersArray[orderindex].item) {
