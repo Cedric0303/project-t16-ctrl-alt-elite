@@ -101,6 +101,7 @@ const postNewOrder = async (req, res) => {
             orderID: orderID,
             item: orderInfo["item"],
             orderTotal: orderTotal,
+            discounted: false,
             timestamp: new Date(),
             vendorID: orderInfo["vendorID"],
             customerID: payload.body.username,
@@ -205,6 +206,7 @@ const modifyOrder = async (req, res) => {
             $set: {
                 item: orderInfo["item"],
                 orderTotal: orderTotal,
+                discounted: false,
                 timestamp: new Date(),
                 vendorID: orderInfo["vendorID"],
                 customerID: payload.body.username,

@@ -215,7 +215,8 @@ const fulfilledOrder = async (req, res) => {
             $set: {
                 orderStatus: "Fulfilled",
                 fulfilledTimestamp: curTime,
-                orderTotal: Number(orderTotal)
+                orderTotal: Number(orderTotal),
+                discounted: true,
             }
         })
         res.status(202)
