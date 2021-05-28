@@ -523,7 +523,7 @@ s {
 
 #orderModalContent {
     display: grid;
-    grid-template-rows: 1.2fr 4fr 10fr 3fr;
+    grid-template-rows: 1.2fr 4fr 10fr max-content;
 }
 
 #modalHeader {
@@ -606,6 +606,7 @@ s {
 #modalSubtotalLine {
     display: flex;
     justify-content: space-between;
+    margin: 0.8vh 0;
 }
 
 #discountAppliedText {

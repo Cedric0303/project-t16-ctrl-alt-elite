@@ -33,7 +33,7 @@ function timeElapsed(orderinfo,  totalSeconds) {
     }
 
     setTimeElapsed(hour, minute, second, "elapsed")
-    updateTotal(totalSeconds)
+    updateTotal(totalSeconds, false)
 }
 
 // calculate time elapsed till order fulfilled
@@ -48,7 +48,7 @@ function fulfillTime(orderinfo, totalSeconds) {
     second = time % 60
     setTimeElapsed(hour, minute, second, "fulfilled")
     cancelModifyOrderButton.classList.add("disabled");
-    updateTotal(totalSeconds)
+    updateTotal(totalSeconds, true)
 }
 
 // calculate time elapsed till order completed
@@ -64,10 +64,9 @@ function completeTime(orderinfo, totalSeconds) {
     setTimeElapsed(hour, minute, second, "completed")
     cancelModifyOrderButton.classList.add("disabled");
 
-    console.log(totalSeconds);
     fulfilledTime = new Date(orderinfo.fulfilledTimestamp)
     fulfilledTimeSeconds = Math.round((fulfilledTime.getTime() -  orderTime.getTime()) / 1000)
-    updateTotal(fulfilledTimeSeconds)
+    updateTotal(fulfilledTimeSeconds, true)
 }
 
 // updates the text for time elapsed on the screen

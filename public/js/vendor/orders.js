@@ -95,9 +95,9 @@ function getDiscountedTotal(price) {
 }
 
 function updateModal(orderindex) {
+    order = ordersArray[orderindex]
     orderstatus = ordersArray[orderindex].orderStatus
     if (orderstatus == "Ordering") {
-        countdown(orderTimeTilDisc, DISCOUNTTIME-timeElapsed(ordersArray[orderindex]));
         orderStatusText.innerHTML = "Order Not Made"
         orderStatusText.style.color = "#ff3b30";
     } else {
@@ -105,9 +105,9 @@ function updateModal(orderindex) {
         orderStatusText.innerHTML = "Waiting for Pickup"
         orderStatusText.style.color = "#4cd964";
     }
+    
     modalOrderID.innerHTML = ordersArray[orderindex].orderID
     orderTimestamp.innerHTML = formatDate(ordersArray[orderindex].timestamp)
-    countupModal(orderTimeElapsed, timeElapsed(ordersArray[orderindex]));
     orderitems = ""
     for (i in ordersArray[orderindex].item) {
         item = ordersArray[orderindex].item[i]
@@ -118,12 +118,18 @@ function updateModal(orderindex) {
                     + "</div>"
     }
     modalOrderItems.innerHTML = orderitems
+    // if time elapsed exceeds discount time and the order isn't fulfilled
     if ((timeElapsed(ordersArray[orderindex]) >= DISCOUNTTIME)&&(orderstatus=="Ordering")) {
         timeDisc.style.display = "none";
         modalOrderSubtotal.innerHTML = "$"+(ordersArray[orderindex].orderTotal).toFixed(2)
         discountAppliedText.style.display = "block";
     } else {
+        timeDisc.style.display = "inline";
         discountAppliedText.style.display = "none";
+    }
+
+    if (orderstatus=="Fulfilled") {
+        timeDisc.style.display = "none";
     }
 
     // if time is over discount time and the order is fulfilled
@@ -138,15 +144,28 @@ function updateModal(orderindex) {
         modalOrderSubtotal.innerHTML = "$"+Number(ordersArray[orderindex].orderTotal).toFixed(2)
         discountAppliedText.style.display = "none";
     }
+
+    // if modal is open
+    if (modal.style.display == "block") {
+        countupModal(orderTimeElapsed, timeElapsed(ordersArray[orderindex]));
+        if (timeDisc.style.display != "none") {
+            orderTimeTilDisc.style.display = "inline"
+            countdownModal(orderTimeTilDisc, DISCOUNTTIME-timeElapsed(ordersArray[orderindex]));
+        } 
+    }
 }
 
 function expandOrder() {
     // expands selected order into modal
+    expandOrderButton.disabled = true;
     modal.style.display = "block";
+    updateModal(selectedOrderIndex)
 }
 
 window.onclick = function(event) {
     if (event.target == modal) {
+        expandOrderButton.disabled = false;
+        orderTimeTilDisc.style.display = "none";
         modal.style.display = "none";
     }
 } 
@@ -193,16 +212,16 @@ function timeElapsedMade(order) {
     return totalSeconds
 }
 
+intervals = []
 // sets interval that updates "element" for "time" seconds
 function countdown(element, time) {
     var downinterval = setInterval(() => {
         // if time reaches 0, or if the element showing the time doesn't exist
         if ((time == 0) || (document.getElementById(element.id) == null)) {
-            clearInterval(downinterval);
             if (time == 0) {
                 updateOrderStatuses()
-                updateModal(selectedOrderIndex)
             }
+            clearInterval(downinterval);
             return;
         // if the element showing the time is display: none;
         } else if (element.style.display == "none") {
@@ -216,6 +235,34 @@ function countdown(element, time) {
         }
         element.innerHTML = secondsToMinutes(time)
     }, 1000);
+    intervals.push(downinterval)
+}
+
+function countdownModal(element, time) {
+    var downintervalModal = setInterval(() => {
+        // if time reaches 0, or if the element showing the time doesn't exist
+        if ((time == 0) || (document.getElementById(element.id) == null)) {
+            if (time == 0) {
+                clearAllIntervals()
+                updateOrderStatuses()
+                updateModal(selectedOrderIndex)
+                return;
+            }
+            clearInterval(downintervalModal);
+            return;
+        // if the element showing the time is display: none;
+        } else if (element.style.display == "none") {
+            if (modal.style.display == "none") {
+                clearInterval(downintervalModal);
+                return;
+            }
+            time--;
+        } else {
+            time--;
+        }
+        element.innerHTML = secondsToMinutes(time)
+    }, 1000);
+    intervals.push(downintervalModal)
 }
 
 function countup(element, time) {
@@ -228,21 +275,30 @@ function countup(element, time) {
         }
         element.innerHTML = secondsToMinutes(time);
     }, 1000);
+    intervals.push(upinterval)
 }
 
 function countupModal(element, time) {
     var upintervalmodal = setInterval(() => {
         if (modal.style.display == "none") {
             clearInterval(upintervalmodal);
+            return;
         } else {
             time++;
-            return;
         }
         element.innerHTML = secondsToMinutes(time);
     }, 1000);
+    intervals.push(upintervalmodal)
+}
+
+function clearAllIntervals() {
+    for (interval in intervals) {
+        clearInterval(intervals[interval])
+    }
 }
 
 function updateOrderStatuses() {
+    clearAllIntervals();
     for (var i=0; i<orderBoxes.length; i++) {
         currorder = ordersArray[i]
         orderStatus = currorder.orderStatus;
@@ -252,7 +308,7 @@ function updateOrderStatuses() {
                 if (timeElapsed(currorder) >= DISCOUNTTIME) {
                     orderStatusElement.innerHTML = "Discount Applied"
                     orderStatusElement.style.color = "#ff3b30"
-                    orderStatusElement.style.fontFamily = "Roboto"
+                    orderStatusElement.style.fontFamily = "Roboto, sans-serif;"
                     orderStatusElement.style.fontSize = "1.7em"
                     orderStatusElement.style.fontWeight = "700"
                     orderStatusElement.style.textAlign = "center" 
@@ -271,7 +327,7 @@ function updateOrderStatuses() {
                 currMadeTimer = document.getElementById('madeTimer'+currorder.orderID)
                 countup(currMadeTimer, timeElapsedMade(currorder));
                 orderStatusElement.style.color = "#4cd964"
-                orderStatusElement.style.fontFamily = "Roboto"
+                orderStatusElement.style.fontFamily = "Roboto, sans-serif;"
                 orderStatusElement.style.fontSize = "1.5em"
                 orderStatusElement.style.fontWeight = "700"
                 orderStatusElement.style.textAlign = "center" 
@@ -321,4 +377,7 @@ socket.on('orderChange', function (orders) {
     currentOrdersElement.innerHTML = output
     registerOrderFunctions();
     updateOrderStatuses()
+    expandOrderButton.disabled = false;
+    orderTimeTilDisc.style.display = "none";
+    modal.style.display = "none";
 })
