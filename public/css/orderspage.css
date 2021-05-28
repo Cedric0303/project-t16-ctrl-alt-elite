@@ -71,8 +71,8 @@
     font-size: 1em;
     font-weight: bold;
 
-    display: flex;
-    align-items: flex-end;
+    /* display: flex;
+    align-items: flex-end; */
 }
 
 .ordertrailer {

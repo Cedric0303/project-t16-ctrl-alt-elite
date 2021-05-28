@@ -1,3 +1,7 @@
+const DISCOUNTVALUE = 20 / 100 // 20%
+
+ordersElement = document.getElementById("customerOrders")
+
 changeColor = function () {
     var container = document.getElementsByClassName("orderbox-container")
     var targets = document.getElementsByClassName('orderstatus')
@@ -38,39 +42,59 @@ removeunderscore = function (input) {
     return newinput;
 }
 
-changeColor()
+// returns original, undiscounted total
+function getOgTotal(price) {
+    return Number(price/(1-DISCOUNTVALUE)).toFixed(2)
+}
 
-ordersElement = document.getElementById("customerOrders")
+function ordertotalHtml(order) {
+    console.log(order);
+    output = ""
+    if (order.discounted) {
+        output += "Order Total: <br class=\"responsive\">$" + (order.orderTotal).toFixed(2) + "&nbsp;<span style=\"color:#ef5658\"><s>" + Number(getOgTotal(order.orderTotal)).toFixed(2) + "</s> (20% off)</span>"
+    } else {
+        output += "Order Total: $" + (order.orderTotal).toFixed(2)
+    }
+    return output;
+}
+
+function updateOrders(orders) {
+    output = ""
+    for (i in orders) {
+        output += "<div class=\"orderElement\">"
+                + "<a class=\"hoverable orderbox-container\" href=\"orders/"+ orders[i].orderID + "\">"
+                + "<div class=\"orderdate\">" + formatDate(orders[i].timestamp) + "</div>"
+                + "<div class=\"ordercontent\">"
+        for (j in orders[i].item) {
+            item = orders[i].item[j]
+            output += "<div class=\"orderitem\">"
+                    + "<div>" + orders[i].item[j].count + "x</div>"
+                    + "<div>" + orders[i].item[j].name + "</div>"
+                    + "<div>$" + (orders[i].item[j].total).toFixed(2) + "</div>"
+                    + "</div>"
+        }
+        output += "</div>"
+                + "<div class=\"ordertotal\">"+ordertotalHtml(orders[i])+"</div>"
+                + "<div class=\"orderstatus\">" + orders[i].orderStatus + "</div>"
+                + "<div class=\"ordertrailer\">"
+                + "<div>" + removeunderscore(orders[i].vendorID) + "</div>"
+                + "</div>"
+                + "</a>"
+                + "<a class=\"viewonMap hoverable\" href=\"/customer/van/" + orders[i].vendorID + "\">View On Map</a>"
+                + "</div>"
+    }
+    ordersElement.innerHTML = output
+    changeColor()
+}
+
+// execute on load
+changeColor()
+updateOrders(allOrders)
 
 const socket = io()
 if (customerID != null) {
     socket.emit('customerID', customerID);
     socket.on('ordersChange', function (orders) {
-        output = ""
-        for (i in orders) {
-            output += "<div class=\"orderElement\">"
-                    + "<a class=\"hoverable orderbox-container\" href=\"orders/"+ orders[i].orderID + "\">"
-                    + "<div class=\"orderdate\">" + formatDate(orders[i].timestamp) + "</div>"
-                    + "<div class=\"ordercontent\">"
-            for (j in orders[i].item) {
-                item = orders[i].item[j]
-                output += "<div class=\"orderitem\">"
-                        + "<div>" + orders[i].item[j].count + "x</div>"
-                        + "<div>" + orders[i].item[j].name + "</div>"
-                        + "<div>$" + (orders[i].item[j].total).toFixed(2) + "</div>"
-                        + "</div>"
-            }
-            output += "</div>"
-                    + "<div class=\"ordertotal\">Order Total: $" + (orders[i].orderTotal).toFixed(2) + "</div>"
-                    + "<div class=\"orderstatus\">" + orders[i].orderStatus + "</div>"
-                    + "<div class=\"ordertrailer\">"
-                    + "<div>" + removeunderscore(orders[i].vendorID) + "</div>"
-                    + "</div>"
-                    + "</a>"
-                    + "<a class=\"viewonMap hoverable\" href=\"/customer/van/" + orders[i].vendorID + "\">View On Map</a>"
-                    + "</div>"
-        }
-        ordersElement.innerHTML = output
-        changeColor()
+        updateOrders(orders)
     })
 }
