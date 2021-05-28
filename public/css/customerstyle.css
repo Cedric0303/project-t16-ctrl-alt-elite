@@ -1303,3 +1303,9 @@ input[type=number]::-webkit-outer-spin-button {
         padding-bottom: 4em;
     }
 }
+
+@media screen and (min-height: 820px) {
+    #orderDetailItemList {
+        height: max-content;
+    }
+}

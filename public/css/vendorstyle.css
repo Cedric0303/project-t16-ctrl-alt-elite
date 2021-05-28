@@ -14,14 +14,8 @@ a {
     text-decoration: none;
 }
 
-.hoverable:hover {
-    filter: brightness(0.85);
-    cursor: pointer;
-}
-
-.hoverable:disabled {
-    filter: opacity(0.4);
-    cursor: default;
+s {
+    text-decoration: line-through;
 }
 
 .disabled {
@@ -63,6 +57,21 @@ a {
     padding: 0;
     width: 100%;
     pointer-events: none;
+}
+
+.hoverable {
+    pointer-events: auto;
+}
+
+.hoverable:hover {
+    filter: brightness(0.85);
+    cursor: pointer;
+}
+
+.hoverable:disabled {
+    pointer-events: none;
+    filter: opacity(0.4);
+    cursor: default;
 }
 
 /* -----------login page---------- */
@@ -355,6 +364,10 @@ a {
     font-weight: 600;
 }
 
+.orderitemtotal {
+    justify-self: flex-end;
+}
+
 .orderStatus {
     width: 100%;
     height: 100%;
@@ -367,12 +380,12 @@ a {
     padding: 0 10%;
     margin: 0;
 
-    color: #ff3b30;
+    color: #000000;
 }
 
 .discountTimer {
     font-size: 2rem;
-    color: #000000;
+    color: #ff3b30;
 }
 
 .madeTimer {
@@ -445,8 +458,6 @@ a {
     font-weight: 600;
     align-items: center;
     column-gap: 1vw;
-
-    z-index: 9000;
 }
 
 #expandOrder:disabled {
@@ -477,7 +488,132 @@ a {
 #pastOrdersButton i {
     font-size: 1.5em;
 }
+/* ---------------modal styling----------- */
+/* modal bg */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9500;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.6);
+}
+/* modal box */
+.modal-content {
+    background-color: #efeff4;
+    margin: 12% auto;
+    padding: 0.5em 0;
+    border-radius: 10px;
+    outline: 8px solid #5ac8fa;
+    width: 50%;
+    box-sizing: border-box;
+}
 
+.modal-content > div {
+    padding: 0 0.5em;
+}
+
+#notMadeModal {
+    display: block;
+}
+
+#orderModalContent {
+    display: grid;
+    grid-template-rows: 1.2fr 4fr 10fr 3fr;
+}
+
+#modalHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    font-size: 1.1em;
+    border-bottom: 2px solid #a3a3a3;
+}
+
+#modalInfo {
+    display: grid;
+    box-sizing: border-box;
+    padding: 0.5em 0.7em;
+
+    font-weight: 600;
+    border-bottom: 2px solid #a3a3a3;
+
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "timeOrdered timeDisc"
+        "timeElapsed ."
+        "orderStatusText orderStatusText"
+}
+
+#timeOrdered {grid-area: timeOrdered;}
+#orderTimestamp {
+    font-weight: 500;
+}
+
+#timeDisc {grid-area: timeDisc;}
+#orderTimeTilDisc {
+    font-weight: 500;
+    color: #ff3b30;
+}
+
+#timeElapsed {grid-area: timeElapsed;}
+#orderTimeElapsed {
+    font-weight: 500;
+    color: #ff3b30;
+}
+
+#orderStatusText {
+    grid-area: orderStatusText;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 2em;
+    font-weight: 700;
+    color: #ff3b30;
+}
+
+#modalOrderItems {
+    display: flex;
+    flex-direction: column;
+
+    background-color: #ffffff;
+    border-bottom: 2px solid #a3a3a3;
+
+    overflow-y: auto;
+}
+
+.modalOrderItem {
+    display: grid;
+    grid-template-columns: 7fr 1fr 2fr;
+    padding: 0.3em 0 0.3em 1em;
+    border-bottom: 1px solid #a3a3a3;
+}
+
+#modalOrderTotal {
+    display: grid;
+    align-items: center;
+    background-color: #ffffff;
+    border-bottom: 2px solid #a3a3a3;
+    font-size: 1.2em;
+}
+
+#modalSubtotalLine {
+    display: flex;
+    justify-content: space-between;
+}
+
+#discountAppliedText {
+    display: none;
+    justify-self: flex-end;
+    color: #ff3b30;
+    font-size: 1.2em;
+}
 
 /* -------------- PAST ORDERS -------------- */
 #pageContainer{

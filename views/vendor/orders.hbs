@@ -28,6 +28,31 @@
     
 </div>
 
+{{!-- modals for expanded order view --}}
+<div id="orderModal" class="modal">
+    <div id="orderModalContent" class="modal-content">
+        <div id="modalHeader">
+            <div>Order ID: <span id="modalOrderID">1622156132897</span></div>
+            <div>Name: <span id="modalOrderName" class="customerName">Jeongwoo</span></div>
+        </div>
+        <div id="modalInfo">
+            <div id="timeOrdered">Time Ordered: <span id="orderTimestamp"></span></div>
+            <div id="timeDisc">Time until Discount: <span id="orderTimeTilDisc"></span></div>
+            <div id="timeElapsed">Time Elapsed: <span id="orderTimeElapsed"></span></div>
+            <div id="orderStatusText">Order Not Made</div>
+        </div>
+        <div id="modalOrderItems">
+        </div>
+        <div id="modalOrderTotal">
+            <div id="modalSubtotalLine">
+                <div>Subtotal:</div>
+                <div id="modalOrderSubtotal"></div>
+            </div>
+            <div id="discountAppliedText"><b>Discount Applied</b></div>
+        </div>
+    </div>
+</div>
+
 <div class="fixedbot ordersPageFloat">
     <button id="expandOrder" class="hoverable" disabled><i class="fas fa-expand"></i> Expand Order</button>
     <a id="pastOrdersButton" class="hoverable" href="/vendor/{{vendor.loginID}}/pastorders"><i class="fas fa-history"></i> Past Orders</a>

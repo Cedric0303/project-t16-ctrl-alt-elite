@@ -38,11 +38,6 @@ removeunderscore = function (input) {
     return newinput;
 }
 
-toFixed2 = function (input) {
-    var newinput = input.toFixed(2);
-    return newinput;
-}
-
 changeColor()
 
 ordersElement = document.getElementById("customerOrders")
@@ -62,11 +57,11 @@ if (customerID != null) {
                 output += "<div class=\"orderitem\">"
                         + "<div>" + orders[i].item[j].count + "x</div>"
                         + "<div>" + orders[i].item[j].name + "</div>"
-                        + "<div>$" + toFixed2(orders[i].item[j].total) + "</div>"
+                        + "<div>$" + (orders[i].item[j].total).toFixed(2) + "</div>"
                         + "</div>"
             }
             output += "</div>"
-                    + "<div class=\"ordertotal\">Order Total: $" + toFixed2(orders[i].orderTotal) + "</div>"
+                    + "<div class=\"ordertotal\">Order Total: $" + (orders[i].orderTotal).toFixed(2) + "</div>"
                     + "<div class=\"orderstatus\">" + orders[i].orderStatus + "</div>"
                     + "<div class=\"ordertrailer\">"
                     + "<div>" + removeunderscore(orders[i].vendorID) + "</div>"

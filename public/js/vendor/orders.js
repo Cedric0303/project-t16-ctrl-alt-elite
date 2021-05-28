@@ -8,6 +8,19 @@ orderCollectedButton = document.getElementById('orderCollectedButton')
 expandOrderButton = document.getElementById('expandOrder')
 currentOrdersElement = document.getElementById("currentOrders")
 
+// modal
+modal = document.getElementById("orderModal");
+modalOrderID = document.getElementById('modalOrderID')
+modalOrderName = document.getElementById('modalOrderName')
+orderTimestamp = document.getElementById('orderTimestamp')
+orderTimeTilDisc = document.getElementById('orderTimeTilDisc')
+timeDisc = document.getElementById('timeDisc')
+orderTimeElapsed = document.getElementById('orderTimeElapsed')
+orderStatusText = document.getElementById('orderStatusText')
+modalOrderItems = document.getElementById('modalOrderItems')
+modalOrderSubtotal = document.getElementById('modalOrderSubtotal')
+discountAppliedText = document.getElementById('discountAppliedText')
+
 selectedOrderIndex = null;
 function selectOrder() {
     // update visual border indicator for selected order
@@ -21,7 +34,9 @@ function selectOrder() {
                 // if the order was deselected then set selectedOrderIndex to null
                 selectedOrderIndex = null;
             } else {
+                // if orderSelected was added i.e. order was selected
                 selectedOrderIndex = i;
+                updateModal(selectedOrderIndex);
             }
         }
     }
@@ -57,10 +72,84 @@ function updateStatusButtons() {
     }
 }
 
-function expandOrder(type) {
-    // opens modal of selectedOrderIndex
-    // type is one of ['notMade','Made']
+function formatDate(datetime) {
+    var dt = new Date(datetime);
+    formatted = "";
+    ampm = ""
+    date = dt.toDateString();
+    time = dt.toLocaleTimeString("en-AU", {
+        timeZone: "Australia/Melbourne",
+        hour: '2-digit', 
+        minute:'2-digit'
+    });
+
+    formatted = date+" at "+time;
+    return formatted;
 }
+
+function getOgTotal(price) {
+    return Number(price/(1-DISCOUNTVALUE)).toFixed(2)
+}
+function getDiscountedTotal(price) {
+    return Number(price-(price*DISCOUNTVALUE)).toFixed(2)
+}
+
+function updateModal(orderindex) {
+    orderstatus = ordersArray[orderindex].orderStatus
+    if (orderstatus == "Ordering") {
+        countdown(orderTimeTilDisc, DISCOUNTTIME-timeElapsed(ordersArray[orderindex]));
+        orderStatusText.innerHTML = "Order Not Made"
+        orderStatusText.style.color = "#ff3b30";
+    } else {
+        timeDisc.style.display = "none";
+        orderStatusText.innerHTML = "Waiting for Pickup"
+        orderStatusText.style.color = "#4cd964";
+    }
+    modalOrderID.innerHTML = ordersArray[orderindex].orderID
+    orderTimestamp.innerHTML = formatDate(ordersArray[orderindex].timestamp)
+    countupModal(orderTimeElapsed, timeElapsed(ordersArray[orderindex]));
+    orderitems = ""
+    for (i in ordersArray[orderindex].item) {
+        item = ordersArray[orderindex].item[i]
+        orderitems += "<div class=\"modalOrderItem\">"
+                        + "<div>" + ordersArray[orderindex].item[i].name + "</div>"
+                        + "<div class=\"orderitemcount\">" + ordersArray[orderindex].item[i].count + "x</div>"
+                        + "<div class=\"orderitemtotal\">$" + (ordersArray[orderindex].item[i].total).toFixed(2) + "</div>"
+                    + "</div>"
+    }
+    modalOrderItems.innerHTML = orderitems
+    if ((timeElapsed(ordersArray[orderindex]) >= DISCOUNTTIME)&&(orderstatus=="Ordering")) {
+        timeDisc.style.display = "none";
+        modalOrderSubtotal.innerHTML = "$"+(ordersArray[orderindex].orderTotal).toFixed(2)
+        discountAppliedText.style.display = "block";
+    } else {
+        discountAppliedText.style.display = "none";
+    }
+
+    // if time is over discount time and the order is fulfilled
+    if ((timeElapsed(ordersArray[orderindex]) >= DISCOUNTTIME) && (orderstatus=="Fulfilled")) {
+        // show total from db with slashed og price
+        modalOrderSubtotal.innerHTML = "$" + Number(ordersArray[orderindex].orderTotal).toFixed(2) + " <span style=\"color:#ef5658\"><s>$" + Number(getOgTotal(ordersArray[orderindex].orderTotal)).toFixed(2) + "</s> (20% off)</span>"
+    // if time is over discount time and the other is not fulfilled (ordering)
+    } else if ((timeElapsed(ordersArray[orderindex]) >= DISCOUNTTIME) && !(orderstatus=="Fulfilled")) {
+        // show discounted total with total from db
+        modalOrderSubtotal.innerHTML = "$" + Number(getDiscountedTotal(ordersArray[orderindex].orderTotal)).toFixed(2) + " <span style=\"color:#ef5658\"><s>$" + Number(ordersArray[orderindex].orderTotal).toFixed(2) + "</s> (20% off)</span>"
+    } else {
+        modalOrderSubtotal.innerHTML = "$"+Number(ordersArray[orderindex].orderTotal).toFixed(2)
+        discountAppliedText.style.display = "none";
+    }
+}
+
+function expandOrder() {
+    // expands selected order into modal
+    modal.style.display = "block";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+} 
 
 function setStatusMade() {
     if (selectedOrderIndex != null) {
@@ -107,9 +196,21 @@ function timeElapsedMade(order) {
 // sets interval that updates "element" for "time" seconds
 function countdown(element, time) {
     var downinterval = setInterval(() => {
+        // if time reaches 0, or if the element showing the time doesn't exist
         if ((time == 0) || (document.getElementById(element.id) == null)) {
             clearInterval(downinterval);
+            if (time == 0) {
+                updateOrderStatuses()
+                updateModal(selectedOrderIndex)
+            }
             return;
+        // if the element showing the time is display: none;
+        } else if (element.style.display == "none") {
+            if (modal.style.display == "none") {
+                clearInterval(downinterval);
+                return;
+            }
+            time--;
         } else {
             time--;
         }
@@ -123,6 +224,18 @@ function countup(element, time) {
             time++;
         } else {
             clearInterval(upinterval);
+            return;
+        }
+        element.innerHTML = secondsToMinutes(time);
+    }, 1000);
+}
+
+function countupModal(element, time) {
+    var upintervalmodal = setInterval(() => {
+        if (modal.style.display == "none") {
+            clearInterval(upintervalmodal);
+        } else {
+            time++;
             return;
         }
         element.innerHTML = secondsToMinutes(time);
