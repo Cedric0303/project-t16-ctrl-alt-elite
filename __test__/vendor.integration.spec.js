@@ -12,7 +12,7 @@ describe('#1 Integration test (logged in)', () => {
     let cookie = null;
 	let vendor = {
 		vanID: 'Diner_Driver',
-		password: '12345678',
+		password: 'd1n3rd1n3r',
 	}
 
     beforeAll(() => agent
