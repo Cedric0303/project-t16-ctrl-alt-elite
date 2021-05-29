@@ -45,8 +45,9 @@ function getOgTotal(price) {
 // accepts time in seconds and returns a formatted string
 function secondsToText(time) {
     hours = Math.floor(time/3600)
-    minutes = Math.floor(time/60)
-    seconds = time%60
+    minLeft = time % 3600
+    minutes = Math.floor(minLeft/60)
+    seconds = minLeft % 60
     if (hours != 0) {
         return hours+"hr "+String(minutes).padStart(2, '0')+"min "+String(seconds).padStart(2, '0')+"s elapsed"
     } else if (minutes != 0) {
@@ -161,16 +162,18 @@ for (var i=0; i<pastOrders.length; i++) {
 
 // filter menu by categories
 function filterOrders() {
-    var searchTerm = searchbar.value;
+    var searchTerm = String(searchbar.value).toLowerCase();
     var regex = new RegExp(`^${searchTerm}`, 'i');
     for(var i = 0; i < pastOrders.length; i++){
         if (searchTerm != "") {
-            console.log(searchTerm);
             // if current order id is not a match, hide it
-            if(!(regex).test(pastOrders[i].dataset.id)){
-                pastOrders[i].style.display = 'none';
-            } else {
+            if ((regex).test(pastOrders[i].dataset.id) || 
+            (pastOrders[i].dataset.id == orders[i].orderID &&
+            ((regex).test(String(orders[i].customerGivenName).toLowerCase())) || 
+            (regex).test(String(orders[i].customerID)))) {
                 pastOrders[i].style.display = 'grid';
+            } else {
+                pastOrders[i].style.display = 'none';
             }
         } else {
             pastOrders[i].style.display = 'grid';
