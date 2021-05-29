@@ -114,7 +114,7 @@ geolocate.on('geolocate', function() {
         marker[1].getElement().addEventListener('click', updateMarkers);
     })
     nearestVan = vanDist[0][0]
-    upadteVanStats()
+    updateVanStats()
     displayVanList(ordered)
 });
 var curMarker = createLocationMarker(curPos)

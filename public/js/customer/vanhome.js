@@ -176,23 +176,3 @@ vanMarkers.forEach((marker, index) => {
     marker[1].getElement().addEventListener('click', updateSelection);
     marker[1].getElement().addEventListener('click', updateMarkers);
 })
-
-// simulate user moving around
-curMarker.on('dragend', function () {
-    for (i in vanMarkers) {
-        vanMarkers[i][1].remove()
-    }
-    var marker_pos = curMarker.getLngLat()
-    curPos.long = marker_pos.lng;
-    curPos.lat = marker_pos.lat;
-    vanDist = calcVanDist(curPos, vans);
-    vanMarkers = []
-    vanMarkers = createVanMarker(vanDist);
-    vanMarkers.forEach((marker) => {
-        marker[1].getElement().addEventListener('click', updateSelection);
-        marker[1].getElement().addEventListener('click', updateMarkers);
-    })
-    nearestVan = vanDist[0][0]
-    updateVanStats()
-    displayVanList(ordered)
-})
