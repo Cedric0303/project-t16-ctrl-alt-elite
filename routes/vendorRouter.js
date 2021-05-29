@@ -24,8 +24,10 @@ vendorRouter.get('/:vanID/close', vendorController.closeVan)
 // return orders of a specific vendor van
 vendorRouter.get('/:vanID/orders', vendorController.getOrders)
 
-// sets order status of a specific order
+// sets order status of a specific order to fulfilled
 vendorRouter.post('/:vanID/orders/fulfill/:orderID', vendorController.fulfilledOrder)
+
+// sets order status of a specific order to completed
 vendorRouter.post('/:vanID/orders/complete/:orderID', vendorController.pickedUpOrder)
 
 // get past orders of a van

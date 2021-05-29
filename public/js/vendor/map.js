@@ -29,10 +29,6 @@ function createLocationMarker(curPos) {
     .addTo(map)
 }
 
-// if (van == null) {
-//     var curPos = {"long":144.9541022, "lat": -37.7994056}
-// }
-// else {
 var curPos = {"long": van.longitude, "lat": van.latitude}
 // }
 var {map, geolocate} = createMap(curPos)
@@ -47,6 +43,3 @@ geolocate.on('geolocate', function() {
     curMarker = createLocationMarker(curPos)
     document.getElementById("mapdescription").innerHTML = "GPS Location: [" + curPos.long + ", " + curPos.lat + "]";
 })
-// curPos <- current location
-// curPos = {long: blabla, lat: blablabla}
-// usage: curPos.long / curPos.lat
