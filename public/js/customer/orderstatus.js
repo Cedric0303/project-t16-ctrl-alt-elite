@@ -171,8 +171,10 @@ function setStatus(order) {
 
 cancelModifyOrderButton.href = window.location + "/modify"
 
+// run on load
 setStatus(orderinfo)
 
+// ---------------live update code--------------
 const socket = io()
 socket.emit('orderID', orderinfo.orderID);
 socket.on('statusChange', function (order) {

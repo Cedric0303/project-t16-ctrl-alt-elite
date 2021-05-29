@@ -398,7 +398,6 @@ function postOrder() {
         vendorID: vaninfo.loginID
     };
     payload = JSON.stringify(payload);
-    console.log(payload);
     document.getElementById('payloadInput').value = payload;
     document.getElementById('orderForm').submit(); 
 }

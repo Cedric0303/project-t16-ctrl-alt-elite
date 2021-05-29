@@ -48,7 +48,6 @@ function getOgTotal(price) {
 }
 
 function ordertotalHtml(order) {
-    console.log(order);
     output = ""
     if (order.discounted) {
         output += "Order Total: <br class=\"responsive\">$" + (order.orderTotal).toFixed(2) + "&nbsp;<span style=\"color:#ef5658\"><s>$" + Number(getOgTotal(order.orderTotal)).toFixed(2) + "</s> (20% off)</span>"
@@ -87,10 +86,11 @@ function updateOrders(orders) {
     changeColor()
 }
 
-// execute on load
+// run on load
 changeColor()
 updateOrders(allOrders)
 
+// ---------------live update code--------------
 const socket = io()
 if (customerID != null) {
     socket.emit('customerID', customerID);
