@@ -685,12 +685,18 @@ s {
     display: grid;
 }
 
+.selected {
+    background-color: #dbdbdb;
+}
+
 .pastOrderDateside {
     color: #6b6b6b;
     font-size: 0.95em;
 }
 
 #pastOrderDetails {
+    display: none;
+
     position: fixed;
     right: 0;
 
@@ -705,7 +711,7 @@ s {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    height: 5vh;
+    height: 5%;
     font-size: 1em;
     font-weight: 600;
     text-align: center;
@@ -716,6 +722,7 @@ s {
 }
 
 #pastOrderContent {
+    height: 95%;
     padding: 2vh 1em;
     overflow-y: auto;
 }
@@ -745,6 +752,18 @@ s {
 #pastOrderItems {
     border-top: 1px solid #c0c0c0;
     background-color: #ffffff;
+    border-bottom: 1px solid #c0c0c0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.pastOrderItem {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+    justify-items: center;
+    border-top: 1px solid #c0c0c0;
+    background-color: #ffffff;
     padding: 0.7vh 0.5em;
     border-bottom: 1px solid #c0c0c0;
 }
@@ -770,7 +789,16 @@ s {
     font-size: 1.1em;
 }
 
+#pastOrderRatingDiv {
+    padding-top: 1vh;
+}
+
+#pastOrderReviewDiv {
+    padding-top: 1vh;
+}
+
 #pastOrderIDbottomDiv {
-    padding-top: 10em;
+    padding-top: 1em;
+    padding-bottom: 10vh;
     font-size: 0.8em;
 }

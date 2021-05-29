@@ -5,7 +5,7 @@
     <input type="text" id="searchbar" placeholder="Search">
     <div id="orderList">
         {{#each orders}}
-            <div class="pastOrder hoverable">
+            <div class="pastOrder hoverable" data-index={{@index}} data-id={{this.orderID}}>
                 <div class="pastOrderIDside">Order {{this.orderID}}</div>
                 <div class="pastOrderDateside">{{#formatDatePrevOrders this.timestamp}}{{/formatDatePrevOrders}}</div>
             </div>
@@ -15,7 +15,7 @@
 <div id="pastOrderDetails">
     <div id="pastOrderHeader">Order&nbsp;<span id="pastOrderID"></span></div>
     <div id="pastOrderContent">
-        <div id="pastOrderNameDiv">Ordered by:&nbsp;<span id="pastOrderName"></span> (<span id="pastOrderUsername"></span>)</div>
+        <div id="pastOrderNameDiv">Ordered by:&nbsp;<span id="pastOrderName"></span>&nbsp;(<span id="pastOrderUsername"></span>)</div>
         <div id="pastOrderTimeDiv">Time:&nbsp;<span id="pastOrderTimestamp"></span></div>
         <div id="pastOrderCollected">Collected at:&nbsp;<span id="pastOrderVanName"></span></div>
         <div id="pastOrderItemsLabel">
@@ -26,9 +26,11 @@
         </div>
         <div id="pastOrderItems"></div>
         <div id="pastOrderTotalDiv">Total:&nbsp;<span id="pastOrderTotal"></span></div>
-        <div id="pastOrderFulfillDiv">Order made at:&nbsp;<span id="pastOrderFulfillTime"></span></div>
-        <div id="pastOrderCompleteDiv">Order collected at:&nbsp;<span id="pastOrderCompleteTime"></span></div>
-        <div id="pastOrderIDbottomDiv">Order ID: <span id="pastOrderIDbottom"></span></div>
+        <div id="pastOrderFulfillDiv">Order made at:&nbsp;<span id="pastOrderFulfillTime"></span>&nbsp;(<span id="pastOrderFulfillTimeElapsed"></span>)</div>
+        <div id="pastOrderCompleteDiv">Order collected at:&nbsp;<span id="pastOrderCompleteTime"></span>&nbsp;(<span id="pastOrderCompleteTimeElapsed"></span>)</div>
+        <div id="pastOrderRatingDiv">Rating:&nbsp;<span id="pastOrderRating"></span></div>
+        <div id="pastOrderReviewDiv">Review:&nbsp;<span id="pastOrderReview"></span></div>
+        <div id="pastOrderIDbottomDiv">Order ID:&nbsp;<span id="pastOrderIDbottom"></span></div>
     </div>
 </div>
 <script src="/js/vendor/pastOrders.js"></script>
