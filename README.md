@@ -96,5 +96,5 @@ SECRET_OR_PUBLIC_KEY=secret
 - [x] User Interface (UI) mockup
 - [x] App server mockup
 - [x] Front-end + back-end (one feature)
-- [ ] Complete system + source code
-- [ ] Report on your work(+ test1 feature)
+- [x] Complete system + source code
+- [x] Report on your work(+ test1 feature)
