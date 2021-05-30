@@ -105,3 +105,4 @@ SECRET_OR_PUBLIC_KEY=secret
 ## Known Issues
 - Customer app
   - When tracking location live on homepage, the closest van is selected periodically whenever the location updates. This deselects the manually selected van.
+  - When attempting to access the homepage with a pre-selected van that is not in the 5 closest vans to the user's location, the van is not selected.
