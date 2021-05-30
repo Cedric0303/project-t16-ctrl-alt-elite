@@ -208,17 +208,28 @@ const fulfilledOrder = async (req, res) => {
         var orderTotal = order.orderTotal
         if (((curTime.getTime() - new Date(order.timestamp).getTime()) / 1000) >= constants.DISCOUNTTIME) {
             orderTotal = Number(order.orderTotal - (order.orderTotal * constants.DISCOUNTVALUE)).toFixed(2)
+            await Order.updateOne({
+                orderID: orderID
+            }, {
+                $set: {
+                    orderStatus: "Fulfilled",
+                    fulfilledTimestamp: curTime,
+                    orderTotal: Number(orderTotal),
+                    discounted: true
+                }
+            })
+        } else {
+            await Order.updateOne({
+                orderID: orderID
+            }, {
+                $set: {
+                    orderStatus: "Fulfilled",
+                    fulfilledTimestamp: curTime,
+                    orderTotal: Number(orderTotal),
+                    discounted: false
+                }
+            })
         }
-        await Order.updateOne({
-            orderID: orderID
-        }, {
-            $set: {
-                orderStatus: "Fulfilled",
-                fulfilledTimestamp: curTime,
-                orderTotal: Number(orderTotal),
-                discounted: true,
-            }
-        })
         res.status(202)
     }
     else {
