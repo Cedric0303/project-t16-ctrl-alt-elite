@@ -2,7 +2,7 @@
 # INFO30005 – Web Information Technologies
 
 ## Final Commit
-Commit hash: `1b41191f20dd1210f171997831ed064654b9490a`
+Commit hash: `f7f691f81ea9dba319c7821ec924109a4f9275e8`
 # Group Project Repository
 
 
@@ -20,6 +20,7 @@ Commit hash: `1b41191f20dd1210f171997831ed064654b9490a`
   - [Database Access](#database-access)
   - [dotenv Variables](#dotenv-variables)
   - [TODO](#todo)
+  - [Known Issues](#known-issues)
 
 ## Team Members
 
@@ -100,3 +101,7 @@ SECRET_OR_PUBLIC_KEY=secret
 - [x] Front-end + back-end (one feature)
 - [x] Complete system + source code
 - [x] Report on your work(+ test1 feature)
+
+## Known Issues
+- Customer app
+  - When tracking location live on homepage, the closest van is selected periodically whenever the location updates. This deselects the manually selected van.
