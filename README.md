@@ -1,11 +1,14 @@
 **The University of Melbourne**
 # INFO30005 – Web Information Technologies
 
+## Final Commit
+Commit hash: `1b41191f20dd1210f171997831ed064654b9490a`
 # Group Project Repository
 
 
 ## Table of contents
 - [INFO30005 – Web Information Technologies](#info30005--web-information-technologies)
+  - [Final Commit](#final-commit)
 - [Group Project Repository](#group-project-repository)
   - [Table of contents](#table-of-contents)
   - [Team Members](#team-members)
@@ -58,7 +61,6 @@ URL: `https://project-t16-ctrl-alt-elite.herokuapp.com/`
 Email: `default@default.com`
 <br>
 Password: `n0td3fault`
-
 
 
 ### Example Vendor Accounts
