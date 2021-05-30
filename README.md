@@ -2,7 +2,7 @@
 # INFO30005 – Web Information Technologies
 
 ## Final Commit
-Commit hash: `07c152404c37e62b0f47c03d61e146cc9423e213`
+Commit hash: `cf529a817d77b507e41ea9a60bde695d0a25ec14`
 # Group Project Repository
 
 
