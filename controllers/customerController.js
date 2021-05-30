@@ -21,7 +21,7 @@ const Vendor = db.collection('vendor')
 // return default customer homescreen
 const getCustomerHome = async (req, res) => {
     const vans = await Vendor.find({
-        "isOpen": true
+        isOpen: true
     }).project({
         "_id": false,
         "password": false
@@ -34,7 +34,7 @@ const getCustomerHome = async (req, res) => {
 // return customer homescreen with pre-selected van 
 const getCustomerHomeVan = async (req, res) => {
     const vans = await Vendor.find({
-        "isOpen": true
+        isOpen: true
     }).project({
         "_id": false,
         "password": false
